@@ -4,12 +4,12 @@ header-img: "img/green.jpg"
 tagline: "cn"  
 description: "beyondouyuan_Irving|少年自负淩云笔，到而今，春华落尽，满怀萧瑟，常恨世人新意少，爱说南朝狂客！"  
 baseurl: ""
-url: "http://cnfeat"  
+url: "http://beyondouyuan.github"  
 
 # About/contact
 owner: 
-  name: " CnFeat"
-  email: CnFeat@gmail.com
+  name: " beyondouyuan"
+  email: beyondouyuan@gmail.com
   bio: "前端很大，进行到底"
 
 # Data
@@ -43,7 +43,7 @@ defaults:
       type: "posts"
     values:
       layout: "post"
-      author: "CnFeat"
+      author: "beyondouyuan"
       header-img: "img/green.jpg" # We don't want posts without a header image, that whould mean white on white
 
 # Comments 
