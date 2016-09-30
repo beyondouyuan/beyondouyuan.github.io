@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "About"
-description: "学苟知本，六经皆我注脚 "
+description: "少年自负淩云笔，到而今，春华落尽，满怀萧瑟，常恨世人新意少，爱说南朝狂客！ "
 header-img: "img/green.jpg"
 ---
 
@@ -53,7 +53,7 @@ header-img: "img/green.jpg"
 
 ###联系
 
-- [博客：www.cnfeat.com](beyondouyuan.github.io)
+- [博客：beyondouyuan.github.io](beyondouyuan.github.io)
 
 - [微博@小欧小媛小](http://weibo.com/207775270)
 
