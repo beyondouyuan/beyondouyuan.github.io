@@ -37,6 +37,6 @@ header-img: "img/green.jpg"
 
 	This is my house!
 
-###开篇
+###2016/10/01 文章
 
 - [《怎样学习NodeJs》](https://beyondouyuan.github.io/blog/2016/09/30/how-to-study-nodejs/)
