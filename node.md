@@ -40,3 +40,20 @@ header-img: "img/green.jpg"
 ###2016/10/01 文章
 
 - [《NodeJs初成长》](https://beyondouyuan.github.io/blog/2016/09/30/nodejs-study-part1/)
+
+
+<ul class="listing">
+{% for post in site.posts %}
+  {% if post.node %}
+  	{% capture y %}{{post.date | date:"%Y"}}{% endcapture %}
+	  {% if year != y %}
+	    {% assign year = y %}
+	    <li class="listing-seperator">{{ y }}</li>
+	  {% endif %}
+	  <li class="listing-item">
+	    <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+	    <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+	  </li>
+  {% endif %}
+{% endfor %}
+</ul>
