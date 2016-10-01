@@ -21,7 +21,7 @@ header-img: "img/zhihu.jpg"
 
 - [《24款最值得推荐的中文字体》](http://cnfeat.com/blog/2015/05/22/a-24-chinese-fonts/) -->
 
-### 2016/10/01 文章 ###
+<!-- ### 2016/10/01 文章 ### -->
 
 <!-- - [《Javascript初成长》](https://beyondouyuan.github.io/blog/2016/10/01/javascript-study-part1/)
 
@@ -33,10 +33,10 @@ Javascrip是一种具有面向对象能力的、解释性的程序设计语言�
 {% for post in site.posts %}
   {% if post.javascript %}
   <!-- 时间轴标记 -->
-  	{% capture y %}### {{post.date | date:"%Y"}}  文章列表 ###{% endcapture %}
+  	{% capture y %}{{post.date | date:"%Y"}}{% endcapture %}
 	  {% if year != y %}
 	    {% assign year = y %}
-	    <li class="listing-seperator">{{ y }}</li>
+	    <li class="listing-seperator">{{ y }}  文章列表</li>
 	  {% endif %}
 	  <li class="listing-item">
 	  <!-- 时间轴-标题 -->
