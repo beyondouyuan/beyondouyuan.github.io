@@ -38,16 +38,8 @@ Javascrip是一种具有面向对象能力的、解释性的程序设计语言�
 {% endfor %}
 </div> -->
 
-<div id='tag_cloud'>
-{% for tag in post.tags %}
-	{% if tag[0] =="javascript" %}
-	<a href="#{{ tag[0] }}" title="{{ tag[0] }}" rel="{{ tag[1].size }}" id="{{ tag[0] }}">{{ tag[0] }}</a>
-	{% else %}{{ post.title }}
-	{% endif %}
-{% endfor %}
-</div>
 
-<ul class="listing">
+<!-- <ul class="listing">
 {% for tag in site.tags %}
   <li class="listing-seperator" id="{{ tag[0] }}">{{ tag[0] }}</li>
 {% for post in tag[1] %}
@@ -55,6 +47,20 @@ Javascrip是一种具有面向对象能力的、解释性的程序设计语言�
   <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
   </li>
+{% endfor %}
+{% endfor %}
+</ul> -->
+
+<ul class="listing">
+{% for tag in site.tags %}
+  <li class="listing-seperator" id="{{ tag[0] }}">{{ tag[0] }}</li>
+{% for post in tag[1] %}
+  {% if pos.js%}
+  	<li class="listing-item">
+	  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+	  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+  </li>
+  {% endif %}
 {% endfor %}
 {% endfor %}
 </ul>
