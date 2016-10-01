@@ -32,9 +32,21 @@ Javascrip是一种具有面向对象能力的、解释性的程序设计语言�
 
 Javascrip是一种具有面向对象能力的、解释性的程序设计语言，更具体一点，他是基于对象和事件驱动并具有相对安全性的客户端脚本语言。
 
-{% if post.js %}
-	<span class="meta">{{post.js}}</span>
-{% endif %}
+<ul class="listing">
+{% for post in site.posts %}
+  {% if post.assign%}
+  	{% capture y %}{{post.date | date:"%Y"}}{% endcapture %}
+	  {% if year != y %}
+	    {% assign year = y %}
+	    <li class="listing-seperator">{{ y }}</li>
+	  {% endif %}
+	  <li class="listing-item">
+	    <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+	    <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+	  </li>
+  {% endif %}
+{% endfor %}
+</ul>
 
 
 

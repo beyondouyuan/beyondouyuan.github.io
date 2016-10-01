@@ -5,7 +5,7 @@ author: beyondouyuan
 date: 2016-10-01
 categories: blog
 tags: [学习,前端,Jvascript]
-js: javascript
+assign: javascript
 description: 北风有佳人，绝世而独立。一顾倾人城，再顾倾人国。
 ---
 
