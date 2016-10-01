@@ -40,7 +40,9 @@ Javascrip是一种具有面向对象能力的、解释性的程序设计语言�
 
 <div id='tag_cloud'>
 {% for tag in site.tags %}
-<a href="#{{ tag[0] }}" title="{{ tag[0] }}" rel="{{ tag[1].size }}" id="{{ tag[0] }}">{{ tag[0] }}</a>
+	{% if tag[1] =="{{javascript}}" %}
+	<a href="#{{ tag[0] }}" title="{{ tag[0] }}" rel="{{ tag[1].size }}" id="{{ tag[0] }}">{{ tag[0] }}</a>
+	{% endif %}
 {% endfor %}
 </div>
 
