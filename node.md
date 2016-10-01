@@ -36,3 +36,5 @@ header-img: "img/green.jpg"
 	来自NodeJs世界的问候，你们是虫子！
 
 	This is my house!
+
+-[《怎样学习Javascript》](https://beyondouyuan.github.io/blog/2016/09/30/how-to-study-nodejs/)

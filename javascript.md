@@ -1,18 +1,9 @@
-<!-- -
+---
 layout: post
 title: "Javascript"
 author: "beyondouyuan"
 description: "少年自负淩云笔，到而今，春华落尽，满怀萧瑟，常恨世人新意少，爱说南朝狂客！"
 header-img: "img/zhihu.jpg"
-- -->
-
----
-layout: post
-title: Javascript
-date: 2015-3-02
-categories: blog
-tags: [总结,知识管理]
-description: 少年自负淩云笔，到而今，春华落尽，满怀萧瑟，常恨世人新意少，爱说南朝狂客！。
 ---
 
 
@@ -29,6 +20,8 @@ description: 少年自负淩云笔，到而今，春华落尽，满怀萧瑟，�
 - [《如何正确地练习写作》](http://www.jianshu.com/p/2621444b619d)
 
 - [《24款最值得推荐的中文字体》](http://cnfeat.com/blog/2015/05/22/a-24-chinese-fonts/)
+
+-[《怎样学习Javascript》](https://beyondouyuan.github.io/blog/2016/10/01/how-to-study-javascript/)
 
 
 
