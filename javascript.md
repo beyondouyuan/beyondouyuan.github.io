@@ -33,7 +33,7 @@ Javascrip是一种具有面向对象能力的、解释性的程序设计语言�
 {% for post in site.posts %}
   {% if post.javascript %}
   <!-- 时间轴标记 -->
-  	{% capture y %}{{post.date | date:"%Y"}}{% endcapture %}
+  	{% capture y %}{{post.date | date:"%Y"}}  文章列表{% endcapture %}
 	  {% if year != y %}
 	    {% assign year = y %}
 	    <li class="listing-seperator">{{ y }}  文章列表</li>
