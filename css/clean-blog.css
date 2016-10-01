@@ -28,6 +28,9 @@ h4 {
 a {
   color: #404040;
 }
+a.sign-tag {
+  color: white;
+}
 a:hover,
 a:focus {
   color: #0085a1;
