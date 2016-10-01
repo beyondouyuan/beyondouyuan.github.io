@@ -23,29 +23,9 @@ header-img: "img/zhihu.jpg"
 
 ### 2016/10/01 文章 ###
 
-- [《Javascript初成长》](https://beyondouyuan.github.io/blog/2016/10/01/javascript-study-part1/)
+<!-- - [《Javascript初成长》](https://beyondouyuan.github.io/blog/2016/10/01/javascript-study-part1/)
 
-Javascrip是一种具有面向对象能力的、解释性的程序设计语言，更具体一点，他是基于对象和事件驱动并具有相对安全性的客户端脚本语言。
-
-
-- [《Javascript初成长》](https://beyondouyuan.github.io/blog/2016/10/01/javascript-study-part1/)
-
-Javascrip是一种具有面向对象能力的、解释性的程序设计语言，更具体一点，他是基于对象和事件驱动并具有相对安全性的客户端脚本语言。
-
-
-{% for post in site.posts %}
-  {% if post.javascript %}
-  	{% capture y %}{{post.date | date:"%Y"}}{% endcapture %}
-	  {% if year != y %}
-	    {% assign year = y %}
-	    - [{{ y }}]
-	  {% endif %}
-	    - [《{{ post.title }}》]({{post.url}})
-
-        { post.content | strip_html | truncate:150 }}
-
-  {% endif %}
-{% endfor %}
+Javascrip是一种具有面向对象能力的、解释性的程序设计语言，更具体一点，他是基于对象和事件驱动并具有相对安全性的客户端脚本语言。 -->
 
 
 <!-- 文章列表 -->
@@ -63,7 +43,7 @@ Javascrip是一种具有面向对象能力的、解释性的程序设计语言�
 	    <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
 	    <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
 	  </li>
-	  <!-- 内容剪切 -->
+	  <!-- 内容预览 -->
 	  <div class="post-content-preview">
             {{ post.content | strip_html | truncate:150 }}
       </div>
