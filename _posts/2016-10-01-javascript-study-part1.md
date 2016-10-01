@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Javascript初成长
-author: "beyondouyuan"
+author: beyondouyuan
 date: 2016-10-01
 categories: blog
 tags: [学习,前端,Jvascript]

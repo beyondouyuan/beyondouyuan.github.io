@@ -1,7 +1,7 @@
 ---
 layout: post
 title: NodeJs初成长
-author: "beyondouyuan"
+author: beyondouyuan
 date: 2016-9-30
 categories: blog
 tags: [学习,前端,NodeJs]
