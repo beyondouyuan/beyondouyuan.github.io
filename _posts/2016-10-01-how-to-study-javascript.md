@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 怎样学习NodeJs
+title: 怎样学习Javascript
 author: "beyondouyuan"
 date: 2016-10-01
 categories: blog
