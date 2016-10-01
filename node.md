@@ -50,7 +50,7 @@ header-img: "img/green.jpg"
   	{% capture y %}{{post.date | date:"%Y"}}{% endcapture %}
 	  {% if year != y %}
 	    {% assign year = y %}
-	    <li class="listing-seperator">{{ y }}</li>
+	    <li class="listing-seperator">{{ y }}  文章列表</li>
 	  {% endif %}
 	  <li class="listing-item">
 	  <!-- 时间轴-标题 -->
