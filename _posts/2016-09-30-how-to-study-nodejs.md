@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 怎样学习NodeJs
-date: 2015-3-02
+date: 2016-9-30
 categories: blog
 tags: [学习,前端,NodeJs]
 description: 少年自负淩云笔，到而今，春华落尽，满怀萧瑟，常恨世人新意少，爱说南朝狂客！。
