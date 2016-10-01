@@ -37,4 +37,6 @@ header-img: "img/green.jpg"
 
 	This is my house!
 
--[《怎样学习Javascript》](https://beyondouyuan.github.io/blog/2016/09/30/how-to-study-nodejs/)
+###开篇
+
+- [《怎样学习NodeJs》](https://beyondouyuan.github.io/blog/2016/09/30/how-to-study-nodejs/)

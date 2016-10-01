@@ -21,7 +21,9 @@ header-img: "img/zhihu.jpg"
 
 - [《24款最值得推荐的中文字体》](http://cnfeat.com/blog/2015/05/22/a-24-chinese-fonts/)
 
--[《怎样学习Javascript》](https://beyondouyuan.github.io/blog/2016/10/01/how-to-study-javascript/)
+###开篇
+
+- [《怎样学习Javascript》](https://beyondouyuan.github.io/blog/2016/10/01/how-to-study-javascript/)
 
 
 
