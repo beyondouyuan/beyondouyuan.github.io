@@ -55,11 +55,11 @@ Javascrip是一种具有面向对象能力的、解释性的程序设计语言�
 {% for tag in site.tags %}
   <li class="listing-seperator" id="{{ tag[0] }}">{{ tag[0] }}</li>
 {% for post in tag[1] %}
-  {% if pos.js%}
+  {% if post.js %}
   	<li class="listing-item">
 	  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-	  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-  </li>
+	  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.js }}</a>
+  	</li>
   {% endif %}
 {% endfor %}
 {% endfor %}
