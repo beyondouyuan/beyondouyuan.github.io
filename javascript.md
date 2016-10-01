@@ -44,6 +44,9 @@ Javascrip是一种具有面向对象能力的、解释性的程序设计语言�
 	    <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
 	    <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
 	  </li>
+	  <div class="post-content-preview">
+            {{ post.content | strip_html | truncate:150 }}
+        </div>
   {% endif %}
 {% endfor %}
 </ul>
