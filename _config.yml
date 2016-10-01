@@ -16,12 +16,12 @@ owner:
 gavatar: http://dreamofbook.qiniudn.com/Az..png
 favicon: img/favicon.png
 
-douban_username:  
-twitter_username: 
-github_username: 
-facebook_username: 
-weibo_username: 
-zhihu_username: 
+douban_username:  beyondouyuan
+twitter_username: beyondouyuan
+github_username: beyondouyuan
+facebook_username: beyondouyuan
+weibo_username: 小欧小援小
+zhihu_username: beyond欧元
 
 # Build settings  
 # use Github Flavored Markdown !important  
@@ -44,7 +44,7 @@ defaults:
     values:
       layout: "post"
       author: "beyondouyuan"
-      header-img: "img/green.jpg" # We don't want posts without a header image, that whould mean white on white
+      header-img: "img/black.jpg" # We don't want posts without a header image, that whould mean white on white
 
 # Comments 
 comments :
