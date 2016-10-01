@@ -1,9 +1,18 @@
----
+<!-- -
 layout: post
 title: "Javascript"
 author: "beyondouyuan"
 description: "少年自负淩云笔，到而今，春华落尽，满怀萧瑟，常恨世人新意少，爱说南朝狂客！"
 header-img: "img/zhihu.jpg"
+- -->
+
+---
+layout: post
+title: Javascript
+date: 2015-3-02
+categories: blog
+tags: [总结,知识管理]
+description: 少年自负淩云笔，到而今，春华落尽，满怀萧瑟，常恨世人新意少，爱说南朝狂客！。
 ---
 
 
