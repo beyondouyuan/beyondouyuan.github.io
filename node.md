@@ -2,7 +2,7 @@
 layout: page
 title: "NodeJs"
 author: "beyondouyuan"
-description: "少年自负淩云笔，到而今，春华落尽，满怀萧瑟，常恨世人新意少，爱说南朝狂客！"
+description: "墙里秋千墙外道，墙外行人墙里佳人笑。笑渐不问声渐消，多情却被无情恼"
 header-img: "img/green.jpg"
 ---
 

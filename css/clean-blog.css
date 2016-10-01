@@ -28,9 +28,6 @@ h4 {
 a {
   color: #404040;
 }
-a.sign-tag {
-  color: white;
-}
 a:hover,
 a:focus {
   color: #0085a1;
@@ -38,6 +35,14 @@ a:focus {
 a img:hover,
 a img:focus {
   cursor: zoom-in;
+}
+/*update on 2016/10/03 by ouyuan*/
+a.sign-tag {
+  color: white;
+}
+a.sign-tag:hover,
+a.sign-tag:focus {
+  color: #F2460F;
 }
 article {
   overflow-x: hidden;
