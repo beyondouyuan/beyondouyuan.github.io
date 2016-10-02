@@ -45,7 +45,7 @@ a.sign-tag:focus {
   color: #F2460F;
 }
 article {
-  overflow-x: hidden;
+  /*overflow-x: hidden;*/
 }
 blockquote {
   color: #808080;
