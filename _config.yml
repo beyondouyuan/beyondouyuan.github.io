@@ -2,7 +2,7 @@
 title: 小楼昨夜前端雨
 header-img: "img/green.jpg"
 tagline: "cn"
-description: "beyondouyuan_Irving|少年自负淩云笔，到而今，春华落尽，满怀萧瑟，常恨世人新意少，爱说南朝狂客！"  
+description: "beyondouyuan|少年自负淩云笔，到而今，春华落尽，满怀萧瑟，常恨世人新意少，爱说南朝狂客！"  
 baseurl: ""
 url: ""
 
@@ -50,9 +50,9 @@ defaults:
 comments :
   provider : duoshuo
   duoshuo :
-    short_name : 
+    short_name : beyondouyuan
   disqus :
-      short_name : 
+      short_name : beyondouyuan
 
 # Analytics and webmaster tools stuff goes here
 google_analytics: 
