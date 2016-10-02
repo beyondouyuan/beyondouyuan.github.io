@@ -7,11 +7,11 @@ header-img: "img/twitter.jpg"
 ---
 
 
-<center>
+<!-- <center>
     <p><img src="http://7xlfkx.com1.z0.glb.clouddn.com/white2.jpg" align="center"></p>
-</center>
+</center> -->
 
-我是beyondouyuan，每天千字践行者，践行时间：2014年02月10日至2015年02月23日，感谢这段经历，让我成为了现在的我。
+<!-- 我是beyondouyuan，每天千字践行者，践行时间：2014年02月10日至2015年02月23日，感谢这段经历，让我成为了现在的我。
 
 现在研习 **认知写作学** 。
 
@@ -64,7 +64,7 @@ header-img: "img/twitter.jpg"
 
 - 公众号：cnfeat
 
-
+ -->
 <center>
     <p><img src="http://i173.photobucket.com/albums/w63/cnfeat/2015-08-29-2_zpsqj7po8eo.png" align="center"></p>
 </center>

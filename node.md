@@ -11,33 +11,8 @@ header-img: "img/green.jpg"
     <p><img src="http://7xlfkx.com1.z0.glb.clouddn.com/white2.jpg" align="center"></p>
 </center>
 
-###消灭服务器，世界输入NOdejs
+### 毁灭你，与你何干 ###
 
-
-
-	来自NodeJs世界的问候，你们是虫子！
-
-	来自NodeJs世界的问候，你们是虫子！
-
-	来自NodeJs世界的问候，你们是虫子！
-
-	来自NodeJs世界的问候，你们是虫子！
-
-	来自NodeJs世界的问候，你们是虫子！
-
-	来自NodeJs世界的问候，你们是虫子！
-
-	来自NodeJs世界的问候，你们是虫子！
-
-	来自NodeJs世界的问候，你们是虫子！
-
-	来自NodeJs世界的问候，你们是虫子！
-
-	来自NodeJs世界的问候，你们是虫子！
-
-	This is my house!
-
-###2016/10/01 文章
 
 <!-- - [《NodeJs初成长》](https://beyondouyuan.github.io/blog/2016/09/30/nodejs-study-part1/) -->
 

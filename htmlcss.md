@@ -11,30 +11,7 @@ header-img: "img/blue.jpg"
     <p><img src="http://7xlfkx.com1.z0.glb.clouddn.com/white2.jpg" align="center"></p>
 </center>
 
-###消灭服务器，世界输入NOdejs
-
-
-
-	来自NodeJs世界的问候，你们是虫子！
-
-	来自NodeJs世界的问候，你们是虫子！
-
-	来自NodeJs世界的问候，你们是虫子！
-
-	来自NodeJs世界的问候，你们是虫子！
-
-	来自NodeJs世界的问候，你们是虫子！
-
-	来自NodeJs世界的问候，你们是虫子！
-
-	来自NodeJs世界的问候，你们是虫子！
-
-	来自NodeJs世界的问候，你们是虫子！
-
-	来自NodeJs世界的问候，你们是虫子！
-
-	来自NodeJs世界的问候，你们是虫子！
-
+### 你们是虫子 ###
 
 <!-- 文章列表 -->
 <ul class="listing">
