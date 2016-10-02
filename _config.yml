@@ -1,10 +1,10 @@
 # Site settings
 title: 小楼昨夜前端雨
-header-img: "img/black.jpg"
+header-img: "img/green.jpg"
 tagline: "cn"
-description: "beyondouyuan|少年自负淩云笔，到而今，春华落尽，满怀萧瑟，常恨世人新意少，爱说南朝狂客！"  
-baseurl: "https://github.com/beyondouyuan"
-url: "https://github.com/beyondouyuan"
+description: "beyondouyuan_Irving|少年自负淩云笔，到而今，春华落尽，满怀萧瑟，常恨世人新意少，爱说南朝狂客！"  
+baseurl: ""
+url: ""
 
 # About/contact
 owner: 
