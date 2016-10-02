@@ -1,8 +1,8 @@
 ---
 layout: page
 title: "Tags"
-description: "少年自负淩云笔，到而今，春华落尽，满怀萧瑟，常恨世人新意少，爱说南朝狂客！"  
-header-img: "img/semantic.jpg"  
+description: "画舸停桡。槿花篱外竹横桥。水上游人沙上女。回顾。笑指芭蕉林里住。"
+header-img: "img/semantic.jpg"
 ---
 
 ##本页使用方法

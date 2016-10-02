@@ -2,7 +2,7 @@
 layout: page
 title: "NodeJs"
 author: "beyondouyuan"
-description: "墙里秋千墙外道，墙外行人墙里佳人笑。笑渐不问声渐消，多情却被无情恼"
+description: "墙里秋千墙外道，墙外行人墙里佳人笑。笑渐不问声渐消，多情却被无情恼。"
 header-img: "img/green.jpg"
 ---
 

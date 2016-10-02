@@ -6,7 +6,7 @@ date: 2016-10-02
 categories: blog
 tags: [学习,前端,html&&css]
 htmlcss: htmlcss
-description: 北风有佳人，绝世而独立。一顾倾人城，再顾倾人国。
+description: 去年元夜时，花市灯如昼。月上柳梢头，人约黄昏后。今年元夜时，月与灯依旧。不见去年人，泪湿春衫袖。
 ---
 
 ###  HtmlAndCss初成长 ###

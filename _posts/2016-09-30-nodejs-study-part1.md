@@ -6,7 +6,7 @@ date: 2016-9-30
 categories: blog
 tags: [学习,前端,NodeJs]
 node: node
-description: 墙里秋千墙外道，墙外行人墙里佳人笑。笑渐不问声渐消，多情却被无情恼。
+description: 拟把疏狂图一醉。对酒当歌，强乐还无味。衣带渐宽终不悔，为伊消得人憔悴。
 ---
 
 ###  NodeJs初成长 ###

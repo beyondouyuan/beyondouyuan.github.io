@@ -6,7 +6,7 @@ date: 2016-10-02
 categories: blog
 tags: [学习,前端,react]
 react: react
-description: 北风有佳人，绝世而独立。一顾倾人城，再顾倾人国。
+description: 一向年光有限身，等闲离别易消魂。酒筵歌席莫辞。
 ---
 
 ###  react初成长 ###

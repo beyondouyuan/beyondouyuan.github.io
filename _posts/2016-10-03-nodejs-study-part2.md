@@ -6,7 +6,7 @@ date: 2016-10-05
 categories: blog
 tags: [学习,前端,NodeJs]
 node: node
-description: 墙里秋千墙外道，墙外行人墙里佳人笑。笑渐不问声渐消，多情却被无情恼。
+description: 吴山青，越山青，两岸青山相对迎，谁知离别情？。
 ---
 
 ###  NodeJs进阶 ###

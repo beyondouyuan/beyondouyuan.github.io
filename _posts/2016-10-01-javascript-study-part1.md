@@ -6,7 +6,7 @@ date: 2016-10-01
 categories: blog
 tags: [学习,前端,Jvascript]
 javascript: javascript
-description: 北风有佳人，绝世而独立。一顾倾人城，再顾倾人国。
+description: 其奈风流端正外，更别有系人心处。一日不思量，也攒眉千度。
 ---
 
 ###  javascript初成长 ###
