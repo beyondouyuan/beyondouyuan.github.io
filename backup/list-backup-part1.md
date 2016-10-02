@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 如何正确地练习写作
-date: 2015-3-02
+date: 2016-09-20
 categories: blog
 tags: [总结,知识管理]
 description: 少年自负淩云笔，到而今，春华落尽，满怀萧瑟，常恨世人新意少，爱说南朝狂客！。
