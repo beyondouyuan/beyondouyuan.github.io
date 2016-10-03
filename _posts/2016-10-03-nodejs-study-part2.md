@@ -231,15 +231,18 @@ counter,js内容如下：
 
 >
 由以上结果分析：
+>
 >//第一次使用require('./util/counter')调用counter模块，counter被缓存在主模块中
 var counter1 = require('./util/counter');
 console.log(counter1.count());
 >
+>
 当第一次执行完成后，count()中的变量i变成了1；
 var counter2 = require('./util/counter');
->
 console.log(counter2.count());
+>
 在模块中再次使用require('./util/counter')调用counter模块时，并不是再次初始化counter模块，而是重复使用缓存在住模块中的counter模块[i值已经变为1]
+>
 >
 故第一个执行console.log(counter2.count());的值为2；
 第二次执行console.log(counter2.count());的值为3，因为其调用的counter对象依然是缓存的[且i值已经变为2]的counter模块
