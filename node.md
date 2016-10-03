@@ -20,6 +20,7 @@ header-img: "img/green.jpg"
 <!-- 文章列表 -->
 <ul class="listing">
 {% for post in site.posts %}
+<!-- 若含有node标签，则遍历初node的所有文章 -->
   {% if post.node %}
   <!-- 时间轴标记 -->
   	{% capture y %}{{post.date | date:"%Y"}}{% endcapture %}
