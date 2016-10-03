@@ -15,11 +15,12 @@ description: 杨家有女初长成，养在深闺人未识。天生丽质难自�
 
 
 >
-NodeJs是一个基于Google V8引擎建立的
-NodeJs不是JS应用、而是JS运行平台
+NodeJs基于Google V8引擎。
+
+NodeJs不是JS应用、而是JS运行平台。
 >
 
-JS是脚本语言，脚本语言都需要一个解析器才能运行。对于写在HTML页面里的JS，浏览器充当了解析器的角色。而对于需要独立运行的JS，NodeJS就是一个解析器
+JS是脚本语言，脚本语言都需要一个解析器才能运行。对于写在HTML页面里的JS，浏览器充当了解析器的角色。而对于需要独立运行的JS，NodeJS就是一个解析器。
 
 初学者可能会误以为这是一个Javascript应用，事实上，NodeJs采用
 C++语言编写而成，是一个Javascript的运行环境。

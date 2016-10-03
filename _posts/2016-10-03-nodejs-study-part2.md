@@ -6,6 +6,7 @@ date: 2016-10-03
 categories: blog
 tags: [学习,前端,NodeJs]
 node: node
+images: "img/green.jpg"
 description: 吴山青，越山青，两岸青山相对迎，谁知离别情？。
 ---
 
@@ -16,7 +17,7 @@ description: 吴山青，越山青，两岸青山相对迎，谁知离别情？�
  	  在windows上安装NodeJs
 
 >
-在Windows上安装NodeJs十分方便，你只需要访问http://nodejs.org，点击Download链接，然后选择WindowsInstaller，下载安装包。下载完成后打开安装包，点击Next即可自动完成安装。
+在Windows上安装NodeJs十分方便，你只需要访问http://nodejs.org，点击Download链接，然后选择Windows Installer，下载安装包。下载完成后打开安装包，点击Next即可自动完成安装。
 >
 
  &&2  测试NodeJs是否已成功安装
@@ -24,7 +25,7 @@ description: 吴山青，越山青，两岸青山相对迎，谁知离别情？�
 打开windows的cmd窗口并输入node，出现如下图所示
 
 <center>
-<p><img src="img/green.jpg" align="center"></p>
+<p><img src="{{post.images}}" align="center"></p>
 </center>
 
 即进入node交互模式，则安装成功
