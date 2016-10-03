@@ -1,12 +1,12 @@
 ---
 layout: post
-title: NodeJs初成长(一)
+title: NodeJs初成长(一)之nodejs入门(1)
 author: beyondouyuan
 date: 2016-09-30
 categories: blog
-tags: [学习,前端,NodeJs]
+tags: [学习,前端,NodeJs,nodejs入门]
 node: node
-description: 杨家有女初长成，养在深闺人未识。天生丽质难自弃，一朝选在君王侧。回眸一笑百媚生，六宫粉黛无颜色。。
+description: 杨家有女初长成，养在深闺人未识。天生丽质难自弃，一朝选在君王侧。回眸一笑百媚生，六宫粉黛无颜色。
 ---
 
 ###  NodeJs初成长(一) ###
