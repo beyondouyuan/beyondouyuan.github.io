@@ -4,7 +4,7 @@ title: Javascript初成长
 author: beyondouyuan
 date: 2016-10-01
 categories: blog
-tags: [学习,前端,Jvascript]
+tags: [前端,Jvascript]
 javascript: javascript
 description: 其奈风流端正外，更别有系人心处。一日不思量，也攒眉千度。
 ---

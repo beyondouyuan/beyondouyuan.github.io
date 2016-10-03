@@ -4,7 +4,7 @@ title: react初成长
 author: beyondouyuan
 date: 2016-10-02
 categories: blog
-tags: [学习,前端,react]
+tags: [前端,react]
 react: react
 description: 一向年光有限身，等闲离别易消魂。酒筵歌席莫辞。
 ---
