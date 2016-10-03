@@ -241,6 +241,7 @@ console.log(counter1.count());
 var counter2 = require('./util/counter');
 console.log(counter2.count());
 >
+>
 在模块中再次使用require('./util/counter')调用counter模块时，并不是再次初始化counter模块，而是重复使用缓存在住模块中的counter模块[i值已经变为1]
 >
 >
