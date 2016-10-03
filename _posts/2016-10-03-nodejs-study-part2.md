@@ -6,7 +6,7 @@ date: 2016-10-03
 categories: blog
 tags: [学习,前端,NodeJs]
 node: node
-description: 吴山青，越山青，两岸青山相对迎，谁知离别情？
+description: 莫倚倾国貌，嫁娶个，有情郎。彼此当年少，莫负好时光
 ---
 
 ###  安装和配置NodeJs ###
