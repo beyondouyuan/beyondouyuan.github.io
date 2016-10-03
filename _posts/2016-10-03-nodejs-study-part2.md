@@ -6,7 +6,6 @@ date: 2016-10-03
 categories: blog
 tags: [学习,前端,NodeJs]
 node: node
-images: "../img/green.jpg"
 description: 吴山青，越山青，两岸青山相对迎，谁知离别情？。
 ---
 
@@ -25,7 +24,7 @@ description: 吴山青，越山青，两岸青山相对迎，谁知离别情？�
 打开windows的cmd窗口并输入node，出现如下图所示
 
 <center>
-<p><img src="https://github.com/beyondouyuan/beyondouyuan.github.io/img/black.jpg" align="center"></p>
+<p><img src="https://beyondouyuan.github.io/img/black.jpg" align="center"></p>
 </center>
 
 即进入node交互模式，则安装成功
