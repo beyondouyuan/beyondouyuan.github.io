@@ -87,25 +87,29 @@ Hello,World测试完后的程序员就像是洗干净了的洁癖的人一样，
 - 最后，用户需要上传图片，所以需要上传处理功能来处理这些方面的细节。
 
 
+
+
+来一个javascript常用例子：
+
 	function clickListener(obj, fn) {
 	    var val = $(obj).val;
 	    $(obj).click(function() {
 	        fn(val)
 	    })
-	}
+	};
 
 	function clickHandle(objVal) {
 	    alert(objVal);
-	}
+	};
 	clickListener("#obj1", clickHandle);
 
 
-----------------------------------------------------------------------------
 
 我们且不管传入的参数是什麽以及我们需要什么参数，根据一项代码的例子类比来理解一下这个NodeJs的处理过程。
 
 用户使用浏览器输入URL(请求)[传入参数"#obj1"] --> 请求URL被服务器[clickListener]接收 --> 被服务器接收的URL通过路由(相当于中转)[clickHandle]传递 --> 路由传递的URL作为参数传递给请求处理程序[clickHandle(objVal)] --> 请求处理程序根据传入参数(URL)进行相应处理并返回结果 --> 将处理得到的结构返回给用户(响应)[alert(objVal)]。
 
+----------------------------------------------------------------------------
 
 		  /~~\
 		  ----
