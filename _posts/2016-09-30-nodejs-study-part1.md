@@ -84,20 +84,20 @@ Hello,World测试完后的程序员就像是洗干净了的洁癖的人一样，
 
 - 应用不仅仅要处理URL对应的请求，还需要把内容显示出来，这意味着需要一些视图逻辑供请求处理程序使用，以便将内容发给用户的浏览器
 
-- 最后，用户需要上传图片，所以需要上传处理功能来处理这些方面的细节.
+- 最后，用户需要上传图片，所以需要上传处理功能来处理这些方面的细节。
 
 
-	function clickListener(obj,fn) {
-		var val = $(obj).val;
-		$(obj).click(function(){
-			fn(val)
-		})
+	function clickListener(obj, fn) {
+	    var val = $(obj).val;
+	    $(obj).click(function() {
+	        fn(val)
+	    })
 	}
 
-	function clickHandle(objVal){
-		alert(objVal);
+	function clickHandle(objVal) {
+	    alert(objVal);
 	}
-	clickListener("#obj1",clickHandle);
+	clickListener("#obj1", clickHandle);
 
 
 ----------------------------------------------------------------------------
