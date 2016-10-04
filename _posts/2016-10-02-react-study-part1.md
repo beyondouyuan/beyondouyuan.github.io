@@ -1,21 +1,29 @@
 ---
 layout: post
-title: react初成长
+title: React初成长
 author: beyondouyuan
 date: 2016-10-02
 categories: blog
-tags: [前端,react]
+tags: [前端,React]
 react: react
 description: 一向年光有限身，等闲离别易消魂。酒筵歌席莫辞。
 ---
 
-###  react初成长 ###
+###  写在前面 ###
 
- &&1  react初成长
+当前前端一场火热，而关于前端的讨论的话题也是火爆异常，前后端分离、全栈工程师、模块化、组件化biubiubiu！停！React就是应组件化之运而生的。
 
+以上。
 
->	Javascrip是一种具有面向对象能力的、解释性的程序设计语言，更具体一点，他是基于对象和事件驱动并具有相对安全性的客户端脚本语言。
->
+### 快速开始 ###
+
+#### JSFiddle ####
+
+开始学习React最简单的方式是使用如下JSFiddle的Hello World例子：
+
+- React JSFiddle
+
+- React JSFiddle without JSX
 
 
   面向对象：oop
