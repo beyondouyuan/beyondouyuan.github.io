@@ -8,13 +8,11 @@ header-img: "img/green.jpg"
 
 
 <center>
-    <p><img src="http://7xlfkx.com1.z0.glb.clouddn.com/white2.jpg" align="center"></p>
+    <p><img src="https://beyondouyuan.github.io/img/ouyuan.jpg" align="center"></p>
 </center>
 
-### 毁灭你，与你何干 ###
+##### 他们从这片黑暗森林逃往另一片黑暗森林！ #####
 
-
-<!-- - [《NodeJs初成长》](https://beyondouyuan.github.io/blog/2016/09/30/nodejs-study-part1/) -->
 
 
 <!-- 文章列表 -->
