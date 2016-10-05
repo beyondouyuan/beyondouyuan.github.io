@@ -6,7 +6,9 @@ description: "却爱蓝罗裙子，羡他长束纤腰。"
 header-img: "img/orange.jpg"
 ---
 
-我是欧元，一切从这里开始！我们，是同志了！
+我是欧元，一切从这里开始！
+
+我们，是同志了！
 
 
 <center>
@@ -15,9 +17,9 @@ header-img: "img/orange.jpg"
 
 ### 联系 ###
 
-- [博客：小楼昨夜前端雨](beyondouyuan.github.io)
+- [博客@小楼昨夜前端雨](https://beyondouyuan.github.io)
 
-- [微博@小欧小媛小](http://weibo.com/207775270)
+- [微博@小欧小媛小](http://weibo.com/2331698453)
 
 - [知乎@文小楼](http://www.zhihu.com/people/beyondouyuan)
 

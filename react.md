@@ -12,9 +12,9 @@ header-img: "img/blue.jpg"
 
 ### 联系 ###
 
-- [博客：小楼昨夜前端雨](beyondouyuan.github.io)
+- [博客@小楼昨夜前端雨](https://beyondouyuan.github.io/)
 
-- [微博@小欧小媛小](http://weibo.com/207775270)
+- [微博@小欧小媛小](http://weibo.com/2331698453)
 
 - [知乎@文小楼](http://www.zhihu.com/people/beyondouyuan)
 

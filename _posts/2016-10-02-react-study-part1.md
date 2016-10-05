@@ -1,6 +1,6 @@
 ---
 layout: post
-title: React初成长
+title: React初成长(一)
 author: beyondouyuan
 date: 2016-10-02
 categories: blog
