@@ -8,8 +8,9 @@ header-img: "img/tw_lan.jpg"
 
 
 <center>
-    <p><img src="http://7xlfkx.com1.z0.glb.clouddn.com/white2.jpg" align="center"></p>
+    <p><img src="https://beyondouyuan.github.io/img/ouyuan.jpg" align="center"></p>
 </center>
+
 
 ### 你们是虫子 ###
 

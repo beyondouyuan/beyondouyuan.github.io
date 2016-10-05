@@ -66,7 +66,7 @@ header-img: "img/blue.jpg"
 
  -->
 <center>
-    <p><img src="http://i173.photobucket.com/albums/w63/cnfeat/2015-08-29-2_zpsqj7po8eo.png" align="center"></p>
+    <p><img src="https://beyondouyuan.github.io/img/wechat.jpg" align="center"></p>
 </center>
 
 
