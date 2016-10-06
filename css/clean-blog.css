@@ -532,3 +532,12 @@ body {
   background-color: #ddd;
 }
 
+/*--------------------------------------------------*
+  customer style add by beyondouyuan
+*---------------------------------------------------*/
+
+
+.list-item,
+.content-box{
+  padding: 10px 0;
+}

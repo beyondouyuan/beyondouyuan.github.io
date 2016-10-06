@@ -12,7 +12,7 @@ header-img: "img/tw_lan.jpg"
 </center>
 
 
-### 我们，是同志了！ ###
+我们，是同志了！
 
 <!-- 文章列表 -->
 <ul class="listing">
