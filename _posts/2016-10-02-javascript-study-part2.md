@@ -4,7 +4,7 @@ title: JavaScript+DOM编程艺术(一)
 author: beyondouyuan
 date: 2016-10-02
 categories: blog
-tags: [Javascript]
+tags: [JavaScript]
 javascript: javascript
 description: 牡丹含露真珠颗，美人折向庭前过，含笑问檀郎，花强妾貌强？　檀郎故相恼，须道花枝好。一面发娇嗔，碎挼花打人。
 ---
