@@ -89,10 +89,10 @@ dome.html文件的内容也很简单，他仅是用于测试的：
 		return document.getElementById(id);
 	}
 
-来自JavaScript+DOM编程艺术：
->
+
 >
 函数真正威力体现在，我们可以把不同的数据传递给他们，而他们将使用实际传递给他们的参数去完成预定的操作。传递的数据即为参数(argument)。
+----------------------来自JavaScript+DOM编程艺术：
 >
 
 ok！来进行第一次测试，将demo中的js部分用刚刚封装的方法进行替换
