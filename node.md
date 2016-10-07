@@ -11,8 +11,10 @@ header-img: "img/green.jpg"
     <p><img src="https://beyondouyuan.github.io/img/ouyuan.jpg" align="center"></p>
 </center>
 
-##### 他们从这片黑暗森林逃往另一片黑暗森林！ #####
-
+<center>
+<p>他们从这片黑暗森林逃往另一片黑暗森林！
+</p>
+</center>
 
 
 <!-- 文章列表 -->

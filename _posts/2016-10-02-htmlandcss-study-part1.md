@@ -4,7 +4,7 @@ title: Css的那些事儿(一)基础篇(1)
 author: beyondouyuan
 date: 2016-10-03
 categories: blog
-tags: [前端,css]
+tags: [css]
 htmlcss: htmlcss
 description: 去年今日落花时，伊前又见依。淡匀双脸浅匀眉，青衫透玉肌。才会面，便相思，相思无尽期。这回相见好相知，相知已是迟。
 ---

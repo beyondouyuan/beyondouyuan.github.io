@@ -4,7 +4,7 @@ title: React初成长(一)
 author: beyondouyuan
 date: 2016-10-02
 categories: blog
-tags: [前端,React]
+tags: [React]
 react: react
 description: 船动湖光滟滟秋，贪看年少信舡流。无端隔水抛莲子，遥被人知半日羞。
 ---

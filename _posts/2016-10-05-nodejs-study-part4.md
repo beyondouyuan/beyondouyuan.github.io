@@ -4,7 +4,7 @@ title: NodeJs初成长(二)之七天学会nodejs(3)
 author: beyondouyuan
 date: 2016-10-05
 categories: blog
-tags: [前端,NodeJs,七天学会nodejs]
+tags: [NodeJs,七天学会nodejs]
 node: node
 description: 美酒清若空，邀月笑西风。年华逝水一杯中，霜鬓映残红。十杯始味浓，故地与君同。江湖一入去匆匆，青陌忆短篷。莫欺少年穷，他朝鱼化龙。功名快意三百盅，马放南山松。谅我不羁李太白，一饮千杯醉不还。纵横天地间，何曾拜曹蛮！
 ---

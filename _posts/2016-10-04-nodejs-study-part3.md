@@ -4,7 +4,7 @@ title: NodeJs初成长(二)之七天学会nodejs(2)
 author: beyondouyuan
 date: 2016-10-04
 categories: blog
-tags: [前端,NodeJs,七天学会nodejs]
+tags: [NodeJs,七天学会nodejs]
 node: node
 description: 春日游，杏花吹满头。陌上谁家年少，足风流？妾拟将身嫁与，一生休。纵被无情弃，不能羞。
 ---

@@ -4,7 +4,7 @@ title: NodeJs初成长(二)之七天学会nodejs(1)
 author: beyondouyuan
 date: 2016-10-03
 categories: blog
-tags: [前端,NodeJs,七天学会nodejs]
+tags: [NodeJs,七天学会nodejs]
 node: node
 description: 杨家有女初长成，养在深闺人未识。天生丽质难自弃，一朝选在君王侧。回眸一笑百媚生，六宫粉黛无颜色。
 ---

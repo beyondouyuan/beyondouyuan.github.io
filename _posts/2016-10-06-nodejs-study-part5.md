@@ -4,7 +4,7 @@ title: NodeJs初成长(二)之七天学会nodejs(4)
 author: beyondouyuan
 date: 2016-10-06
 categories: blog
-tags: [前端,NodeJs,七天学会nodejs]
+tags: [NodeJs,七天学会nodejs]
 node: node
 description: 雨打芭蕉疏梧桐，情生意动。情生意动？醉问金樽绿与红。
 ---
