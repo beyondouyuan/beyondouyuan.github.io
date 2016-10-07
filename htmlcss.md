@@ -12,7 +12,7 @@ header-img: "img/tw_lan.jpg"
 </center>
 
 
-我们，是同志了！
+<center><p>我们，是同志了！</p></center>
 
 <!-- 文章列表 -->
 <ul class="listing">
@@ -22,7 +22,7 @@ header-img: "img/tw_lan.jpg"
   	{% capture y %}{{post.date | date:"%Y"}}{% endcapture %}
 	  {% if year != y %}
 	    {% assign year = y %}
-	    <li class="listing-seperator">{{ y }}  文章列表</li>
+	    <li class="listing-seperator list-item">{{ y }}  文章列表</li>
 	  {% endif %}
 	  <li class="listing-item">
 	  <!-- 时间轴-标题 -->
@@ -30,7 +30,7 @@ header-img: "img/tw_lan.jpg"
 	    <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
 	  </li>
 	  <!-- 内容预览 -->
-	  <div class="post-content-preview">
+	  <div class="post-content-preview content-box">
             {{ post.content | strip_html | truncate:150 }}
       </div>
   {% endif %}
