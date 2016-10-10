@@ -331,7 +331,7 @@ NodeJS提供了domain模块，可以简化异步代码的异常处理。
 	setTimeout(function(fn) {
 	    fn();
 	});
-	--Console-- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+	---------------------------------------Console---------------------------------------
 	Error: undefined is not a
 	function
 
@@ -366,8 +366,7 @@ NodeJS提供了domain模块，可以简化异步代码的异常处理。
 	        }
 	    });
 	}
-	h
-	ttp.createServer(function(request, response) {
+	http.createServer(function(request, response) {
 	    async(request, function(err, data) {
 	        if (err) {
 	            response.writeHead(500);
@@ -400,8 +399,7 @@ NodeJS提供了domain模块，可以简化异步代码的异常处理。
 	        });
 	    });
 	}
-	h
-	ttp.createServer(function(request, response) {
+	http.createServer(function(request, response) {
 	    var d = domain.create();
 	    d.on('error', function() {
 	        response.writeHead(500);
@@ -442,9 +440,9 @@ JS本身的throw..try..catch异常处理机制并不会导致内存泄漏，也�
 
 
 -----------------------------------------------------------------
-*																*
-*																*
-*			下一站 天后！										*
-*																*
-*																*
+
+
+						下一站 天后！
+
+
 -----------------------------------------------------------------
