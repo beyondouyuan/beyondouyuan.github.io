@@ -1,6 +1,6 @@
 ---
 layout: post
-title: NodeJs初成长(二)之七天学会nodejs(6)
+title: NodeJs初成长(二)之七天学会nodejs(5)
 author: beyondouyuan
 date: 2016-10-09
 categories: blog
