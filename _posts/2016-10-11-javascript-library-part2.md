@@ -45,7 +45,7 @@ demo.html结构如下：
 	</html>
 
 
-demo2.js保留[JavaScript封装库(1)](http:beyondouyuan.github.io)中demo.js的部分内容，结构如下：
+demo.js保留[JavaScript封装库(1)](http:beyondouyuan.github.io)中demo.js的部分内容，结构如下：
 
 
 	window.onload = function() {
@@ -80,26 +80,34 @@ base.js中已经已有Base对象，
 	}
 
 当然此时到浏览器刷新时肯定是不能得到我们想要的效果的。
-浏览器会爆出错误：
+浏览器会报出错误：
 Uncaught TypeError: Base.getID(...).css is not a function。
 这不是一个函数。
 
 为何呢？因为HTMLDivElement对象根本就没有.css()这个方法。要想使用这个方法，即必须为该对象添加这样的方法，而HTMLDivElement对象是一个原声的对象，我们不直接操作这个对象。
+
+>
 >
 不是你的对象不要动 ---------------------《JavaScript最佳实践》
 >
 
-所以，若想让div#box使用这个css()方法，那么我们就使div#box返回一个我们自己的对象，那么在此处，css()方法挂载在我们定义Base对象上，所以应该在Base.getID('box')后将其返回为Base对象，如此即可使用Base上的css()方法。
+所以，若想让div#box使用这个css()方法，那么我们就使div#box返回一个我们自己的对象，css()方法挂载在我们定义Base对象上，所以应该在Base.getID('box')后将其返回为Base对象，如此即可使用Base上的css()方法。
 
 
-/**
-* 对象由属性和方法组成，方法就是该对象内定义的函数
-* 即该方法挂载在这个对象上，
-* 只有这个对象自身或者这个对象的实例才能调用该方法
-* 其他任意一个操作或者函数若想调用某个对象的某方法
-* 则必须在操作或者函数的最后返回一个值，
-* 且这个值就是这个操作结束后想要调用含有所想调用的摸个方法的对象
-* 如：
+
+1.对象由属性和方法组成，方法就是该对象内定义的函数，
+
+2.即该方法挂载在这个对象上，
+
+3.只有这个对象自身或者这个对象的实例才能调用该方法，
+
+4.其他任意一个操作或者函数若想调用某个对象的某方法，
+
+5.则必须在操作或者函数的最后返回一个值，
+
+6.且这个值就是这个操作结束后想要调用含有所想调用的摸个方法的对象，
+
+7.如下：
 	function fn1(){
 		// do something
 		return obj;
@@ -113,8 +121,7 @@ Uncaught TypeError: Base.getID(...).css is not a function。
 
 * 以上以var obj = {}对象式定义的方式只是一个比方，实际上
 * obj应该是使用函数式定义一个类(或者说是构造函数)来实现
-*
-*/
+
 
 
 
@@ -124,21 +131,21 @@ Uncaught TypeError: Base.getID(...).css is not a function。
 		alert('a');
 	 });
 
-1.若要实现以上的功能，那么我们就必须知道Base是什么Base是一个基础库的核心对象，也就是说Bases是一个对象Base.getID('box')返回的是一个divElement对象，
- 此divElement对象没有css方法，
+1.若要实现以上的功能，那么我们就必须知道Base是什么，Base是一个基础库的核心对象，也就是说Bases是一个对象Base.getID('box')返回的是一个divElement对象，
+ 此divElement对象没有css()方法，
 
-2.那么我们将Base.getID('box')的返回改成Base即可，则Base.getID('box')的返回将是Base对象而不是divElement对象，此时只需要在Base对象上添加需要使用的想css()等方法即可。
+2.那么我们将Base.getID('box')的返回改成Base即可，则Base.getID('box')的返回将是Base对象而不是divElement对象，此时只需要在Base对象上添加需要使用的css()等方法即可。
 
-3.Base对象的方法当然是只有是Base对象才能使用，所以若是我们定义了一个Base对象，而又给这个对象添加有css等方法那么只要Base.getID('box')的返回值是Base对象，
-那么Base.getID('box')就可以使用css方法此时Base.getID('box').css()才不会报错，其实际上相当于：
+3.Base对象的方法当然是只有是Base对象才能使用，若是我们定义了一个Base对象，而又给这个对象添加有css()等方法，那么只要Base.getID('box')的返回值是Base对象，
+那么Base.getID('box')就可以使用css()方法，此时Base.getID('box').css()才不会报错，其实际上相当于：
 Base.css()
 
 
-4.若是Base.getID('box').css('color','red')返回的也是Base对象，则其无论是多少次调用，链式有多长，返回的总是Base对象，因而可以一直链式调用下去那么自然就可以使用链式调用继续使用Base对象的其他方法总而言之，只要你的操作或者函数方法总是返回Base对象，那么你就可以永无止境d的连续以链式调用的方式不停调用Base对象的方法因为无论如何，对象肯定可以调用自身所包含的方法.若是对象不能调用自身的方法，那，还有枉法吗？？？？？？？
+4.若是Base.getID('box').css('color','red')返回的也是Base对象，则无论是多少次调用，链式有多长，返回的总是Base对象，因而可以一直链式调用下去那么自然就可以使用链式调用继续使用Base对象的其他方法总而言之，只要你的操作或者函数方法总是返回Base对象，那么你就可以永无止境d的连续以链式调用的方式不停调用Base对象的方法，因为无论如何，对象肯定可以调用自身所包含的方法.若是对象不能调用自身的方法，那，还有王法吗？？？？？？？
 
-5.在Base对象添加一个css方法，html方法，click方法。这些方法都是属于Base对象的方法，所以只有Base对象可以使用这些方法。而其他任何操作(或者说函数)最终返回的是Base对象，那么该操作或者函数就可以使用Base的方法。所以我们设计的Base对象应该看起来至少像这样：
+5.在Base对象添加一个css()方法，html()方法，click()方法。这些方法都是属于Base对象的方法，所以只有Base对象可以使用这些方法。而其他任何操作(或者说函数)最终返回的是Base对象，那么该操作或者函数就可以使用Base的方法。所以我们设计的Base对象应该看起来至少像这样：
 
- 	var Base = {}
+	var Base = {};
 	Base.prototype.getID = function(id){
 		//....
 		return Base;
@@ -174,7 +181,7 @@ Base.css()
 
 使用链式调用快速方便设置节点的属性。
 
-要实现链式调用，则需要将var Base={}对象改写，因为这种对象式的写法无法在他的原型中添加方法，因而需要使用函数式对象写法，那么对base.js进行改写，因为：
+要实现链式调用，则需要将var Base={}对象改写，需要使用函数式对象写法，那么对base.js进行改写，因为：
 
 	function Base(){
 			this.getID = function(id){
@@ -349,8 +356,8 @@ base.getID('box')和base.getTagName('p')不是用同一个实例，而是各自�
 
 那么base.js改写如下：
 
-// 每次调用$()new出一个Base对象，
-// 这样就不会是使用同一个Base对象而是后面覆盖前面了
+	// 每次调用$()方法new出一个Base对象，
+	// 这样就不会是使用同一个Base对象而使得后面覆盖前面了
 
 
 	var $ = function(){
@@ -405,5 +412,5 @@ demo.js修改如下：
 		$().getTagName('p').css('color','blue');
 	}
 
-// 此方法每次使用$()将会创建一个新的Base实例，不会出现覆盖：
-// 完美收官
+	// 此方法每次使用$()将会创建一个新的Base实例，不会出现覆盖：
+	// 完美收官
