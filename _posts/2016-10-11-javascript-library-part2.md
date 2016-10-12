@@ -328,12 +328,12 @@ demo.js改写如下：
 demo.js：
 
 
-window.onload = function(){
- 	var base = new Base()
- 	base.getID('box').css('color','red').css('backgroundColor','black');
- 	alert(base.getTagName('p').elements.length);
- 	base.getTagName('p').css('color','blue').css('backgroundColor','green');
-}
+	window.onload = function(){
+	 	var base = new Base()
+	 	base.getID('box').css('color','red').css('backgroundColor','black');
+	 	alert(base.getTagName('p').elements.length);
+	 	base.getTagName('p').css('color','blue').css('backgroundColor','green');
+	}
 
 
 我们同时调用几个方法，你会发现一个神奇的现象:
