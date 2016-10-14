@@ -21,7 +21,7 @@ description: 雨恨云愁，江南依旧称佳丽。水村渔市，一缕孤烟�
 测试 @version $1.0$
 
 
-- demo.html代码如下：
+demo.html代码如下：
 
 	<!DOCTYPE html>
 	<html>
@@ -49,9 +49,7 @@ description: 雨恨云愁，江南依旧称佳丽。水村渔市，一缕孤烟�
 
 base.js中已经已有Base对象，代码如下：
 
-- base.js: @version $1.0$
-
-
+	// base.js: @version $1.0$
 	var Base = {
 		getID:function(id){
 			return document.getElementById(id);
@@ -66,8 +64,7 @@ base.js中已经已有Base对象，代码如下：
 
 首先进行测试，demo.js代码如下：
 
-- demo.js: @version $1.0$
-
+	// demo.js: @version $1.0$
 	window.onload = function() {
 	    alert(getID('box'));
 	}
@@ -229,9 +226,7 @@ Base.css()
 
 这种方式返回的仍然是divElement对象，所以是不符合的。则base.js代码如下：
 
-- base.js: @version $2.0$
-
-
+	// base.js: @version $2.0$
 	function Base(){
 		// 创建一个数组，用于保存获取的节点和节点数组
 		// id返回节点，其他方式返回数组
@@ -290,9 +285,7 @@ Base.css()
 
 demo.js代码如下：
 
-- demo.js: @version $2.0$
-
-
+	// demo.js: @version $2.0$
 	window.onload = function(){
 	 	var base = new Base()
 	 	alert(base.getID('box').elements.length); //1
@@ -311,10 +304,7 @@ demo.js代码如下：
 做什么呢？我们在base.js @version $2.0$ 中还一个获取元素节点的方法getTagName()，我们测试一下看看有何不一样。
 代码如下：
 
-- demo.js: @version $2.1$,
-
-
-
+	// demo.js: @version $2.1$
 	window.onload = function(){
 		var base = new Base()
 		alert(base.getTagName('p').elements.length); //1
@@ -362,9 +352,7 @@ Uncaught TypeError: Cannot set property 'color' of undefined
 
 那么base.js代码如下：
 
-- base.js: @version $3.0$,
-
-
+	// base.js: @version $3.0$
 	function Base(){
 		this.elements = [];
 		this.getID = function(id){
@@ -405,9 +393,7 @@ Uncaught TypeError: Cannot set property 'color' of undefined
 
 demo.js保持不变，而再次在测试，代码如下：
 
-- demo.js: @version $3.0$,
-
-
+	// demo.js: @version $3.0$
 	window.onload = function(){
 	 	var base = new Base()
 	 	alert(base.getTagName('p').elements.length); //3
@@ -423,9 +409,7 @@ demo.js保持不变，而再次在测试，代码如下：
 
 大功告成了吗，我们在了玩玩，保持base.js @version $3.0$不变，代码如下:
 
-- demo.js: @version $3.1$,
-
-
+	// demo.js: @version $3.1$
 	window.onload = function(){
 		var base = new Base();
 		base.getID('box').css('color','blue').css('backgroundColor','black');
@@ -453,9 +437,7 @@ base.getID('box')和base.getTagName('p')那么只要不是用同一个实例，�
 那么base.js代码如下：
 
 
-- base.js: @version $4.0$,
-
-
+	// base.js: @version $4.0$
 	// 每次调用$()方法new出一个Base对象，
 	// 这样就不会是使用同一个Base对象而使得后面覆盖前面了
 
@@ -506,9 +488,7 @@ base.getID('box')和base.getTagName('p')那么只要不是用同一个实例，�
 demo.js代码如下：
 
 
-- demo.js: @version $4.0$,
-
-
+	// demo.js: @version $4.0$
 	window.onload = function(){
 		$().getID('box').css('color','red').css('backgroundColor','black'); //成功
 
