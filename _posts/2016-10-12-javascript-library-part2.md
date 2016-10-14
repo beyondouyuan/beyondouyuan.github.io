@@ -407,7 +407,7 @@ demo.js保持不变，而再次在测试，代码如下：
 <p><img src="https://beyondouyuan.github.io/img/lib_3.png" align="center"></p>
 </center>
 
-大功告成了吗，我们在了玩玩，保持base.js @version $3.0$不变，代码如下:
+大功告成了吗，我们再玩玩新鲜的羞羞事，，，保持base.js @version $3.0$不变，代码如下:
 
 	// demo.js: @version $3.1$
 	window.onload = function(){
