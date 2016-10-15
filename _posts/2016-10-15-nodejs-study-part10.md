@@ -158,7 +158,7 @@ ok！我们的应用现在可以通过请求的URL路径来区别不同的请求
 那么，开始编写路由了，创建一个新文件，名为router.js，添加一下内容：
 
     // 路由模块
-
+    // router.js  @version $1.0$
     function route(pathname){
         console.log("About to route a request for " + pathname);
     }
@@ -172,12 +172,12 @@ ok！我们的应用现在可以通过请求的URL路径来区别不同的请求
 我们的服务器应当知道路由的存在并加以有效利用。我们当然可以通过硬编码的方式将这一依赖绑定到服务器上，但是，经验告诉我们，这样做会非常痛苦，因为之后稍有改动就是牵一发而动全身，因此我们将使用依赖注入的方式较松散地添加路由模块
 
 >
-> [Martin Fowlers关于依赖注入的大作](http://itdocument.com/663560297/)
+> - [Martin Fowlers关于依赖注入的大作](http://itdocument.com/663560297/)
 >
-> [JavaScript里的依赖注入](http://www.ituring.com.cn/article/68377)
-> [用javascript代码通俗的解释一下什么叫依赖注入？](https://www.zhihu.com/question/22463207)
-> [关于JavaScript依赖注入：你应该了解的那些事](http://www.html-js.com/article/A-day-to-learn-about-JavaScript-JavaScript-dependency-injection-you-should-know-that)
-> [理解JavaScript中的依赖注入](http://www.html-js.com/article/A-day-to-learn-JavaScript-understand-dependency-injection-in-JavaScript)
+> - [JavaScript里的依赖注入](http://www.ituring.com.cn/article/68377)
+> - [用javascript代码通俗的解释一下什么叫依赖注入？](https://www.zhihu.com/question/22463207)
+> - [关于JavaScript依赖注入：你应该了解的那些事](http://www.html-js.com/article/A-day-to-learn-about-JavaScript-JavaScript-dependency-injection-you-should-know-that)
+> - [理解JavaScript中的依赖注入](http://www.html-js.com/article/A-day-to-learn-JavaScript-understand-dependency-injection-in-JavaScript)
 > 
 >
 
