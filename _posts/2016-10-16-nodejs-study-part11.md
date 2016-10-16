@@ -12,15 +12,15 @@ description: 锦瑟无端五十弦，一弦一柱思华年。庄生晓梦迷蝴�
 
 ###  写在前面 ###
 
-- @函数式编程
+ &&1 函数式编程
 
 将函数作为参数传递并不仅仅出于技术上的考量，对于软件设计来说，这其实是个哲学问题，想想看：在index文件中，我们可以将router对象传递过去([NodeJs初成长(一)之nodejs入门(3)](https://beyondouyuan.github.io/blog/2016/10/15/nodejs-study-part10/)中的server.start(router.route);)，服务器随后可以调用这个对象的route函数(route(pathname);)。
 
-就像这样，我们传递一个东西，然后服务器利用这个东西完成了一些事情(此时的route函数暂时是输出输出请求的URL路径)。
+就像这样，我们传递一个东西，然后服务器利用这个东西完成了一些事情(此时的route函数暂时是输出请求的URL路径)。
 
 嘿路由，能帮我把这个路由一下么？
 
-但是服务器其实并不需要这样的东西，他只需要把事情做完即可，其实为了把事情做完，你根本不需要东西，你需要的是动作。也就是说，你不需要名称，你需要动词。
+但是服务器其实并不需要这样的东西，他只需要把事情做完即可，其实为了把事情做完，你根本不需要东西，你需要的是动作。也就是说，你不需要名词，你需要动词。
 
 
 ### 路由给真正的请求处理程序 ###
@@ -215,4 +215,4 @@ click()触发事件(启动服务器)，callback()采取行动处理业务。
     Request handler 'start' was called
 
 
-并且，当我们在浏览器中打开的是[http://localhost:8888/](http://localhost:8888/)时，得到的结果也是一模一样的，因为我们在handle对象中对handle["/"] = requestHandlers.start;和handle["/start"] = requestHandlers.start;的赋值时相同的。
+并且，当我们在浏览器中打开的是[http://localhost:8888/](http://localhost:8888/)时，得到的结果也是一模一样的，因为我们在handle对象中对handle["/"] = requestHandlers.start;和handle["/start"] = requestHandlers.start;的赋值是相同的。
