@@ -1,8 +1,8 @@
 ---
 layout: post
-title: NodeJs初成长(一)之nodejs入门(6)
+title: NodeJs初成长(一)之nodejs入门(7)
 author: beyondouyuan
-date: 2016-10-18
+date: 2016-10-20
 categories: blog
 tags: [NodeJs,nodejs入门]
 node: node
@@ -360,7 +360,8 @@ ok！重启服务器，我们应用所有的功能就可以使用了，选择一
 
 命令行输出*cross-device link not permitted, rename *关键词没有改变多大，证明问题依然没有解决，继续查找解决方法：
 
-引入util模块
+
+stackoverflow上找到了一个问题[Node.JS fs.rename doesn't work](https://stackoverflow.com/questions/12196163/node-js-fs-rename-doesnt-work)
 引入util模块
 使用：
     var readStream = fs.createReadStream(files.upload.path);
@@ -371,7 +372,7 @@ ok！重启服务器，我们应用所有的功能就可以使用了，选择一
 
 替代：fs.renameSync(files.upload.path, "/tmp/test.png");
 
-刷新浏览器，上传文件，跳船-->终于出来了！
+刷新浏览器，上传文件，跳转-->终于出来了！
 <center>
 <p><img src="https://beyondouyuan.github.io/img/node_r_s_15.png" align="center"></p>
 </center>
