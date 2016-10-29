@@ -142,9 +142,13 @@ description: 江头又见新秋，几多愁。塞草连天，何处是神州？�
 
 注意html标签书写，留意换行，如以下，将会报错。
     *return ( 
+    
     <form className = "commentForm"
+
         onSubmit = {this.handleSubmit}>
+
         placeholder = "请输入你的姓名"
+
         ref = "author" />
         <input type = "text"
         placeholder = "说点什么鬼吧..."
