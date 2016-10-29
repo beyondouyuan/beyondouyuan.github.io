@@ -23,6 +23,7 @@ description: 莺嘴啄花红溜，燕尾剪波绿皱。指冷玉笙寒，吹彻�
 5.//如：用户名为irving，密码为irving
 
 6.mysql -u irving -pirving  //==>>以此格式输入(-p和password间没有空格)，这可以直接登录了(不会出现在下一行提示enter password)。
+
 7.若是(-p和password间有空格，这需要在下一行再次输入密码才可以,也就是说空格之后输入的密码不起作用)
 
 8.mysql -u irving -p irving  //下一行会提示:enter password
@@ -98,7 +99,7 @@ ok!登录成功，创建一个名为nodejs的数据库
 
 yes!It work!
 
-我们来吧mysql中说创建的表格的信息输出到浏览器上，首先创建一个简单的服务器，并在服务器中查询我们想要得到的数据，代码如下：
+我们来把mysql中所创建的表格的信息输出到浏览器上，首先创建一个简单的服务器，并在服务器中查询我们想要得到的数据，代码如下：
 
 
     var http = require('http');
