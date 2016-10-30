@@ -4,7 +4,7 @@ title: JavaScript封装库(1)
 author: beyondouyuan
 date: 2016-10-07
 categories: blog
-tags: [JavaScript,JavaScript库]
+tags: [JavaScript]
 javascript: javascript
 description: 夜夜相思更漏残，伤心明月凭阑干，想君思我锦衾寒。咫尺画堂深似海，忆来惟把旧书看，几时携手入长安？
 ---

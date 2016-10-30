@@ -4,7 +4,7 @@ title: JavaScript封装库(2)之链式调用
 author: beyondouyuan
 date: 2016-10-12
 categories: blog
-tags: [JavaScript,JavaScript库]
+tags: [JavaScript]
 javascript: javascript
 description: 雨恨云愁，江南依旧称佳丽。水村渔市，一缕孤烟细。　天际征鸿，遥认行如缀。平生事，此时凝睇，谁会凭栏意？
 ---

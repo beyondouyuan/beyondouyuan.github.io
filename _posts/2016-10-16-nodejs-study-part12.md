@@ -4,7 +4,7 @@ title: NodeJs初成长(一)之nodejs入门(5)
 author: beyondouyuan
 date: 2016-10-16
 categories: blog
-tags: [NodeJs,nodejs入门]
+tags: [NodeJs]
 node: node
 description: 桃杏依稀香暗度，谁在秋千，笑里轻轻语？一寸相思千万缕，人间没个安排处。
 

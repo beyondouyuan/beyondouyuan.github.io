@@ -4,7 +4,7 @@ title: NodeJs初成长(二)之七天学会nodejs(6)
 author: beyondouyuan
 date: 2016-10-10
 categories: blog
-tags: [NodeJs,七天学会nodejs]
+tags: [NodeJs]
 node: node
 description: 休相问，怕相问，相问还添恨。春水满塘生，鸂鷘还相趁。昨夜雨霏霏，临明寒一阵。偏忆戍楼人，久绝边庭信。
 ---

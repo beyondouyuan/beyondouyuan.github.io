@@ -4,7 +4,7 @@ title: NodeJs初成长(一)之nodejs入门(2)
 author: beyondouyuan
 date: 2016-10-14
 categories: blog
-tags: [NodeJs,nodejs入门]
+tags: [NodeJs]
 node: node
 description: 天若有情天亦老，此情说便说不了。说不了，一声唤起，又惊春晓。
 ---

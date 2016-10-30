@@ -4,7 +4,7 @@ title: NodeJs初成长(二)之七天学会nodejs(5)
 author: beyondouyuan
 date: 2016-10-09
 categories: blog
-tags: [NodeJs,七天学会nodejs]
+tags: [NodeJs]
 node: node
 description: 永夜抛人何处去？绝来音。香阁掩，眉敛，月将沉。争忍不相寻？怨孤衾。换我心，为你心，始知相忆深。
 ---

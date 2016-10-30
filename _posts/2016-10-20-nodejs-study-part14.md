@@ -4,7 +4,7 @@ title: NodeJs初成长(一)之nodejs入门(7)
 author: beyondouyuan
 date: 2016-10-20
 categories: blog
-tags: [NodeJs,nodejs入门]
+tags: [NodeJs]
 node: node
 description: 相见争如不见，有情还似无情。笙歌散后酒微醒，深院月明人静。
 

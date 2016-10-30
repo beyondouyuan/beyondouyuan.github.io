@@ -4,7 +4,7 @@ title: NodeJs初成长(一)之nodejs入门(1)
 author: beyondouyuan
 date: 2016-09-30
 categories: blog
-tags: [NodeJs,nodejs入门]
+tags: [NodeJs]
 node: node
 description: 杨家有女初长成，养在深闺人未识。天生丽质难自弃，一朝选在君王侧。回眸一笑百媚生，六宫粉黛无颜色。
 ---

@@ -4,7 +4,7 @@ title: NodeJs初成长(二)之七天学会nodejs(7)
 author: beyondouyuan
 date: 2016-10-11
 categories: blog
-tags: [NodeJs,七天学会nodejs]
+tags: [NodeJs]
 node: node
 description: 饮散离亭西去，浮生长恨飘蓬。回头烟柳渐重重，淡云孤雁远，寒日暮天红。今夜画船何处？潮平淮月朦胧。酒醒人静奈愁浓！残灯孤枕梦，轻浪五更风。
 ---

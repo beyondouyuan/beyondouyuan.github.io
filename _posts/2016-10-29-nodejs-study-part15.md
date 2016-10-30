@@ -4,7 +4,7 @@ title: NodeJs初成长之nodejs链接mysql
 author: beyondouyuan
 date: 2016-10-29
 categories: blog
-tags: [NodeJs,nodejs入门]
+tags: [NodeJs]
 node: node
 description: 莺嘴啄花红溜，燕尾剪波绿皱。指冷玉笙寒，吹彻小梅春透。依旧，依旧，人与绿杨俱瘦。
 

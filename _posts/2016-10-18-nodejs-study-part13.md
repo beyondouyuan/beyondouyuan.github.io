@@ -4,7 +4,7 @@ title: NodeJs初成长(一)之nodejs入门(6)
 author: beyondouyuan
 date: 2016-10-18
 categories: blog
-tags: [NodeJs,nodejs入门]
+tags: [NodeJs]
 node: node
 description: 韶华不为少年留。恨悠悠，几时休，飞絮落花时候，一登楼。便做春江都是泪，流不尽，许多愁。
 
