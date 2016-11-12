@@ -21,12 +21,12 @@ description: 淡妆多态，更滴滴频回盼睐。便认得琴心先许，欲�
 
 ### 如何使用jade ###
 
-既然jade基于nodejs，那么我们就可以通过npm install jade -g把它下载下来。
+既然jade基于nodejs，那么我们就可以通过npm install jade -g把它下载下来。至于怎么用，那当然是到官网看文档了。
 
 
 ### 一.搭建工程 ### 
 
-目前来说，前端的UI界面的实现对于我们来说已经不足一提，那么UI的实现就不到此为止，接下来，开始搭建工程。
+目前来说，前端的UI界面的实现对于我们来说已经不足一提，那么UI的实现就到此为止，接下来，开始搭建工程。
 
 一般的，若我们不借助任何框架，创建工程项目时，第一个命令都是mkdir workName，先创建根目录，然后再一个一个结构层次的去构建，这未免太浪费时间了。现在我们借助了express，完全不必如此了！直接执行如下命令，express将会为我们搭建好一个工程：
 
@@ -63,7 +63,7 @@ cmd窗口提示我们创建了哪些文件以及怎样启动这个应用，这�
 
     chat_demo>npm install
 
-当这行命令执行完成后，我们会发现我们的工程有了node_modules目录，也就是说我们需要的依赖项都下载下来了，但是这个依赖项还没有我们需要的socket.io，所以我们去喜爱在socket.io依赖项
+当这行命令执行完成后，我们会发现我们的工程有了node_modules目录，也就是说我们需要的依赖项都下载下来了，但是这个依赖项还没有我们需要的socket.io，所以我们去下载socket.io依赖项
 
 3.下载socket.io依赖项到当前工程
 
@@ -126,6 +126,7 @@ require('../server').listen(server);
 
 // client.js
 // 在客户端建立连接
+// 使用socket，表明是当前用户(客户端)，废话，某个用户当然只关注自身一级自身所连接的服务器了！
 
 var socket = io();
 
@@ -149,7 +150,31 @@ html
     chat_demo>npm install supervisor -g
 
 
-这样当我们的文件有改动的时候程序会自动刷新
+这样当我们的文件有改动的时候程序会自动刷新。
+
+Tips：
+>
+>
+使用supervisor app.js时，需要在app.js中添加app.listen(3000)，否则启动失败。有点奇怪的是，当我使用supervisor app.js启动应用时，虽然启动成功，却没有在cmd窗口看到的监听信息，也就是说：
+
+    'use strict';
+    // 引入socket.io
+    var io = require('socket.io')();
+
+    // 使用io则是面向所有用户(客户端)，废话，服务器当然是面对所有客户端了
+    // 创建io的连接事件
+
+
+    io.on('connection',function (socket) {
+        console.log('有一个用户登录了！');
+        // io是对于整个服务器而言，而用户下线这是针对某个客户端，客户端使用socket而不是io
+        socket.on('disconnect',function(){
+            console.log('用户下线了');
+        });
+    });
+
+似乎未被执行，而是用npm start启动时却执行了，具体的原因，我想是我们使用supervisor app.js时添加的端口监听未能与soket.io中的端口监听关联起来。怎样解决暂且不管了，暂时还是使用npm start来启动服务器吧。
+>
 
 
 启动服务器：
@@ -180,3 +205,5 @@ p 聊天室 #title
 <center>
 <p><img src="https://beyondouyuan.github.io/img/node_chat_24.png" align="center"></p>
 </center>
+
+biu！
