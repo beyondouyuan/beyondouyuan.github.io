@@ -6,7 +6,7 @@ date: 2016-11-19
 categories: blog
 tags: [NodeJs]
 node: node
-description: 月沉沉，人悄悄，一炷后庭香袅。风流帝子不归来，满地禁花慵扫。。
+description: 月沉沉，人悄悄，一炷后庭香袅。风流帝子不归来，满地禁花慵扫。
 
 ---
 
