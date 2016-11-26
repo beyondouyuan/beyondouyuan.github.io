@@ -4,7 +4,7 @@ title: Node+Express+MongoDB开发博客(三)
 author: beyondouyuan
 date: 2016-11-20
 node: node
-description: 去年元夜时，花市灯如昼。月上柳梢头，人约黄昏后。　今年元夜时，月与灯依旧。不见去年人，泪湿春衫袖。
+description: 去年元夜时，花市灯如昼。月上柳梢头，人约黄昏后。今年元夜时，月与灯依旧。不见去年人，泪湿春衫袖。
 
 ---
 
