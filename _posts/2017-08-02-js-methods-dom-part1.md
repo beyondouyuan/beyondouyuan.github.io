@@ -589,6 +589,11 @@ jquery已经为前端开发者提供的大量经过封装的api，将劳苦大�
         }
     }
 
+
+
+函数节流以及防抖，关键均在于对setTimeout的使用
+
+
 #### 时间格式化
 
     function timeTransform(dt) {
@@ -623,4 +628,3 @@ jquery已经为前端开发者提供的大量经过封装的api，将劳苦大�
         }
     };
 
-函数节流以及防抖，关键均在于对setTimeout的使用

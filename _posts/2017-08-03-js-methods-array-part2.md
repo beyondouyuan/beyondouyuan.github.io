@@ -230,6 +230,7 @@ let arr1 = [5, 6, 3, 1, 8, 7, 2, 4];
 * 编程思路：双层循环，外部循环控制未排序的元素，内部循环控制已排序的元素，将未排序的元素设置为标杆基准，与已排序的元素对比，若未排序的元素小于已排序的元素，则交换位置，大于则不动
 **/
 
+#### 插值实现
 
     function insertSort(arr) {
         /*
@@ -284,6 +285,8 @@ let arr1 = [5, 6, 3, 1, 8, 7, 2, 4];
 * 内部循环着负责两两比较
 **/
 
+#### 冒泡实现
+
     function bubbleSort(arr) {
         let len = arr.length;
 
@@ -301,15 +304,15 @@ let arr1 = [5, 6, 3, 1, 8, 7, 2, 4];
 
 #### 数组遍历
 
-let animals = ['dog','cat','mouse'];
+    let animals = ['dog','cat','mouse'];
 
-animals.forEach(item => {
-    console.log(item);
-});
+    animals.forEach(item => {
+        console.log(item);
+    });
 
-animals.map(item => {
-    console.log(item);
-});
+    animals.map(item => {
+        console.log(item);
+    });
 
 
 #### 克隆字符串 数字 数组 对象
@@ -349,47 +352,47 @@ animals.map(item => {
 
 使用hash对象，数组元素作为hash的键，数组索引作为hash的值
 
-let arr = ['a', 'a', 'b', 'c', 'b', 'a', 'd'];
-let getMost = function(arr) {
-    let hash = {};
-    let maxNum = 0;
-    let maxEle = null;
-    const len = arr.length;
-    for (let i = 0; i < len; i++) {
-        var el = arr[i];
-        hash[el] === undefined ? hash[el] = 1 : (hash[el]++);
-        hash[el] >= maxNum && (maxEle = el);
-    }
-    return console.log(hash[el], hash, el, maxEle);
-};
-getMost(arr);
-let findeMost = function(arr) {
-    if (!arr.length) {
-        return;
-    }
-    if (arr.length === 1) {
-        return 1;
-    }
-    let result = {};
-    // 遍历数组
-    for (let i = 0, len = arr.length; i < len; i++) {
-        if (!result[arr[i]]) {
-            result[arr[i]] = 1;
-        } else {
-            result[arr[i]]++;
+    let arr = ['a', 'a', 'b', 'c', 'b', 'a', 'd'];
+    let getMost = function(arr) {
+        let hash = {};
+        let maxNum = 0;
+        let maxEle = null;
+        const len = arr.length;
+        for (let i = 0; i < len; i++) {
+            var el = arr[i];
+            hash[el] === undefined ? hash[el] = 1 : (hash[el]++);
+            hash[el] >= maxNum && (maxEle = el);
         }
-    }
-    // 遍历对象
-    let keys = Object.keys(result);
-    let maxNum = 0,
-        maxEle;
-    for (let i = 0, len = keys.length; i < len; i++) {
-        if (result[keys[i]] > maxNum) {
-            maxNum = result[keys[i]];
-            maxEle = keys[i];
+        return console.log(hash[el], hash, el, maxEle);
+    };
+    getMost(arr);
+    let findeMost = function(arr) {
+        if (!arr.length) {
+            return;
         }
-    }
-    return maxEle;
+        if (arr.length === 1) {
+            return 1;
+        }
+        let result = {};
+        // 遍历数组
+        for (let i = 0, len = arr.length; i < len; i++) {
+            if (!result[arr[i]]) {
+                result[arr[i]] = 1;
+            } else {
+                result[arr[i]]++;
+            }
+        }
+        // 遍历对象
+        let keys = Object.keys(result);
+        let maxNum = 0,
+            maxEle;
+        for (let i = 0, len = keys.length; i < len; i++) {
+            if (result[keys[i]] > maxNum) {
+                maxNum = result[keys[i]];
+                maxEle = keys[i];
+            }
+        }
+        return maxEle;
 
-};
+    };
         
