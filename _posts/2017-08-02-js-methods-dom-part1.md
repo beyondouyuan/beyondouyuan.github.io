@@ -2,7 +2,7 @@
 layout: post
 title: 常用dom-js
 author: beyondouyuan
-date: 2017-08-04
+date: 2017-08-02
 categories: blog
 tags: [JavaScript]
 javascript: javascript

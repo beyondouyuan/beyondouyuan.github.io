@@ -2,7 +2,7 @@
 layout: post
 title: 前端初长成--记在一年半工作之后的回顾与总结
 author: beyondouyuan
-date: 2017-08-04
+date: 2017-08-01
 categories: blog
 tags: [Notes]
 description: 杨家有女初长成，养在深闺人未识。天生丽质难自弃，一朝选在君王侧。回眸一笑百媚生，六宫粉黛无颜色。
