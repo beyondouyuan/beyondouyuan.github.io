@@ -75,6 +75,9 @@ css写在auto.css样式表，样式也如HTML结构一般，一目了然。
 - js修改图片容器的left属性，即可实现无缝轮播，
 - css中不需设定固定的样式，样式也同样在js中计算，以达到响应式效果。
 
+
+
+
     html,
     body {
         font-size: 100px;
@@ -194,6 +197,9 @@ css写在auto.css样式表，样式也如HTML结构一般，一目了然。
 - 8.设置定时器
 - 9.执行定时器，实现自动轮播
 - 10.监听屏幕尺寸事件，重新获取容器宽高属性，实现响应式效果
+
+
+
 
     var playOptions = {
         containerID: 'container',
@@ -390,6 +396,7 @@ css写在auto.css样式表，样式也如HTML结构一般，一目了然。
 
 - 首先边缘多出的一张继续以过度的形式轮播，
 - 通过定时器延时（延时时间为动画过度的时间）重新定位到初始状态
+
 
     function carousel(option, interval) {
         var $ = function(ele) {
