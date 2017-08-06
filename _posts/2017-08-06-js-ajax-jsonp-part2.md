@@ -18,7 +18,7 @@ Ajax和JSONP实现的跨域做了很好的封装，但有时候，我们并不�
 
 ### JSONP原理
 
-JSONP即JSON + Padding实现跨域请求方式，简单粗暴点的理解，JSONP就是通过动态船舰script标签，通过script标签的src绕过浏览器的同源策略的限制实现跨域，通过src属性发送请求到服务器，服务器返回js代码，网页端接收响应，然后直接执行代码，其就相当于是通过scriptyingyong外部文件一样。
+JSONP即JSON + Padding实现跨域请求方式，简单粗暴点的理解，JSONP就是通过动态创建script标签，通过script标签的src绕过浏览器的同源策略的限制实现跨域，通过src属性发送请求到服务器，服务器返回js代码，网页端接收响应，然后直接执行代码，其就相当于是通过scriptyingyong外部文件一样。
 
 ### JDON组成
 
