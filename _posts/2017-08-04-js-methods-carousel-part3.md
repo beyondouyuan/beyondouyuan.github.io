@@ -183,7 +183,7 @@ css写在auto.css样式表，样式也如HTML结构一般，一目了然。
         /* right: 0; */
     }
 
-#### JS路基
+#### JS逻辑
 
 即便写了博客笔记，个人还是习惯于代码中的参数注释或者功能说明。
 
@@ -199,7 +199,7 @@ css写在auto.css样式表，样式也如HTML结构一般，一目了然。
 - 10.监听屏幕尺寸事件，重新获取容器宽高属性，实现响应式效果
 
 
-
+### 调用示例
 
     var playOptions = {
         containerID: 'container',
@@ -221,6 +221,8 @@ css写在auto.css样式表，样式也如HTML结构一般，一目了然。
         carousel(playOptions, 10);
     };
 
+#### JS具体实现
+
     function carousel(option, interval) {
         var $ = function(ele) {
             return document.getElementById(ele);
@@ -237,8 +239,6 @@ css写在auto.css样式表，样式也如HTML结构一般，一目了然。
         // 图片参数
         var img = list.getElementsByTagName('img'),
             len = img.length;
-            // width = parseInt((img[0].width)),
-            // height = parseInt((img[0].height));
         var width,
             height;
         // 初始化容器大小
@@ -387,16 +387,18 @@ css写在auto.css样式表，样式也如HTML结构一般，一目了然。
         container.onmouseout = play;
 
         window.addEventListener('resize', responseInit, false);
+
     }
 
 
 ### 轮播二
-轮播一实际上是循环轮播，
-修改js逻辑，实现视觉上无缝熏昏轮播，关键在于到达边缘时的逻辑控制：
+轮播一实际上是无线循环轮播，
+修改js逻辑，实现视觉上无缝循环轮播，关键在于到达边缘时的逻辑控制：
 
 - 首先边缘多出的一张继续以过度的形式轮播，
 - 通过定时器延时（延时时间为动画过度的时间）重新定位到初始状态
 
+#### JS具体实现
 
     function carousel(option, interval) {
         var $ = function(ele) {
