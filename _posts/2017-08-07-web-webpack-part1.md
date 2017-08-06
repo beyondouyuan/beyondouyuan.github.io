@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 原生JavaScript实现JSONP跨域
+title: 从头开始webpack
 author: beyondouyuan
 date: 2017-08-07
 categories: blog
