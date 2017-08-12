@@ -604,3 +604,232 @@ super()方法必须接受参数，否则报错。
 </center>
 
 查看db.json，已经插入了刚才添加的球员数据！
+
+#### 验证
+
+以上，一时鲜球员添加，但是，还存在一些问题：
+
+- 名字任意长
+- 年龄为任意值
+- 值可以为空
+
+对于开发者来说，我们不能盲目相信用户输入的信息，可能有恶意造假，甚至用户不知道如何处理，因而我们需要对表单的输入做一定的限制，即进行表单验证。
+
+合理良好的表单验证可以提高产品的用户体验与友好度，一般的表单验证主要为数据有效性验证、非空验证、验证失败的友好提示，发生错误则阻止表单提交。
+
+进行验证时，记录每一个需要验证字段的当前有效状态，该字段的输入数据有效，则不提示信息，无效则显示提示信息，对于输入数据的验证一般在表单值发生改变时进行验证。
+
+
+修改state的结构，把每个表单的值都放到了一个form字段中，方便统一管理；然后每个表单的值都变为了一个包含valid和value还有error字段的对象，valid表示该值的有效状态，value表示该表单具体的值，error表示错误提示信息，在输入框值改变时进行验证，验证出错则提示错误信息，验证成功则更新状态：
+
+
+    import React from 'react';
+
+    class PlayerAdd extends React.Component {
+        // PlayerAdd组件实际上是React组件类的子类，
+        // 调用React组件类的构造函数，且构造函数不能为空
+        constructor() {
+            // 在构造函数中调用super()初始化this，this不能出现在super之前
+            super();
+            this.state = {
+                form: {
+                    name: {
+                        valid: false,
+                        value: '',
+                        error: ''
+                    },
+                    age: {
+                        valid: false,
+                        value: 0,
+                        error: ''
+                    },
+                    team: {
+                        valid: false,
+                        value: '',
+                        error: ''
+                    },
+                    size: {
+                        valid: false,
+                        value: 0,
+                        error: ''
+                    }
+                }
+            };
+        }
+        // 输入框change处理程序
+        handleChange(field, value, type='string') {
+            // 表单值默认为字符串类型，对于数值类型，可以使用隐式转换为数值类型
+            if(type === 'number') {
+                value = +value;
+            }
+            const { form } = this.state;
+            const newField = { value, valid: true, error: '' };
+            switch(field) {
+                case 'name': {
+                    if (value.length >= 32) {
+                        newField.error = '球员名字最长为32位';
+                        newField.valid = false;
+                    } else if (value.length === 0) {
+                        newField.error = '请输入球员名字';
+                        newField.valid = false;
+                    }
+                    break;
+                }
+                case 'age': {
+                    if (value >= 100) {
+                        newField.error = '请输入正确的年龄';
+                        newField.valid = false;
+                    } else if (value < 0) {
+                        newField.error = '请输入正确的年龄';
+                        newField.valid = false;
+                    }
+                    break;
+                }
+                case 'team': {
+                    if (value.length >= 32) {
+                        newField.error = '球队名字最长为32位';
+                        newField.valid = false;
+                    } else if (value.length === 0) {
+                        newField.error = '请输入球队名字';
+                        newField.valid = false;
+                    }
+                    break;
+                }
+                case 'size': {
+                    if (value >= 300) {
+                        newField.error = '身高不能超过300cm';
+                        newField.valid = false;
+                    }
+                    break;
+                }
+            }
+            this.setState({
+                form: {
+                    ...form,
+                    [field]: newField
+                }
+            });
+        }
+        fetchData(url) {
+            // 通过解构获取数据
+            const {form: { name, age, team, size }} = this.state;
+            if (!name.valid || !age.valid || !team.valid || !size.valid) {
+                alert('请填写正确的信息后重试');
+                return;
+            }
+            fetch(url, {
+                method: 'post',
+                // fetch方法提交的json需要使用JSON.stringify方法转换为字符串
+                // 请求体
+                body:JSON.stringify({
+                    name: name.value,
+                    age: age.value,
+                    team: team.value,
+                    size: size.value
+                }),
+                // 请求头
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            // 回调函数
+            .then((res) => res.json())
+            .then((res) => {
+                // 当添加成功，返回的sjon对象中应包含一个有效的id字段
+                // 因而可以使用res.id来判断是否添加成功
+                if(res.id) {
+                    alert('恭喜！添加球员成功！');
+                } else {
+                    alert('添加失败');
+                }
+            })
+            // 捕捉错误
+            .catch((err) => {
+                console.error(err);
+            });
+        }
+        // 表单提交处理程序
+        handleSubmit(event) {
+            event.preventDefault();
+            this.fetchData('http://localhost:3000/players');
+        }
+        render() {
+            // 解构出所需要的值
+            const {form: { name, age, team, size }} = this.state;
+            return (
+                <div>
+                    <header>
+                        <h1>添加球员</h1>
+                    </header>
+                    <main>
+                        <form onSubmit={(event) => this.handleSubmit(event)}>
+                            <div className="input-group">
+                                <label>球员名字：</label>
+                                <input type="text" placeholder="请输入球员名字..." value={name.value} onChange={(event) => this.handleChange('name', event.target.value)} />
+                                {!name.valid && <span>{name.error}</span>}
+                            </div>
+                            <div className="input-group">
+                                <label>球员年龄：</label>
+                                <input type="number" placeholder="请输入球员年龄..." value={age.value || ''} onChange={(event) => this.handleChange('age', event.target.value, 'number')} />
+                                {!age.valid && <span>{age.error}</span>}
+                            </div>
+                            <div className="input-group">
+                                <label>效力球队：</label>
+                                <input type="text" placeholder="请输入效力球队..." value={team.value}  onChange={(event) => this.handleChange('team', event.target.value)} />
+                                {!team.valid && <span>{team.error}</span>}
+                            </div>
+                            <div className="input-group">
+                                <label>球员身高：</label>
+                                <input type="number" placeholder="请输入球员身高..." value={size.value || ''} onChange={(event) => this.handleChange('size', event.target.value, 'number')} />
+                                {!size.valid && <span>{size.error}</span>}
+                            </div>
+                            <input type="submit" value="提交" />
+                        </form>
+                    </main>
+                </div>
+            );
+        }
+    }
+
+    export default PlayerAdd;
+
+
+解构：
+
+左右两边结构相同，提取出右边对应数据并赋值给左边。
+
+以下，ES6对象的解构，将会从右边的this.state中提取出与左边form同名的对象。
+
+    const { form } = this.state;
+
+而：
+    const {form: { name, age, team, size }} = this.state;
+
+将会从右边的this.state中提取出name,age,team,size等对象。
+
+TIPS：数组的解构基于位置信息解构，对象是无序的，其基于属性名以及结构进行提取，也即相当于一种模式匹配。
+
+#### 对象展开运算符
+
+使用展开运算符可以快速操作对象
+
+    newState = {...oldState}
+
+oldState对象将会自动展开，其对应的属性会被映射到newState队形属性中
+##### 合并对象
+
+    let a={x:1,y:2};
+    let b={z:3};
+    let ab={...a,...b};
+    ab //{x:1,y:2,z:3}
+
+则：
+
+    this.setState({
+        form: {
+            ...form,
+            [field]: newField
+        }
+    });
+
+为将form对象和filed两者合并更新状态中的form对象。
