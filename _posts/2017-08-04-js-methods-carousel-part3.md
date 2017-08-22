@@ -249,14 +249,14 @@ css写在auto.css样式表，样式也如HTML结构一般，一目了然。
             list.style.height = height + 'px';
         }
         // init();
-        // 或者根据最外层容器代谢哦啊自适应的设置图片大小
+        // 或者根据最外层容器实现自适应的设置图片大小
         function responseInit() {
             width = container.offsetWidth;
             height = parseInt((img[0].height));
-            // 宽度睡视窗自适应
+            // 宽度随视窗自适应
             list.style.left = -width + 'px';
             list.style.width = width * len + 'px';
-            // 高度睡图片自适应
+            // 高度随图片自适应
             container.style.height = height + 'px';
             list.style.height = height + 'px';
             for (var i = 0; i < len; i++) {
@@ -428,14 +428,14 @@ css写在auto.css样式表，样式也如HTML结构一般，一目了然。
             list.style.height = height + 'px';
         }
         // init();
-        // 或者根据最外层容器代谢哦啊自适应的设置图片大小
+        // 或者根据最外层容器实现自适应的设置图片大小
         function responseInit() {
             width = container.offsetWidth;
             height = parseInt((img[0].height));
-            // 宽度睡视窗自适应
+            // 宽度随视窗自适应
             list.style.left = -width + 'px';
             list.style.width = width * len + 'px';
-            // 高度睡图片自适应
+            // 高度随图片自适应
             container.style.height = height + 'px';
             list.style.height = height + 'px';
             for (var i = 0; i < len; i++) {
@@ -495,7 +495,7 @@ css写在auto.css样式表，样式也如HTML结构一般，一目了然。
             // 处于动画状态
             animated = true;
             var newLeft = parseInt(list.style.left) + offset;
-            // 做到边缘时重新无过度实行定位，弹道循环无缝的视觉效果
+            // 做到边缘时重新无过度实行定位，达到循环无缝的视觉效果
             function resetImg(index) {
                 animated = true;
                 list.style.left = -(width * index) + 'px';
