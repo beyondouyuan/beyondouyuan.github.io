@@ -1,6 +1,6 @@
 ---
 layout: post
-title: React全家桶之一
+title: React全家桶之后台管理系统（上）
 author: beyondouyuan
 date: 2017-08-11
 categories: blog
@@ -11,7 +11,7 @@ description: 一寸柔肠情几许？薄衾孤枕，梦回人静。侵晓潇潇�
 
 ###  写在前面 ###
 
-重新学习React之React全家桶入门，通过构建一个简单的球员管理系统来学习React全家桶。
+重新学习React之React全家桶入门，通过构建一个简单的球员管理系统来学习React全家桶，从React组件基础，到React-Router路由管理到React-Redux数据流框架，并引入Ant-Design UI库，完成React全家桶的入门学习以及深入理解。
 
 ## React全家桶入门
 
