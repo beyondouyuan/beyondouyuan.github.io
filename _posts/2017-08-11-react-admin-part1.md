@@ -836,3 +836,945 @@ oldState对象将会自动展开，其对应的属性会被映射到newState队�
 
 为将form对象和filed两者合并更新状态中的form对象。
 
+
+
+### 组件化表单
+
+以上已完成添加球员的表单，当我们想为球员添加荣誉时，同样需要一个表单，如果再去写一个表单，那么久增加了工作量，组件化是我们的选择，组件化除了便于开发和维护外，另一个重要的特点是可以根据组件选择复用。要实现组件化，我们就需要将耦合在代码中的写死的定制化内容(如针对于球员输入的验证逻辑)抽离出来。
+
+#### 高阶组件
+
+所谓高阶组件即返回组件的组件或者函数。高阶组件可以在不修改原组件代码的情况下，修改源代码的行为或者功能。
+
+一般的，我们的每一个组件只一件事情，组件的初始数据也应该由外部传入，而不再组件内部定制写死，组件内部只维护状态的更新。
+
+一般在开发中，React组件分为另个类型，容器组件和具体的展示组件，容器组件负责提供初始数据以及公共方法，展示组件则只负责根据容器组件传入的数据以及方法来展示数据，展示组件作为容器组件的字组件，容器组件为父组件，父组件到子组件的数据传递方式通过this.props来实现，父子组件间的通信为单向数据流，即由父组件向字组件传递。
+
+高阶组件即扮演容器组件的方法，我们将展示组件嵌套在容器组件，字组件所需要的数据存储在容器组件中，字组件通过过this.props读取想要的一切数据(包括基础数据，对象，数组，函数方法)：
+    
+    Parent.js
+    import Child from './Component/Child'
+    class Parent extends React.Compont {
+        const name ="Ouyuan";
+        const obj = {
+            sex: male,
+            age: 10
+        };
+        function handleChange() {
+            // doSomething
+        }
+        return <Child name={name} obj={obj} change={handleChange} />
+    }
+
+    Child.js
+    
+    class Child extends React.Component {
+        const myName = this.props.name;
+        const obj = this.props.obj;
+        handleSubmit(e) {
+            e.preveStop();
+            // do
+            shit.setState({
+                //...
+            })
+        }
+        render() {
+            return (
+                <div>
+                    <section>{name}</section>
+                    <section>{obj.age}</section>
+                    <input value={obj.sex} onChange={this.props.change}/>
+                    <button onClick={this.handleSubmit}>提交</button>
+                </div>
+            )
+        }
+    }
+
+
+以上，Parent是一个容器组件，Child是一个具体的展示组件，Child所需要的一切初始数据以及一些可抽离的方法，均由Parent容器组件提供，Child只需要通过this.props对象读取对应属性即可，如此，可是的Child组件只专注一节事情(展示数据或者其他的定制的事情)。以上中，change时间可能每一个被嵌套在容器组件中的子组件中都要用到，故而抽离出来当作公共方法放在容器组件中，传入到字组件再由组件去调用即可。而每个组件的提交的数据或者处理过程不一样，所以handleSubmit也可能不一样，所以handleSubmit一般写在子组件内部。
+
+
+组件化我们管理系统的表单：在/src目录下新建utils目录，在utils下新建formProvider.jswe文件：
+
+
+    function formProvider(fields) {
+        return function(Component) {
+
+            const initFormState = {};
+            for (const key in fields) {
+                initFormState[key] = {
+                    value: fields[key].defaultValue,
+                    error: ''
+                };
+            }
+
+            class FormComponent extends React.Component {
+                constructor(props) {
+                    super(props);
+                    this.state = {
+                        form: initFormState,
+                        formValid: false
+                    };
+                    // 绑定this
+                    this.handleChange = this.handleChange.bind(this);
+                }
+                handleChange(fieldName, value, type= "string") {
+                    if (type === 'number') {
+                        value = +value;
+                    }
+                    const { form } = this.state;
+
+                    const newFieldState = { value, valid: true, error: '' };
+
+                    const fieldRules = fields[fieldName].rules;
+
+                    for (let i = 0; i < fieldRules.length; i++) {
+                        const { pattern, error } = fieldRules[i];
+                        let valid = false;
+                        if (typeof pattern === 'function') {
+                            valid = pattern(value);
+                        } else {
+                            valid = pattern.test(value);
+                        }
+
+                        if (!valid) {
+                            newFieldState.valid = false;
+                            newFieldState.error = error;
+                            break;
+                        }
+                    }
+
+                    const newForm = {...form, [fieldName]: newFieldState };
+                    // const formValid = Object.values(newForm).every(f => f.valid);
+                    // 遍历对象可枚举的属性
+                    // 低版本浏览器不支持Object.values方法
+                    const validArr = Object.keys(newForm).map((k) => newForm[k]);
+                    const formValid = validArr.every(f => f.valid);
+                    this.setState({
+                        form: newForm,
+                        formValid
+                    });
+                }
+                // 渲染存入的子组件
+                render() {
+                    const { form, formValid } = this.state;
+                    return <Component 
+                        { ...this.props }
+                        form = { form }
+                        formValid = { formValid }
+                        handleChange = { this.handleChange }
+                    />
+                }
+            }
+            // 返回父级组件
+            return FormComponent;
+        }
+    }
+
+    export default formProvider;
+
+
+formProvider接收一个fields参数，并返回一个匿名函数，这个匿名函数接收一个组件作为参数并返回一个组件，所以它的用法是这样的。
+
+PlayerAdd = formProvider(fields)(PlayerAdd);
+
+第二个圆括号传入的参数是一个组件(PlayerAdd)，他将被formProvider函数返回的匿名函数接收并被渲染。PlayerAdd组件被匿名函数接收了，并被调用匿名函数中的FormComponent组件调用render方法渲染，也就是说PlayerAdd组件被FormComponent组件所包裹了(FormComponent嵌套了PlayerAdd)，PlayerAdd组件所需要到的初始数据以及可抽离的功用方法在FormComponent中定义。
+
+以上FormComponrt中使用的展开运算符{ ...this.props }将会把当前组件中除了已经使用到的(form、formValid已经被使用)所有剩余属性(如剩余的name、age等)传递到子组件中。如此，则不需手动传递每一个属性以及防止重复传值，如：
+
+    const list = {a: 1, b: 2, c: 3}
+
+    <Todo {...list} />
+
+等同于
+
+    <Todo a={list.a} b={list.b} c={list.c} />
+
+    {...this.props }
+    form = { form }
+    formValid = { formValid }
+    handleChange = { this.handleChange }
+
+相当于把form、formValid和handleChange合并之后通过props传到子组件中，当然也可以不合并直接传递这三个属性。
+
+然后，我们就可将PalyerAdd组件中定制的数据以及可抽离的公用方法删除掉，只保留渲染组件，所需的数次数据均由外部世界提交(对于PlayerAdd而言，包裹了他的FormComponent组件即为外部世界)：
+
+    import React from 'react';
+
+    import formProvider from '../../utils/formProvider'
+
+
+    class PlayerAdd extends React.Component {
+
+        fetchData(url) {
+            // 通过解构获取数据
+            const {form: { name, age, team, size }, formValid } = this.props;
+            if (!formValid) {
+                alert('请填写正确的信息后重试');
+                return;
+            }
+            fetch(url, {
+                method: 'post',
+                // fetch方法提交的json需要使用JSON.stringify方法转换为字符串
+                // 请求体
+                body:JSON.stringify({
+                    name: name.value,
+                    age: age.value,
+                    team: team.value,
+                    size: size.value
+                }),
+                // 请求头
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            // 回调函数
+            .then((res) => res.json())
+            .then((res) => {
+                // 当添加成功，返回的sjon对象中应包含一个有效的id字段
+                // 因而可以使用res.id来判断是否添加成功
+                if(res.id) {
+                    alert('恭喜！添加球员成功！');
+                } else {
+                    alert('添加失败');
+                }
+            })
+            // 捕捉错误
+            .catch((err) => {
+                console.error(err);
+            });
+        }
+        // 表单提交处理程序
+        handleSubmit(event) {
+            event.preventDefault();
+            this.fetchData('http://localhost:3000/players');
+        }
+        render() {
+            // 结构出所需要的值
+            const {form: { name, age, team, size }, handleChange} = this.props;
+            return (
+                <div>
+                    <header>
+                        <h1>添加球员</h1>
+                    </header>
+                    <main>
+                        <form onSubmit={(event) => this.handleSubmit(event)}>
+                            <div className="input-group">
+                                <label>球员名字：</label>
+                                <input type="text" placeholder="请输入球员名字..." value={name.value} onChange={(event) => handleChange('name', event.target.value)} />
+                                {!name.valid && <span>{name.error}</span>}
+                            </div>
+                            <div className="input-group">
+                                <label>球员年龄：</label>
+                                <input type="number" placeholder="请输入球员年龄..." value={age.value || ''} onChange={(event) => handleChange('age', event.target.value, 'number')} />
+                                {!age.valid && <span>{age.error}</span>}
+                            </div>
+                            <div className="input-group">
+                                <label>效力球队：</label>
+                                <input type="text" placeholder="请输入效力球队..." value={team.value}  onChange={(event) => handleChange('team', event.target.value)} />
+                                {!team.valid && <span>{team.error}</span>}
+                            </div>
+                            <div className="input-group">
+                                <label>球员身高：</label>
+                                <input type="number" placeholder="请输入球员身高..." value={size.value || ''} onChange={(event) => handleChange('size', event.target.value, 'number')} />
+                                {!size.valid && <span>{size.error}</span>}
+                            </div>
+                            <input type="submit" value="提交" />
+                        </form>
+                    </main>
+                </div>
+            );
+        }
+    }
+
+
+    PlayerAdd = formProvider({
+        name: {
+            defaultValue: '',
+            rules: [
+                {
+                    pattern: function(value) {
+                        return value.length > 0
+                    },
+                    error: '请输入球员名字'
+                },
+                {
+                    pattern: /^.{1,32}$/,
+                    error: '用户名最多32个字符'
+                }
+            ]
+        },
+        age: {
+            defaultValue: 0,
+            rules: [
+                {
+                    pattern: function (value) {
+                    return value >= 1 && value <= 100;
+                    },
+                    error: '请输入1~100的年龄'
+                }
+            ]
+        },
+        team: {
+            defaultValue: '',
+            rules: [
+                {
+                    pattern: function(value) {
+                        return value.length > 0
+                    },
+                    error: '请输入球队名字'
+                },
+                {
+                    pattern: /^.{1,32}$/,
+                    error: '球队名最多32个字符'
+                }
+            ]
+        },
+        size: {
+            defaultValue: 0,
+            rules: [
+                {
+                    pattern: function (value) {
+                    return value >= 100 && value <= 300;
+                    },
+                    error: '请输入100~300的身高'
+                }
+            ]
+        }
+    })(PlayerAdd);
+
+
+    export default PlayerAdd;
+
+我们将PlayerAdd传入formProvider初始化后再导出，当路由去渲染PlayerAdd组件时就是渲染已经被初始化了的PlayerAdd组件。
+
+
+#### 组件拆分
+
+组件拆分是一门艺术，合理的组件拆分可以分离出大部分的公用部分，有效提高开发效率，比如以上，我们将之后重用的表单组件，验证部分抽离到容器组件中去，后续添加球员荣誉数据是可以重用这个表单组件，只需要传入不同的验证参数即可。在展示组件中，以来有不少重复的部分：
+
+每一.input-group包含一个label，一个输入的input，一个提示错误span，我们在重复的书写着这些东西，可以将这部分抽离出来封装为一个组件，然后再遍历渲染即可。
+
+/Componets/目录下新建FormItem目录，在FormItem目录下新建FormItem.js：
+
+    import React from 'react';
+
+    class FormItem extends React.Component {
+        render() {
+            return(
+                <div className="input-group">
+                    <label>{this.props.label}</label>
+                    {this.props.children}
+                    {!this.props.valid && <span>{this.props.error}</span>}
+                </div>
+            )
+        }
+    }
+
+
+    export default FormItem;
+
+
+一般this.props对象内的每一个属性对应一个属性名，如想要获取传入的name数据则通过this.props.name获取，但是有一个例外，那就是this.props.children，该属性对应该组件内的内的所有子节点，使用{this.props.children}将会把该组件内的所有子节点自动全部展开。
+
+
+PlayerAdd.js组件中引入FormItem组件，修改PlayerAdd组件：
+
+    <form onSubmit={(event) => this.handleSubmit(event)}>
+        <FormItem label="球员名字：" valid={name.valid} error={name.error}>
+            <input type="text" placeholder="请输入球员名字..." value={name.value} onChange={(event) => handleChange('name', event.target.value)} />
+        </FormItem>
+        <FormItem label="球员年龄：" valid={age.valid} error={age.error}>
+            <input type="number" placeholder="请输入球员年龄..." value={age.value || ''} onChange={(event) => handleChange('age', event.target.value, 'number')} />
+        </FormItem>
+        <FormItem label="情愿身高：" valid={team.valid} error={team.error}>
+            <input type="text" placeholder="请输入效力球队..." value={team.value}  onChange={(event) => handleChange('team', event.target.value)} />
+        </FormItem>
+        <FormItem label="情愿身高：" valid={size.valid} error={size.error}>
+            <input type="number" placeholder="请输入球员身高..." value={size.value || ''} onChange={(event) => handleChange('size', event.target.value, 'number')} />
+        </FormItem>
+        <input type="submit" value="提交" />
+    </form>
+
+
+### 渲染数据
+
+我们需要将数据库的数据展现出来，创建一乐PlayerList.js文件
+
+
+    import React from 'react';
+
+    class PlayerList extends React.Component {
+
+        constructor(props) {
+            super(props);
+            this.state = {
+                PlayerList: []
+            }
+        }
+        // 在组件怪家前请求数据，当然也可以在组件挂载完成后再请求数据
+        componentWillMount() {
+            this.fetchData('http://localhost:3000/players');
+        }
+        fetchData(url) {
+            fetch(url)
+                // 将返回数据json格式化
+                .then(res => res.json())
+                .then(res => {
+                    // 将获取到的数据储存在state中，在组件内部进行维护
+                    this.setState({
+                        PlayerList: res
+                    });
+                });
+        }
+        render() {
+            // 解构赋值提取数据
+            const { PlayerList } = this.state;
+            // 使用map方法将球员信息数据遍历并渲染到表格中
+            return (
+                <div>
+                    <header>
+                        <h1>球员信息</h1>
+                    </header>
+                    <main>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>球员ID</th>
+                                    <th>球员名字</th>
+                                    <th>球员年龄</th>
+                                    <th>效力球队</th>
+                                    <th>球员身高</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {/*jsx中的JavaScript表单时使用花括号括住*/}
+                                {
+                                    PlayerList.map((player) => {
+                                        return(
+                                            <tr key={player.id}>
+                                                <td>{player.id}</td>
+                                                <td>{player.name}</td>
+                                                <td>{player.age}</td>
+                                                <td>{player.team}</td>
+                                                <td>{player.size}</td>
+                                            </tr>
+                                        )
+                                    })
+                                }
+                            </tbody>
+                        </table>
+                    </main>
+                </div>
+            )
+        }
+    }
+
+
+    export default PlayerList;
+
+
+珠江中去获取数据时，我们可以选择在组件被挂载前，也可以在组件被挂载成功后的生命周期去获取数据。获取数据成功后，我们将得到的数据保存在组件内部的state中，因为后续可能会对组件进行操作更变数据，到时候就可以通过更改维护state来实现。返回的数据是一个数据，这可以使用map方法遍历出来并渲染到组件当中。JSX当中所有涉及到JavaScript表达式均需要包括在花括号中。
+
+在index.js中添加球员列表的路由渲染出该组件页面，同时在Home.js组件中也添加到该组件的路由。此时访问[http://localhost:8000/player/list](http://localhost:8000/player/list)即可看到我们存储在数据库中的数据，如图7：
+
+我们还可以在PlayerAdd.js组件中添加路由跳转，但添加球员信息成功后，使用react-router控制路由跳转到球员行李额列表页：
+
+#### 布局组件
+
+在我们的页面中，每一个组件都包含一个页面标题header标签和h1标签，同时内容部分包含在一个main标签中，这样子每个组件每次都需要重复写一遍，效率太低，我们可以将这两个公用部分抽离出来形成布局组件。
+
+新建/Layouts目录，该目录下心境啊HomeLayout.js组件：
+
+
+    import React from 'react';
+
+    class HomeLayout extends React.Component {
+        render() {
+            const { title, children } = this.props;
+            return (
+                <div>
+                    <header>
+                        <h1>{title}</h1>
+                    </header>
+                    <main>
+                        {children}
+                    </main>
+                </div>
+            )
+        }
+    }
+
+
+    export default HomeLayout;
+
+
+
+在HomeLayout中使用props.title来维护页面的标题文本。使用props.children来渲染每个页面特有的内容部分。{props.children}将会自动展开我们的所有节点。
+性爱Home.js试验一下：
+
+    import React from 'react';
+    import { Link } from 'react-router-dom';
+    import HomeLayout from '../Layouts/HomeLayout';
+
+    class Home extends React.Component {
+        render() {
+            return (
+                <HomeLayout title="欢迎来到球员管理系统">
+                    <div>
+                        <Link to="/player/add">新增球员</Link>
+                    </div>
+                    <div>
+                        <Link to="/player/list">球员信息</Link>
+                    </div>
+                </HomeLayout>
+            );
+        }
+    }
+
+    export default Home;
+
+页面成功渲染，那么其他页面也可以做此调整重构。除了可以在每一个页面import HomeLayout组件外，也可以在路由中进行嵌套，则每一个需要使用到HomeLayoutde zujian都会在路由渲染时传入HomeLayout布局组件。
+
+#### 编辑与删除
+
+到现在为止，已完成读写操作，编辑与删除时针对已存在的数据进行的操作。修改PalyerList.js组件，增加编辑与删除按钮以及相对应的处理程序：
+
+
+修改PlayerList.js组件，在表格中新增操作列，随后添加删除编辑处理程序handleDelete和handleEdit。
+
+
+#### 删除
+
+先易后难，首先解决删除功能，在修改PlayerList组件中添加handleDelete方法：
+
+    handleDelete(player) {
+        // 确认对话框
+        const confirmed = confirm(`确定要删除球员 ${player.name} 吗？`);
+        if (confirmed) {
+                fetch('http://localhost:3000/players' + player.id, {
+                method: 'delete'
+            })
+            .then(res => res.json())
+            .then(res => {
+                    this.setState({
+                    PlayerList: this.state.PlayerList.filter(item => item.id !== player.id)
+                });
+                alert('删除球员成功！');
+            })
+            .catch(err => {
+                console.error(err);
+                alert('删除失败！')
+            });
+        }
+    }
+
+handleDelete和handleEdit方法将player对象作为参数传入，则这两个方法根据传入的player对象进行相应操作。
+
+
+#### 编辑
+
+一般地，编辑与添加基本上一致，不同的地方在于：
+
+- 球员编辑需要将球员数据先填充到表单
+- 球员编辑在提交时调用的接口和方法不同
+- 页面辩题不同
+- 页面路由不同
+
+这么看来，我们完全可以讲PlayerAdd.js组件复制一份到一个新的页面中去形成一个新的PlayerEdit.js页面，然后修改一下页面标题，在路由页面添加相应路由到该页面，并且修改提交时候的接口与方法即可。
+
+看上去是可行的，但是React的一大优势就是组件化，组件化的一大特点就是可复用性，倘若我们如此任性的酒新建一个几乎一致只有少许不同的地方的页面组件，那么我们何必再进行之前的组件话优化？甚至，我们何必选择React？
+
+and so!
+
+我们将会新增和编辑页面抽出来，将相同相似的部分抽成一个PlayerEditor.js组件。
+
+- 升级原来的formProvider组件，使其返回的表单组件支持数据填充(编辑页面表单填充数据)
+- 将PlayerAdd.js中大部分代码抽离到PlayerEditor.js中，通过传入不同的pros来控制组件的行为是增加还是编辑
+
+修改formProvider组件：
+
+
+    /*
+     * @Author: Irving
+     * @Date:   2017-08-12 17:01:43
+     * @Last Modified by:   Irving
+     * @Last Modified time: 2017-08-13 21:12:32
+     */
+
+    import React from 'react';
+
+    function formProvider(fields) {
+        /**
+         * [description]
+         * @param  {[type]} Component [description]
+         * @return {[type]}           [description]
+         */
+        return function(Component) {
+            const initFormState = {};
+            for (const key in fields) {
+                initFormState[key] = {
+                    value: fields[key].defaultValue,
+                    error: ''
+                };
+            }
+
+            class FormComponent extends React.Component {
+                // 在constructor中初始化数据以及绑定this
+                constructor(props) {
+                    super(props);
+                    this.state = {
+                        form: initFormState,
+                        formValid: false
+                    };
+                    // 绑定this
+                    this.handleChange = this.handleChange.bind(this);
+                    this.setFormData = this.setFormData.bind(this);
+                }
+                setFormData(values) {
+                    if (!values) {
+                        return;
+                    }
+                    const { form } = this.state;
+                    let newForm = {...form};
+                    for(const field in form) {
+                        if (form.hasOwnProperty(field)) {
+                            if (typeof values[field] !== 'undefined') {
+                                newForm[field] = {...newForm[field], value: values[field]};
+                            }
+                            newForm[field].valid = true;
+                        }
+                    }
+
+                    this.setState({
+                        form: newForm
+                    });
+                }
+                handleChange(fieldName, value, type= "string") {
+                    if (type === 'number') {
+                        value = +value;
+                    }
+                    const { form } = this.state;
+
+                    const newFieldState = { value, valid: true, error: '' };
+
+                    const fieldRules = fields[fieldName].rules;
+
+                    for (let i = 0; i < fieldRules.length; i++) {
+                        const { pattern, error } = fieldRules[i];
+                        let valid = false;
+                        if (typeof pattern === 'function') {
+                            valid = pattern(value);
+                        } else {
+                            valid = pattern.test(value);
+                        }
+
+                        if (!valid) {
+                            newFieldState.valid = false;
+                            newFieldState.error = error;
+                            break;
+                        }
+                    }
+
+                    const newForm = {...form, [fieldName]: newFieldState };
+                    // const formValid = Object.values(newForm).every(f => f.valid);
+                    // 遍历对象可枚举的属性
+                    // 低版本浏览器不支持Object.values方法
+                    const validArr = Object.keys(newForm).map((k) => newForm[k]);
+                    const formValid = validArr.every(f => f.valid);
+                    this.setState({
+                        form: newForm,
+                        formValid
+                    });
+                }
+                // 渲染存入的子组件
+                render() {
+                    const { form, formValid } = this.state;
+                    return <Component
+                        {...this.props }
+                        form = { form }
+                        formValid = { formValid }
+                        handleChange = { this.handleChange }
+                        setFormData = { this.setFormData }
+                    />
+                }
+            }
+            // 返回父级组件
+            return FormComponent;
+        }
+    }
+
+    export default formProvider;
+
+组件增加setFormData方法，用于填充表单数据。则在编辑球员数据时，即可在表单中读取原数据。
+
+将PlayerAdd组件中的表单抽离到PlayerEditor组件中，表单即为编辑新增的公用部分，如此可达到组件复用的目的。
+
+
+PlayerEditor.js:
+
+    /*
+    * @Author: Irving
+    * @Date:   2017-08-13 21:13:24
+    * @Last Modified by:   beyondouyuan
+    * @Last Modified time: 2017-08-23 10:33:53
+    */
+
+
+    import React from 'react';
+
+    import formProvider from '../../utils/formProvider';
+
+    import FormItem from '../FormItem/FormItem';
+    import HomeLayout from '../Layouts/HomeLayout';
+
+    class PlayerEditor extends React.Component {
+
+        componentWillMount () {
+            const {editTarget, setFormData} = this.props;
+            if (editTarget) {
+                setFormData(editTarget);
+            }
+        }
+
+        fetchData(url) {
+            // 通过解构获取数据
+            const {form: { name, age, team, size }, formValid, editTarget } = this.props;
+            if (!formValid) {
+                alert('请填写正确的信息后重试');
+                return;
+            }
+            let editType = "添加";
+            let apiUrl = url;
+            let method = 'post';
+            if (editTarget) {
+                editType = "编辑";
+                apiUrl += '/' + editTarget.id;
+                method = 'put';
+            }
+            fetch(apiUrl, {
+                method,
+                // fetch方法提交的json需要使用JSON.stringify方法转换为字符串
+                // 请求体
+                body:JSON.stringify({
+                    name: name.value,
+                    age: age.value,
+                    team: team.value,
+                    size: size.value
+                }),
+                // 请求头
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            // 回调函数
+            .then((res) => res.json())
+            .then((res) => {
+                // 当添加成功，返回的sjon对象中应包含一个有效的id字段
+                // 因而可以使用res.id来判断是否添加成功
+                if(res.id) {
+                    alert(editType + '球员成功！');
+                    this.context.router.push('/player/list');
+                } else {
+                    alert(editType + '失败');
+                }
+            })
+            // 捕捉错误
+            .catch((err) => {
+                console.error(err);
+            });
+        }
+        // 表单提交处理程序
+        handleSubmit(event) {
+            event.preventDefault();
+            this.fetchData('http://localhost:3000/players');
+        }
+        render() {
+            // 结构出所需要的值
+            const {form: { name, age, team, size }, handleChange} = this.props;
+            return (
+                <form onSubmit={(event) => this.handleSubmit(event)}>
+                    <FormItem label="球员名字：" valid={name.valid} error={name.error}>
+                        <input type="text" placeholder="请输入球员名字..." value={name.value} onChange={(event) => handleChange('name', event.target.value)} />
+                    </FormItem>
+                    <FormItem label="球员年龄：" valid={age.valid} error={age.error}>
+                        <input type="number" placeholder="请输入球员年龄..." value={age.value || ''} onChange={(event) => handleChange('age', event.target.value, 'number')} />
+                    </FormItem>
+                    <FormItem label="效力球队：" valid={team.valid} error={team.error}>
+                        <input type="text" placeholder="请输入效力球队..." value={team.value}  onChange={(event) => handleChange('team', event.target.value)} />
+                    </FormItem>
+                    <FormItem label="球员身高：" valid={size.valid} error={size.error}>
+                        <input type="number" placeholder="请输入球员身高..." value={size.value || ''} onChange={(event) => handleChange('size', event.target.value, 'number')} />
+                    </FormItem>
+                    <input type="submit" value="提交" />
+                </form>
+            );
+        }
+    }
+
+    // 必须给PlayerAdd义一个包含router属性的contextTypes
+    // 使得组件中可以通过this.context.router来使用React Router提供的方法
+    PlayerEditor.contextTypes = {
+      router: React.PropTypes.object.isRequired
+    };
+
+    PlayerEditor = formProvider({
+        name: {
+            defaultValue: '',
+            rules: [
+                {
+                    pattern: function(value) {
+                        return value.length > 0
+                    },
+                    error: '请输入球员名字'
+                },
+                {
+                    pattern: /^.{1,32}$/,
+                    error: '用户名最多32个字符'
+                }
+            ]
+        },
+        age: {
+            defaultValue: 0,
+            rules: [
+                {
+                    pattern: function (value) {
+                    return value >= 1 && value <= 100;
+                    },
+                    error: '请输入1~100的年龄'
+                }
+            ]
+        },
+        team: {
+            defaultValue: '',
+            rules: [
+                {
+                    pattern: function(value) {
+                        return value.length > 0
+                    },
+                    error: '请输入球队名字'
+                },
+                {
+                    pattern: /^.{1,32}$/,
+                    error: '球队名最多32个字符'
+                }
+            ]
+        },
+        size: {
+            defaultValue: 0,
+            rules: [
+                {
+                    pattern: function (value) {
+                    return value >= 100 && value <= 300;
+                    },
+                    error: '请输入100~300的身高'
+                }
+            ]
+        }
+    })(PlayerEditor);
+
+
+    export default PlayerEditor;
+
+PlayerEditor.js组件在组件挂载前，接收了来自父组件props对象传入的editTarget属性，用于填充数据（编辑时填充、新增操作则不填充），同时在fetchData方法中也根据父组件中传入的editTarget属性来分别处理新增或者编辑的提交处理程序即handleSubmit，新增或者编辑提交数据时的方法不一样，路经也不完全一致（新增为post方法，而编辑则为put方法）。抽离出PlayerEditpr组件后，修改PlayerAdd组件如下：
+
+    /*
+    * @Author: Irving
+    * @Date:   2017-08-11 18:30:44
+    * @Last Modified by:   Irving
+    * @Last Modified time: 2017-08-13 21:31:07
+    * @PlayerAdd.js
+    */
+
+    import React from 'react';
+
+    import HomeLayout from '../Layouts/HomeLayout';
+    import PlayerEditor from './PlayerEditor'
+
+    class PlayerAdd extends React.Component {
+        render() {
+            return (
+                <HomeLayout title="添加球员">
+                    <PlayerEditor />
+                </HomeLayout>
+            );
+        }
+    }
+    export default PlayerAdd;
+
+
+随后新增PlayerEditPage组件，作为编辑页面，同时在路由页面同样相应路由渲染此页面，PlayerEditPage如下：
+
+    /*
+    * @Author: Irving
+    * @Date:   2017-08-13 22:49:38
+    * @Last Modified by:   beyondouyuan
+    * @Last Modified time: 2017-08-23 10:46:53
+    * @PlayerEditPage
+    */
+
+    import React from 'react';
+    import HomeLayout from '../Layouts/HomeLayout';
+    import PlayerEditor from './PlayerEditor'
+
+    class PlayerEditPage extends React.Component {
+        /**
+         * [constructor description]
+         * @param  {[type]} props [description]
+         * @return {[type]}       [description]
+         */
+        constructor(props) {
+            super(props);
+            this.state = {
+                player: null
+            };
+        }
+        componentWillMount() {
+            const playerId = this.context.router.params.id;
+            fetch('http://localhost:3000/players/' + playerId)
+            .then(res => res.json())
+            .then(res => {
+                this.setState({
+                    player: res
+                });
+            });
+        }
+
+        render() {
+            const { player } = this.state;
+            return(
+                <HomeLayout title="编辑球员">
+                    {
+                        player ? <PlayerEditor editTarget={player} /> : '加载中'
+                    }
+                </HomeLayout>
+            )
+        }
+    }
+
+    PlayerEditPage.contextTypes = {
+        router: React.PropTypes.object.isRequired
+    };
+
+
+    export default PlayerEditPage;
+
+PlayerEditPage页面传入editTarget到PlayerEditor组件，用于控制判断为编辑操作。编辑页面在组件渲染前填充表单数据(官方更推荐是在组件挂载之后再执行fetch数据的操作)。
+
+到此，一切准备就绪，添加编辑处理程序，实际上，编辑操作不做数据的实际操作，只需在点击编辑按钮时，将页面路由跳转至编辑页面即可，随后在编辑页面中编辑数据，提交表单，ok！所以，编辑和新增几乎是一致的，只是做个路由跳转到编辑页面，在编辑页面加载时去fetch数据填充表单，然后提交表单，handleEdit如下:
+
+    handleEdit(player) {
+        /**
+         * 路由跳转到编辑页面即可
+         */
+        this.context.router.push('/player/edit/' + player.id);
+
+    }
+
+测试一下，点击编辑按钮，页面跳转：
+
+<center>
+<p><img src="https://beyondouyuan.github.io/img/ant_admin/admin_7.png" align="center"></p>
+</center>
+
+
