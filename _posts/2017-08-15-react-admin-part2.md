@@ -308,9 +308,632 @@ handlePlayerOwnerIdChange方法用于监听输入框，然后使用函数节流�
 在某个组件中引入样式表文件，而不是在程序应用的入口文件中引入样式表，则无需使用webpack的loader去加载文件，如此形成一个组件对应一个模块的样式表。
 
 
-以上，未完待续。。。
+以上，到当前为止，React的组件基础，以及React-Router的使用知识已经算是过了官方文档的大部分了，其实可以看出，使用React的核心或者说基本点在于以下几点：
+
+- 组件的拆分，在React中，可以说一切都是组件，一切都是由组件组成，也即可以说明，一切都可以被拆分为组件。
+- 是否需要将某部分拆分为组件？组件是否该继续细拆违更小的组件？组件的拆分是一门艺术！
+- 组件是否可以重用，如何重用？组件由两大特点：可维护性，可复用性。
+- 组件的逻辑：组件内部通过维护，组件对外接口由props对象提供。
+- 组件的生命周期，在哪个周期适合做哪些操作？ajax或者fetch数组请求官方更加推荐是在componentDidMouting周期内执行，而不是在componentWillMouting周期， componentWillMouting具有不确定性，服务器端的操作再次周期问题不大。componentDidMouting周期至少可以保证被调用一次。
 
 
+### 登陆验证
+
+到目前为止，我们的后台，来者不拒，所有知道我们后台连接的人都可以直接访问我们的后台，可以操作修改我们的数据。这怎么行呢？so!我们需要给我们的后台系统添加验证后开放权限，首先，你要有个女朋友！哈哈哈哈，首先，得要登陆才可以访问后台并操作数据，未登录？对不起，请离开。
+
+对于我们的管理系统而言，其实是一个SPA应用，即单页面应用，SPA应用于传统的web应用不同，SPA的页面渲染不再依赖于服务器，其语服务器的交互主要通过接口完成，而REASTfu风格的接口提倡无状态，通常不使用cookie和session来进行身份认证。不通过cookie和session的话，一般会采用web token来实现身份验证(如微信公众号采用的token验证身份)，所谓token其实就是一个验证身份的令牌。见令牌如见圣上。客户端在登陆成功后可以获取服务器加密的token。然后在后续需要身份认证的接口请求中在header中带上这个token，服务端就可以通过判断token的有效性来验证该请求是否合法。
+
+
+改造服务器，实现简单的token验证。
+
+在server/目录下新建auth.js，写入验证模块：
+
+
+    // 到期时间 1 min
+    const expireTime = 1000 * 60;
+
+    module.exports = function(req, res, next) {
+        // 登陆成功后的返回头中增加服务器已加密的token信息，以便在后续需要身份验证的接口请求中在请求头戴上这个token，发送到服务器进行判断请求是否合法
+        res.header('Access-Control-Expose-Headers', 'access-token');
+
+        // 当前时间
+        const now = Date.now();
+        // 默认为不合法你，即未认证
+        let unAuthorized = true;
+
+        // 获取请求头的信息，判断是否有access-token即请求是否合法
+        const token = req.header('access-token');
+        // 若请求头存在token，则为合法请求
+        if (token) {
+            // 是否有效期内
+            const expired = now - token > expireTime;
+            // 超时
+            if (!expired) {
+                unAuthorized = false;
+                // 重新设置token有效时间起始点为当前时间点
+                res.header('access-token', now);
+            }
+        }
+
+        if (unAuthorized) {
+            // 客户端请求出错
+            res.sendStatus(401);
+        } else {
+            // 继续执行
+            next();
+        }
+    }
+
+
+
+### 服务器入口
+
+在server/目录下新建index.js文件，作为启动服务器入口，同时需要在项目中本地安装服务器开发依赖：
+
+    npm install json-server --save-dev
+
+index.js引入json-server，使用其API，构建一个简单的服务器启动项：
+
+
+    const path = require('path');
+    const jsonServer = require('json-server');
+    const server = jsonServer.create();
+    const router = jsonServer.router(path.join(__dirname, 'db.json'));
+    const middlewares = jsonServer.defaults();
+
+    // 注册json-server的api
+
+    server.use(jsonServer.bodyParser);
+    server.use(middlewares);
+
+    server.post('/login', function(req, res, next) {
+        res.header('Access-Control-Expose-Headers', 'access-token');
+        const { account, password } = req.body;
+        if (account === 'admin' && password === '123456') {
+            res.header('access-token', Date.now());
+            res.json(true);
+        } else {
+            res.json(false);
+        }
+    });
+
+    // 验证
+    server.use(require('./auth'));
+    server.use(router);
+
+    server.listen(3000, function() {
+        console.log('服务器启动成功！浏览器访问http://localhost:3000/')
+    })
+
+
+
+如此，在服务器中实现简单的登陆服务，并在启动服务器后，加载验证模块，
+
+
+TIPS：验证的实现流程：
+
+当服务器启动后，若违登陆，我们直接通过浏览器访问前端项目地址[http://localhost:8000](http://localhost:8000)，此时与未做验证之前没有任何不懂，但是，当我们从首页点击路由或者地址栏直接输入想要访问的页面的路由时，若是该路由是新增信息页面路由，也没有什么问题，但是，若是该路由所渲染的组件内部涉及到数据请求，那么，由于未登录，即服务器中的：
+
+
+
+    server.post('/login', function(req, res, next) {
+        res.header('Access-Control-Expose-Headers', 'access-token');
+        const { account, password } = req.body;
+        if (account === 'admin' && password === '123456') {
+            res.header('access-token', Date.now());
+            res.json(true);
+        } else {
+            res.json(false);
+        }
+    });
+
+这段代码未被执行，即：
+
+    res.header('access-token', Date.now());
+    res.json(true);
+
+这两条语句未执行，那么也就无处可寻找access-token了。则验证未通过，此时浏览器抛出错我！那么怎么办呢？登陆呗！等等，这里还有一个亮点，验证未通过，那么应该是未登陆或者有效期超时，此时，都应该需要登陆或者重新登陆，要用户自己去找登陆页面然后登陆吗？当然不可能如此不友好啦！也就是说，一旦抛出验证未通过的错误，那么我们就应该自动跳转到登陆页面，让用户登陆！一般什么时候回抛出错误？在我们这个管理系统中，我们设计的是，发起请求时，一旦对于敏感的数据API发起请求就需要验证，相应头返回信息就包括重新计时的access-token字段，此处我们假定所有的数据都是敏感信息，那么也就是说，所有发起请求的地方都要验证，一旦验证未通过，则报错并自动跳转到登陆界面。以上：对于那些发起请求的地方进行登陆页面跳转，再好不过了，我们的数据请求都是使用fetch方法来完成，每个涉及到数据交互的地方都需要用到fetch，那么我们要在每一个fetch的地方都要进行登陆页面跳转的接口修改嘛？当然不行！这也太蠢了！该当如何？封装复用！我已经在每个fetch数据的地方都进行了简单的封装，但是这存在两个问题：
+
+- 封装只在每个组件内部将fetch代码段抽离成一个函数，便于组件代码的管理
+- 目前封装的每个fetch函数都不一样，然而他们却都有很多相同的店
+
+也就是说，我目前所做的封装并不是真正的封装，知识将零散的代码片段合成一个函数，便于管理代码而已，他们不可被其他组件中需要用同样代码的地方复用，只能每个组件内写一个函数，这座了大量重复的工作，所以，我们应该将这段fetch数据的代码抽离成一个单独的fetch模块，并且把相同功能的部分也独立未共用方法，而不是在每个组件内写一个函数的所谓简单的封装，当有组件需要用fetch数据时，引入这个fetch模块，然后需要做组件特有的操作时再行添加！
+
+### 封装Fetch
+
+在utils/目录下，新建request.js文件，用于封装fetch模块：
+
+
+    import { hashHistory } from 'react-router'
+
+
+    export default function request(method, url, body) {
+        method = method.toUpperCase();
+
+        if (method === 'GET') {
+            // fetch的GET不允许有body，参数只能放在url中
+            body = undefined;
+        } else {
+            // 序列化请求体
+            body = body && JSON.stringify(body);
+            // 以上相当于
+            // if (body) {
+            //     json.stringify(body);
+            // }
+        }
+
+        return fetch(url, {
+            // 请求方法
+            method,
+            // 公共头部信息
+            // fetch如ajax一样，若是post方法，发送htttp请求时，根据协议则需要设置请求头报文信息
+            // 请求头内部需要设置access_token字段
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Access-Token': sessionStorage.getItem('access_token') || '' // 从sessionStorage中获取access token
+            },
+            // 请求体
+            body
+        })
+            .then((res) => {
+                if(res.status === 401) {
+                    // 路由跳转至登陆页面
+                    hashHistory.push('/login');
+                    // 标记为未认证
+                    // return Promise.reject('Unauthorized.');
+                } else {
+                    // 获取头部的access_token字段
+                    const token = res.headers.get('access-token');
+                    if (token) {
+                        // 设置token存储到sessionStorage中
+                        sessionStorage.setItem('access_token', token);
+                    }
+                    return res.json();
+                }
+            })
+    }
+
+    // 配置不同请求方法的fetch
+    export const get = url => request('GET', url);
+    export const post = (url, body) => request('POST', url, body);
+    export const put = (url, body) => request('PUT', url, body);
+    export const del = (url, body) => request('DELETE', url, body);
+
+封装的首要特点就是将定制化的部分改为通用化，比如，请求的方法有gep post put等，定制化就是在每个函数中写死请求的方法时get或者post还是put，则每次请求使用不同的方法，这个函数就得复制一份，通用化即是以参数代替定制化写死的内容，如，以method代替get、post、put等，每次请求方法不同时，只要传入的实参不同即可。
+
+以上，除了导出四个对应方法的四个函数外，还要导出默认的request函数，因为请求方法可能不止四个钟的一个，也可能是，使用fetch模块时，由于需求不同，请求时方法也不同（即求情方法可能改变），但是其他都相同，我们不可能去调用不同的方法函数，而应该是使用默认的request函数，修改因为需求不同而使得方法不同的method参数，这个应用场景很熟悉是不是？新增信息和编辑信息！新增和编辑使用的fetch一切代码几乎相同，除了根据传入的条件判断方法是post还是put。所以，以上即为封装的fetch模块。
+
+封装好fetch后，将应用中一切涉及到fetch数据请求的地方均修改为引入我们封装的模块，此后即可实现一旦抛出验证未通过的错误即可自动跳转到登陆页面！
+
+
+### 实现登陆
+
+登陆跳转已实现，登陆页面尚未就绪，实现之：
+
+
+在Components/目录下新建Login/目录，在该目录下新建Login.js组件：
+
+    import React from 'react';
+
+    import formProvider from '../../utils/formProvider';
+
+    import FormItem from '../FormItem/FormItem';
+    import HomeLayout from '../Layouts/HomeLayout';
+
+    import { post } from '../../utils/request';
+
+    class Login extends React.Component {
+        constructor() {
+            super();
+            this.handleSubmit = this.handleSubmit.bind(this);
+        }
+        handleSubmit(event) {
+            event.preventDefault();
+            const { formValid, form: {account, password} } = this.props;
+            if (!formValid) {
+                alert('请输入账号或密码');
+                return;
+            }
+            post('http://localhost:3000/login', {
+                account: account.value,
+                password: password.value
+            })
+                .then((res) => {
+                    if(res) {
+                        alert('登陆成功')
+                        this.context.router.push('/');
+                    } else {
+                        alert('登陆失败，账号或者密码错误')
+                    }
+                })
+        }
+        render() {
+            const { form: { account, password }, handleChange } = this.props;
+
+            return(
+                <HomeLayout title="登陆">
+                    <form onSubmit={this.handleSubmit}>
+                        <FormItem label="用户名：" valid={account.valid} error={account.error}>
+                            <input type="text" value={account.value} onChange={event => handleChange('account', event.target.value)} />
+                        </FormItem>
+                        <FormItem label="密码：" valid={password.valid} error={password.error}>
+                            <input type="text" value={password.value} onChange={event => handleChange('password', event.target.value)} />
+                        </FormItem>
+                        <div>
+                            <input type="submit" value="提交" />
+                        </div>
+                    </form>
+                </HomeLayout>
+            )
+        }
+    }
+
+    Login.contextTypes = {
+      router: React.PropTypes.object.isRequired
+    };
+
+
+    Login = formProvider({
+        account: {
+            defaultValue: '',
+            rules: [
+                {
+                    pattern(value) {
+                        return value.length > 0;
+                    },
+                    error: '请输入账号'
+                }
+            ]
+        },
+        password: {
+            defaultValue: '',
+            rules: [
+                {
+                    pattern(value) {
+                        return value.length > 0;
+                    },
+                    error: '请输入密码'
+                }
+            ]
+        }
+    })(Login);
+
+    export default Login;
+
+
+别忘路在路由文件中添加路由哦！React中一切想要通过url方式被直接访问的组件都需要通过添加路由来渲染。
+
+
+
+<center>
+<p><img src="https://beyondouyuan.github.io/img/ant_admin/admin_8.png" align="center"></p>
+</center>
+
+
+尝试一下操作，启动服务器-访问管理系统-不登陆-访问信息列表-报错并自动跳转到登陆-登陆-成功后跳转到主页。
+
+当然了，这种验证方式并不十分友好，比如，每次登陆成功都是回到主页，我们可以设计react-router的路由操作，每次登陆成功回到上一次页面。但我们的关注的重点暂时不在于产品设计。and so on。。。
+
+### Ant-Design
+
+后台管理系统有时并不太关注页面的样式，或者样式的变化也不是特别复杂，但是也不能太过于丑陋，也不能过于单一，Ant-Design可以满足我们的需求。
+
+TIPS：
+
+前端时间知乎上海游话题问起为什么NG这么久了还没出一个乡React的Ant-Design这样的UI框架？哈哈哈哈哈！应为他没有我们帅啊！不过前一周NG倒是出了相应的UI框架了。
+
+安装组件库：
+
+    npm install antd --save
+
+
+对于使用React全家桶来说，无论是webpack打包还是其他的打包，都存在这样一个问题：若是将全家桶或者第三方库都打包了，则文件将会异常庞大，所以，我们需要实现组件的暗许加载，则需要安装一个babel-plugin-import的babel插件来实现次目的：
+
+    npm install babel-plugin-import --save-dev
+
+
+TIPS：
+
+npm安装命令：
+
+项目依赖：
+
+    npm install xxx --save
+
+    or
+
+    npm i xxx -S
+
+开发依赖：
+
+    npm install xxx --save-dev
+
+    or
+
+    npm i xxx -D
+
+
+配置.roadhogrc文件，加载babel-plugin-import插件：
+
+在根目录下创建.roadhogrc文件：
+
+    {
+      "extraBabelPlugins": [
+        ["import", {
+          "libraryName": "antd",
+          "libraryDirectory": "lib",
+          "style": "css"
+        }]
+      ]
+    }
+
+
+
+### 引入antd
+
+首先修改我们的整体布局，一般而言，后台管理系统的结构通常为顶部导航栏部分，左侧侧边栏菜单部分，右侧主体内容部分，将我们的布局也改为这样的结构与行业接轨！
+
+HomeLayout.js中引入antd，修改HomeLayout组件如下：
+
+    import React from 'react';
+
+    import { Link } from 'react-router';
+
+    import { Menu, Icon } from 'antd';
+
+    import style from './home-layout.less'
+
+    const SubMenu = Menu.SubMenu;
+    const MenuItem = Menu.Item;
+
+
+    class HomeLayout extends React.Component {
+        render() {
+            const { children } = this.props;
+            return (
+                <div>
+                    <header className={style.header}>
+                        <Link to="/">首页</Link>
+                    </header>
+
+                    <main className={style.main}>
+                        <div className={style.menu}>
+                            <Menu mode="inline" theme="dark" style={{width: '240px'}}>
+                                <SubMenu key="player" title={<span><Icon type="user" /><span>球员管理</span></span>}>
+                                    <MenuItem key="player-list">
+                                        <Link to="/player/list">球员列表</Link>
+                                    </MenuItem>
+                                    <MenuItem key="player-add">
+                                        <Link to="/player/add">添加列表</Link>
+                                    </MenuItem>
+                                </SubMenu>
+                                <SubMenu key="honor" title={<span><Icon type="user" /><span>球员管理</span></span>}>
+                                    <MenuItem key="honor-list">
+                                        <Link to="/honor/list">球员列表</Link>
+                                    </MenuItem>
+                                    <MenuItem key="honor-add">
+                                        <Link to="/honor/add">添加列表</Link>
+                                    </MenuItem>
+                                </SubMenu>
+                            </Menu>
+                        </div>
+
+                        <div className={style.content}>
+                            {children}
+                        </div>
+                    </main>
+                </div>
+            )
+        }
+    }
+
+    export default HomeLayout;
+
+此时访问我们的首页：
+
+
+
+
+
+<center>
+<p><img src="https://beyondouyuan.github.io/img/ant_admin/admin_9.png" align="center"></p>
+</center>
+
+
+可以发现，侧边栏已经有样式，这就是我们引入的antd组件库，antd使用方法参考官网[Ant-Design](https://ant.design/docs/react/introduce-cn)，侧边栏已经成勇使用了antd组件库的样式，但是整体布局^_^。那是因为我们的home-layout.less还没有着手去写，完成home-layout.less：
+
+    .main {
+        height: 100vh;
+        padding-top: 50px;
+    }
+
+    .header {
+        width: 100%;
+        height: 50px;
+        line-height: 50px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-size: 18px;
+        padding: 0 20px;
+        color: white;
+        background-color: #2F99FF;
+        > a {
+            color: inherit;
+        }
+    }
+
+
+    .menu {
+        width: 240px;
+        height: 100%;
+        float: left;
+        background-color: #404040;
+    }
+
+    .content {
+        height: 100%;
+        padding: 12px;
+        overflow: hidden;
+        margin-left: 240px;
+    }
+
+
+左侧固定，右侧自适应哦！如图：
+
+
+<center>
+<p><img src="https://beyondouyuan.github.io/img/ant_admin/admin_10.png" align="center"></p>
+</center>
+
+
+有了这个布局页面之后，此间我们做的Home.js组件，用于当作主页，以便用来放置各个路由供用户点击，有了侧边栏之后，这个组件已经没有存在的必要，但是我们还是可以修改一下这个组件，比如放置欢迎信息以及一些简单的登陆用户的信息展示。
+
+<center>
+<p><img src="https://beyondouyuan.github.io/img/ant_admin/admin_11.png" align="center"></p>
+</center>
+
+
+完美有木有！当然不完美，太空洞了，往后进行扩展的时候，Home.js组件应该是渲染一些可视化的可视数据图。
+
+
+TIPS：路由文件修改如下：
+
+
+    import React from 'react';
+    import ReactDOM from 'react-dom';
+    // use react-router
+    import { Router, Route, IndexRoute, hashHistory } from 'react-router';
+
+    // use Components
+    import PlayerAddComponent from './Components/Players/PlayerAdd';
+    import HomeComponent from './Components/Players/Home';
+    import PlayerListComponent from './Components/Players/PlayerList';
+    import PlayerEdit from './Components/Players/PlayerEdit';
+
+    import HomeLayout from './Components/Layouts/HomeLayout'
+    import HonorAddComponent from './Components/Honor/HonorAdd';
+    import HonorListComponent from './Components/Honor/HonorList';
+    import HonorEdit from './Components/Honor/HonorEdit';
+    import Login from './Components/Login/Login'
+
+    ReactDOM.render((
+        <Router history={hashHistory}>
+            <Route path="/" component={HomeLayout}>
+                <IndexRoute component={HomeComponent} />
+                <Route path="/player/add" component={PlayerAddComponent} />
+                <Route path="/player/list" component={PlayerListComponent} />
+                <Route path="/player/edit/:id" component={PlayerEdit} />
+                <Route path="/honor/add" component={HonorAddComponent} />
+                <Route path="/honor/list" component={HonorListComponent} />
+                <Route path="/honor/edit/:id" component={HonorEdit} />
+            </Route>
+            <Route exact path="/login" component={Login} />
+        </Router>
+    ), document.getElementById('root'));
+
+
+
+使用嵌套路由，path="/"渲染布局HomeLayout则不必在每个组件都引入HomeLayout，同时首页HomeComponent的渲染使用IndexRoute路由组件。login则不需要使用主题布局。
+
+
+主体的布局已经完成，但是对于登陆页面^_^丑，则用antd美化一下：
+
+
+    import React from 'react';
+    import { Icon, Form, Input, Button, message } from 'antd';
+
+    import { post } from '../../utils/request';
+
+    import style from './login.less'
+
+    const FormItem = Form.Item;
+
+    class Login extends React.Component {
+        constructor() {
+            super();
+            this.handleSubmit = this.handleSubmit.bind(this);
+        }
+        handleSubmit(event) {
+            event.preventDefault();
+            this.props.form.validateFields((err, values) => {
+                if(!err) {
+                    post('http://localhost:3000/login', values)
+                        .then((res) => {
+                            if(res) {
+                                message.success('登陆成功')
+                                this.context.router.push('/');
+                            } else {
+                                message.error('登陆失败，账号或者密码错误')
+                            }
+                        })
+                }
+            })
+        }
+        render() {
+            const { form } = this.props;
+            const { getFieldDecorator } = form;
+            return(
+                <div className={style.container}>
+                    <div className={style.login}>
+                        <header className={style.header}>
+                            球员管理系统
+                        </header>
+                        <section className={style.section}>
+                            <form onSubmit={this.handleSubmit}>
+                                <FormItem>
+                                    {getFieldDecorator('account', {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: '请输入账号',
+                                                type: 'string'
+                                            }
+                                        ]
+                                    })(
+                                        <Input type="text" addonBefore={<Icon type="user"/>} />
+                                    )}
+                                </FormItem>
+                                <FormItem>
+                                    {getFieldDecorator('password', {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: '请输入密码',
+                                                type: 'string'
+                                            }
+                                        ]
+                                    })(
+                                        <Input type="password" addonBefore={<Icon type="lock"/>} />
+                                    )}
+                                </FormItem>
+                                <div>
+                                    <Button className={style.btn} htmlType="submit" type="primary">登陆</Button>
+                                </div>
+                            </form>
+                        </section>
+                    </div>
+                </div>
+            )
+        }
+    }
+
+    Login.contextTypes = {
+      router: React.PropTypes.object.isRequired
+    };
+
+    Login = Form.create()(Login);
+
+    export default Login;
+
+
+Login组件是一个简单的表单，我们利用antd组件库表单提供的create来构建表单，而不在需要原来我们所写的formProvider组件，同时表单的验证也使用antd组件提供的getFieldDecorator方法来验证，getFieldDecorator出了用于验证，它还封装了表单提交时候的处理，比如，获取表单的值，所以，我们修改一下表单提交处理程序，不再需要手动去获取表单的值，而通过getFieldDecorator获取所需的值数据，同时在表单提交时获取表单的校验结果，所以，表单提交实际数据写在antd的表单form的validateFields中。
+
+
+<center>
+<p><img src="https://beyondouyuan.github.io/img/ant_admin/admin_12.png" align="center"></p>
+</center>
 
 
 
