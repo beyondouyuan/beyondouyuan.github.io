@@ -936,6 +936,327 @@ Login组件是一个简单的表单，我们利用antd组件库表单提供的cr
 </center>
 
 
+以此，所有需要表单的地方，我们都可以使用antd的form表单代替，所以，修改PlayerEditor.js组件：
+
+
+    import React from 'react';
+    import { Form, Input, Button, InputNumber, message } from 'antd';
+    import request, { get } from '../../utils/request';
+
+    const FormItem = Form.Item;
+
+    const FormLayout = {
+        labelCol: {
+            span: 4
+        },
+        wrapperCol: {
+            span: 16
+        }
+    };
+
+    class PlayerEditor extends React.Component {
+
+        componentDidMount() {
+            const { editTarget, form } = this.props;
+            if (editTarget) {
+                form.setFieldsValue(editTarget);
+            }
+        }
+
+        // 表单提交处理程序
+        handleSubmit(event) {
+            event.preventDefault();
+            const { form, editTarget } = this.props;
+            form.validateFields((err, values) => {
+                if (!err) {
+                    let editType = "添加";
+                    let apiUrl = 'http://localhost:3000/players';
+                    let method = 'post';
+                    if (editTarget) {
+                        editType = "编辑";
+                        apiUrl += '/' + editTarget.id;
+                        method = 'put';
+                    }
+                    request(method, apiUrl, values)
+                        .then((res) => {
+                            if(res.id) {
+                                message.success(editType + '球员成功！');
+                                this.context.router.push('/player/list');
+                            } else {
+                                message.error(editType + '失败');
+                            }
+                        })
+                        .catch((err) => {
+                            message.error(err);
+                        });
+                } else {
+                    message.warn(err);
+                }
+            });
+        }
+        render() {
+            // 结构出所需要的值
+            const { form } = this.props;
+            const { getFieldDecorator } = form;
+            return (
+                <div style={{width: '600px'}}>
+                    <form onSubmit={(event) => this.handleSubmit(event)}>
+                        <FormItem label="球员名字：" {...FormLayout}>
+                            {getFieldDecorator('name', {
+                                rules: [
+                                    {
+                                        required: true,
+                                        message: '请输入球员名字'
+                                    },
+                                    {
+                                        pattern: /^.{1,32}$/,
+                                        message: '名字最多32位'
+                                    }
+                                ]
+                            })(
+                                <Input type="text" />
+                            )}
+                        </FormItem>
+                        <FormItem label="球员年龄：" {...FormLayout}>
+                            {getFieldDecorator('age', {
+                                rules: [
+                                    {
+                                        required: true,
+                                        message: '请输入球员年龄',
+                                        type: 'number'
+                                    },
+                                    {
+                                        min: 19,
+                                        max: 50,
+                                        message: '请输入合法年龄',
+                                        type: 'number'
+                                    }
+                                ]
+                            })(
+                                <InputNumber style={{width: '100%'}} />
+                            )}
+                        </FormItem>
+                        <FormItem label="效力球队：" {...FormLayout}>
+                            {getFieldDecorator('team', {
+                                rules: [
+                                    {
+                                        required: true,
+                                        message: '请输入效力青队'
+                                    },
+                                    {
+                                        pattern: /^.{1,32}$/,
+                                        message: '名字最多32位'
+                                    }
+                                ]
+                            })(
+                                <Input type="text" />
+                            )}
+                        </FormItem>
+                        <FormItem label="球员身高：" {...FormLayout}>
+                            {getFieldDecorator('size', {
+                                rules: [
+                                    {
+                                        required: true,
+                                        message: '请输入球员年龄',
+                                        type: 'number'
+                                    },
+                                    {
+                                        min: 150,
+                                        max: 300,
+                                        message: '请输入合法身高',
+                                        type: 'number'
+                                    }
+                                ]
+                            })(
+                                <InputNumber style={{width: '100%'}} />
+                            )}
+                        </FormItem>
+                        <FormItem wrapperCol={{...FormLayout.wrapperCol, offset: FormLayout.labelCol.span}}>
+                            <Button type="primary" htmlType="submit">提交</Button>
+                        </FormItem>
+                    </form>
+                </div>
+            );
+        }
+    }
+
+    // 必须给PlayerAdd义一个包含router属性的contextTypes
+    // 使得组件中可以通过this.context.router来使用React Router提供的方法
+    PlayerEditor.contextTypes = {
+      router: React.PropTypes.object.isRequired
+    };
+
+    PlayerEditor = Form.create()(PlayerEditor)
+
+    export default PlayerEditor;
+
+
+
+
+
+对于以下代码：
+
+    componentDidMount() {
+        const { editTarget, form } = this.props;
+            if (editTarget) {
+                form.setFieldsValue(editTarget);
+        }
+    }
+
+我们使用antd组件库form的setFieldsValue方法代替我们的setFormData方法，setFieldsValue是form创建之后才可调用该方法，所以需要在组件挂载之后再调用。
+
+<center>
+<p><img src="https://beyondouyuan.github.io/img/ant_admin/admin_13.png" align="center"></p>
+</center>
+
+然后再修改球员数据列表也，直接食用antd的表格来渲染数据：
+
+
+    import React from 'react';
+    import { message, Table, Button, Popconfirm } from 'antd';
+    import request, { get, del } from '../../utils/request'
+
+    class PlayerList extends React.Component {
+        /**
+         * [constructor description]
+         * @param  {[type]} props [description]
+         * @return {[type]}       [description]
+         */
+        constructor(props) {
+            super(props);
+            this.state = {
+                PlayerList: []
+            }
+        }
+        // 在组件挂载前请求数据，当然也可以在组件挂载完成后再请求数据
+        componentWillMount() {
+            /**
+             * [description]
+             * @param  {[type]} res [description]
+             * @return {[type]}     [description]
+             */
+            get('http://localhost:3000/players')
+                .then((res) => {
+                    if (res) {
+                        this.setState({
+                            PlayerList: res
+                        })
+                    }
+                });
+        }
+        /**
+         * [fetchData description]
+         * @param  {[type]} url [description]
+         * @return {[type]}     [description]
+         */
+        fetchData(url) {
+            fetch(url)
+                // 将返回数据json格式化
+                .then(res => res.json())
+                .then(res => {
+                    // 将获取到的数据储存在state中，在组件内部进行维护
+                    this.setState({
+                        PlayerList: res
+                    });
+                });
+        }
+        /**
+         * [handleDelete description]
+         * @param  {[type]} player [description]
+         * @return {[type]}        [description]
+         */
+        handleDelete(player) {
+                del('http://localhost:3000/players/' + player.id)
+                // .then(res => res.json())
+                .then(res => {
+                    this.setState({
+                        PlayerList: this.state.PlayerList.filter(item => item.id !== player.id)
+                    });
+                    message.success('删除球员成功！');
+                })
+                .catch(err => {
+                    console.error(err);
+                    message.error('删除失败！')
+                });
+        }
+        /**
+         * [handleEdit description]
+         * @param  {[type]} player [description]
+         * @return {[type]}        [description]
+         */
+        handleEdit(player) {
+            /**
+             * 路由跳转到编辑页面即可
+             */
+            this.context.router.push('/player/edit/' + player.id);
+
+        }
+
+        render() {
+            // 解构赋值提取数据
+            const { PlayerList } = this.state;
+            // 表头
+            const columns = [
+                {
+                    title: '球员ID',
+                    dataIndex: 'id'
+                },
+                {
+                    title: '球员名字',
+                    dataIndex: 'name'
+                },
+                {
+                    title: '球员年龄',
+                    dataIndex: 'age'
+                },
+                {
+                    title: '效力球队',
+                    dataIndex: 'team'
+                },
+                {
+                    title: '球员身高',
+                    dataIndex: 'size'
+                },
+                {
+                    title: '操作',
+                    render: (text, record) => (
+                        <Button.Group type="ghost">
+                            <Button size="small" onClick={() => this.handleEdit(record)}>编辑</Button>
+                            <Popconfirm title="确定要删除吗？" onConfirm={() => this.handleDelete(record)}>
+                                <Button size="small">删除</Button>
+                            </Popconfirm>
+                        </Button.Group>
+                    )
+                }
+            ]
+            return (
+                    <Table columns={columns} dataSource={PlayerList} rowKey={row => row.id}/>
+            )
+        }
+    }
+
+    PlayerList.contextTypes = {
+      router: React.PropTypes.object.isRequired
+    };
+
+    export default PlayerList;
+
+
+
+其中antd组件库的Table为我们提供了分页处理，具体的参数配置参考官网即可。
+
+
+
+<center>
+<p><img src="https://beyondouyuan.github.io/img/ant_admin/admin_14.png" align="center"></p>
+</center>
+
+
+对于球员荣誉部分，同样引入antd即可，大功告成哈！
+
+
+
+
 
 
 
