@@ -790,13 +790,14 @@ HomeLayout.js中引入antd，修改HomeLayout组件如下：
 
 有了这个布局页面之后，此间我们做的Home.js组件，用于当作主页，以便用来放置各个路由供用户点击，有了侧边栏之后，这个组件已经没有存在的必要，但是我们还是可以修改一下这个组件，比如放置欢迎信息以及一些简单的登陆用户的信息展示。
 
+
+
+
+完美有木有！当然不完美，太空洞了，往后进行扩展的时候，Home.js组件应该是渲染一些可视化的可视数据图。like this!
+
 <center>
 <p><img src="https://beyondouyuan.github.io/img/ant_admin/admin_11.png" align="center"></p>
 </center>
-
-
-完美有木有！当然不完美，太空洞了，往后进行扩展的时候，Home.js组件应该是渲染一些可视化的可视数据图。
-
 
 TIPS：路由文件修改如下：
 
