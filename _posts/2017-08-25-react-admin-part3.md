@@ -11,7 +11,7 @@ description: 一寸柔肠情几许？薄衾孤枕，梦回人静。侵晓潇潇�
 
 ###  写在前面 ###
 
-界面部分已完成，对于React组件，大家又把React当作一个状态机，React组件dom树是否渲染／更新，由其自身维护的内部状态控制。在我们之前的学习中，都是基于state的状态管理，在组件较少的应用中，这不会有什么问题也足够优雅，但是随着应用的扩展，项目必然增大，组件的量也会随之增长，state光里状态将会变得比较混乱。那么，以某种方式统一管理React的状态久变得十分有必要。React推荐单项数据流的处理方式，其中官方维护的Flux以及圈内颇为受欢迎的Redux是很好的选择。我们选择Redux。
+界面部分已完成，对于React组件，React完全可以认为他是一个状态机，React组件dom树是否渲染／更新，由其自身维护的内部状态控制。在我们之前的学习中，都是基于state的状态管理，在组件较少的应用中，这不会有什么问题也足够优雅，但是随着应用的扩展，项目必然增大，组件的量也会随之增长，state管理状态将会变得比较混乱，开发者将会在各个组件以及路由跳转之间疲于奔命。那么，以某种方式统一管理React的状态就变得十分有必要。React推荐单向数据流的处理方式，其中官方维护的Flux以及圈内颇受欢迎的Redux是非常优秀的状态管理框架，我们选择Redux。
 
 ### Redux是什么
 
@@ -115,61 +115,11 @@ Redux中，每当有一个Action被触发，所有的Reducer都将会被执行�
 
 这样构造的优势就是，我们把Store这棵大树分割成了许许多多的小树，而每棵小树各自维护自身的状态，有木有很熟悉？没错，React组件化的思想不就在于此么！
 
+#### 三个代表
 
-那么，以一个模拟的Redux大概会是这样：
-
-##### HTML
-
-    <div id="container" class="container">
-        <section>
-            <p>Count: <span id="counter">0</span></p>
-            <button id="add-btn">+1</button>
-            <button id="sub-btn">-1</button>
-        </section>
-    </div>
-    <script src="scripts/index.js"></script>
-
-##### javaScript
-
-    // Reducer
-    function counter(state = 0, action) {
-        switch (action.type) {
-            case 'ADD' : return state + 1;
-            case 'SUB' : return state - 1;
-            default: return state;
-        }
-    }
-
-
-    // store
-    const { createStore } = Redux;
-
-    const store = createStore(counter);
-
-    // 监听Store
-
-    state.subscribe(() => {
-        setCounter(store.getState());
-    })
-
-
-    function setCounter(count) {
-        document.getElementById('counter').innerHTML = count;
-    }
-
-    // 触发Action
-
-    document.getElementById('add-btn').addEventListener('click', function () {
-      store.dispatch({type: 'ADD'});
-    });
-
-
-    document.getElementById('sub-btn').addEventListener('click', function () {
-      store.dispatch({type: 'SUB'});
-    });
-
-Redux的核心概念看似这么点知识，但是可研究学习之处却不少。
-
+<center>
+<p><img src="https://beyondouyuan.github.io/img/ant_admin/admin_15.png" align="center"></p>
+</center>
 
 ### React-Redux
 
@@ -200,4 +150,100 @@ Provider的主要作用是提供在组件树的某一个节点通过context获�
             </Router>
         </Provider>
     ), document.getElementById('root'))
+
+以一个及其简单的Redux例子来理解React中使用Redux。为了便于学习于理解，我没有拆分Redux成为container && component && actions && redux && store这样的形式，因为redux的action、redux、store之间的相互应用在还未熟悉Redux之前会容易混乱，《从未入门到立刻放弃》的感觉油然而生^-_-^。
+
+    import React, { Component } from 'react';
+    import { createStore } from 'redux';
+    import { Provider, connect } from 'react-redux';
+    import ReactDOM from 'react-dom';
+
+    import './index.css';
+    // import App from './App';
+    import registerServiceWorker from './registerServiceWorker';
+
+    class App extends Component {
+        render() {
+            const { counter, onHandleAdd, onHandleSub } = this.props;
+            return (
+                <div>
+                    <span onClick={onHandleSub} style={{display: 'inline-block',padding: '8px 16px', cursor: 'pointer' ,color: 'white',backgroundColor: '#1976F6'}}>-1</span>
+                    <span style={{display: 'inline-block',padding: '8px 16px'}}>{ counter }</span>
+                    <span onClick={onHandleAdd} style={{display: 'inline-block',padding: '8px 16px', cursor: 'pointer' ,color: 'white',backgroundColor: '#1976F6'}}>+1</span>
+                </div>
+            )
+        }
+    }
+
+    // actions
+
+    const handleAdd = {
+        type: 'COUNTER_ADD'
+    }
+    const handleSub = {
+        type: 'COUNTER_SUB'
+    }
+
+
+    // reducer
+
+    const initState = {
+        counter: 0
+    }
+
+    const reducer = (state = initState, action) => {
+        switch (action.type) {
+            case 'COUNTER_ADD':
+                return {
+                    counter: state.counter + 1
+                }
+                break;
+            case 'COUNTER_SUB':
+                return {
+                    counter: state.counter - 1
+                }
+                break;
+            default:
+                return initState;
+        }
+    }
+
+    // store
+
+    let store = createStore(reducer);
+
+    // 映射state到props
+
+    function mapStateToProps(state) {
+        return {
+            counter: state.counter
+        }
+    }
+
+    // 映射action到props
+
+    function mapDispatchToProps(dispatch) {
+        return {
+            onHandleAdd: () => dispatch(handleAdd),
+            onHandleSub: () => dispatch(handleSub)
+        }
+    }
+
+    // 连接组件
+
+    App = connect(mapStateToProps, mapDispatchToProps)(App)
+
+    ReactDOM.render(
+        <Provider store={store}>
+            <App />
+        </Provider>,
+        document.getElementById('root'));
+    registerServiceWorker();
+
+
+我使用create-react-app脚手架快速搭建了一个React应用，直接在其入口文件index.js修改代码，并将redux也直接写在这个文件下，完成一个使用redux的小小计数器。这样以来比官网的长篇大论，以及各大社区里写给初学者学习而又不适于初学者的较为高深的博客简单多了。
+
+<center>
+<p><img src="https://beyondouyuan.github.io/img/ant_admin/admin_16.png" align="center"></p>
+</center>
 
