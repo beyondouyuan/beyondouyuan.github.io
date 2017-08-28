@@ -121,6 +121,9 @@ description: 一寸柔肠情几许？薄衾孤枕，梦回人静。侵晓潇潇�
         }
       ]
     }
+
+
+
 在服务器目录server/下执行json-server db.json -w -p 3000命令，json-server带三个参数，第一个db.json为json-server启动服务器数据模板，第二个-w即watch，监控db.json的更改，第三个即port，服务器监听的端口。浏览器访问[http://localhost:3000](http://localhost:3000)即可看到json-server为我们提供的数据接口，浏览器访问json-server启动的服务器可以看到所有数据接口列表。访问相应借口得到对应数据。如此，前端可直接调用这个接口访问数据。
 
 使用json-server启动数据库，其为开发者注册一些列标准的RESTFull风格的API接口路由，以players为例：
@@ -146,58 +149,61 @@ description: 一寸柔肠情几许？薄衾孤枕，梦回人静。侵晓潇潇�
 
 在纯静态开发中，可以直接引入mock.js病使用：
 
-HTML：结构：
+HTML结构如下：
 
-  <div id="container" class="container">
-    <section>
-      <div id="box"></div>
-      <div id="box-list"></div>
-    </section>
-  </div>
-  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-  <script src="http://mockjs.com/dist/mock.js"></script>
-  <script src="scripts/index.js"></script>
 
-index.js文件：
+      <div id="container" class="container">
+        <section>
+          <div id="box"></div>
+          <div id="box-list"></div>
+        </section>
+      </div>
+      <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+      <script src="http://mockjs.com/dist/mock.js"></script>
+      <script src="scripts/index.js"></script>
 
-  $(function() {
-      var $box = $('#box');
-      $('<pre>').text(JSON.stringify(data))
-          .appendTo($box);
 
-      Mock.mock('/api/user', {
-              'user|1-10':[{
-                  'name' : '@cname',
-                  'age|1-100' : 100,
-                  'id|+1' : 89,
-                  'birthday' : '@date("yyy-MM-dd")',
-                  'city' : '@city(true)',
-                  'isMale|1' : true
-              }]
-          }
-      );
 
-      $.ajax({
-          url: '/api/user',
-          dataType: 'json'
-      }).done(function(data, status, xhr) {
-          var $container = $('#box-list');
-          var $box = $('<div></div>');
-          $.each(data.user, function(index, $data) {
-              $(
-                  '<ul>'+
-                      '<li>姓名：'+$data.name+'</li>'+
-                      '<li>年龄：'+$data.age+'</li>'+
-                      '<li>id：'+$data.id+'</li>'+
-                      '<li>生日：'+$data.birthday+'</li>'+
-                      '<li>城市：'+$data.city+'</li>'+
-                      '<li>性别：'+$data.isMale+'</li>'+
-                  '</ul>'
-              ).appendTo($box);
-          });
-          $container.append($box);
-      })
-  })
+index.js文件如下：
+
+    $(function() {
+        var $box = $('#box');
+        $('<pre>').text(JSON.stringify(data))
+            .appendTo($box);
+
+        Mock.mock('/api/user', {
+                'user|1-10':[{
+                    'name' : '@cname',
+                    'age|1-100' : 100,
+                    'id|+1' : 89,
+                    'birthday' : '@date("yyy-MM-dd")',
+                    'city' : '@city(true)',
+                    'isMale|1' : true
+                }]
+            }
+        );
+
+        $.ajax({
+            url: '/api/user',
+            dataType: 'json'
+        }).done(function(data, status, xhr) {
+            var $container = $('#box-list');
+            var $box = $('<div></div>');
+            $.each(data.user, function(index, $data) {
+                $(
+                    '<ul>'+
+                        '<li>姓名：'+$data.name+'</li>'+
+                        '<li>年龄：'+$data.age+'</li>'+
+                        '<li>id：'+$data.id+'</li>'+
+                        '<li>生日：'+$data.birthday+'</li>'+
+                        '<li>城市：'+$data.city+'</li>'+
+                        '<li>性别：'+$data.isMale+'</li>'+
+                    '</ul>'
+                ).appendTo($box);
+            });
+            $container.append($box);
+        })
+    })
 
 <center>
 <p><img src="https://beyondouyuan.github.io/img/other/other_2.png" align="center"></p>
