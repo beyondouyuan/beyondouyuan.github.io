@@ -112,6 +112,7 @@ post方法是封装的一个request模块的方法：
 设置了Access-Token字段发送到服务器。
 
 服务器登陆处理代码：
+
     server.post('/login', function(req, res, next) {
         res.header('Access-Control-Expose-Headers', 'access-token');
         const { account, password } = req.body;
@@ -192,11 +193,15 @@ LocalStorage和SessionStorage几乎具有一致的API，与SessionStorage作为�
         var name = localStorage.getItem('name');
         console.log(name)
     }
+
+
 HTML结构如下：
 
     <div class="storage-container" id="container"></div>
     <script src="scripts/storage.js"></script>
     <script src="scripts/storage2.js"></script>
+
+
 如此，像一些请求的数据就可以存储起来共用也可作为处理数据缓存的很好方案。
 
 在注释中也顺便解释了一下localStorage中传递与获取JSON对象的方法。

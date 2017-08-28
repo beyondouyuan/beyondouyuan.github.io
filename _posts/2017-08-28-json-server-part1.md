@@ -11,7 +11,7 @@ description: 一寸柔肠情几许？薄衾孤枕，梦回人静。侵晓潇潇�
 
 ### 写在前面
 
-前后端分离是一种优秀的分工模式，前端开发不受后段API开发进度的影响，可脱离后段进行。实现前后端分离的一个关键点是前端需要有模拟的数据接口供前端调用，再平实开发中，若数据量比较少或者不太复杂，那么可以直接使用json文件来模拟，但是遇到需要大量的数据或者比较复杂的表结构，json就显得比较吃力，mockjs也就成了一种很好的解决方案。mockjs提供多种数据类型的模拟数据，函括字符串、数组、对象以及图片链接等。mockjs在纯静态的开发中就几乎可以满足我们的所有需求，但是一般涉及到需要启动服务器下的开发，如在React应用开发中，就需要将mockjs整合到服务器中，通常前端启动服务器监听一个端口，mockjs启动另外一个服务器，监听另一个端口，那么，跨域就来了，webpack可以很方便的实现服务器跨域代理，如果应用中没有集成webpack呢？json-server启动的服务器可以直接支持跨域！
+前后端分离是一种优秀的分工模式，前端开发不受后端API开发进度的影响，可脱离后端进行。实现前后端分离的一个关键点是前端需要有模拟的数据接口供前端调用，再平实开发中，若数据量比较少或者不太复杂，那么可以直接使用json文件来模拟，但是遇到需要大量的数据或者比较复杂的表结构，json就显得比较吃力，mockjs也就成了一种很好的解决方案。mockjs提供多种数据类型的模拟数据，函括字符串、数组、对象以及图片链接等。mockjs在纯静态的开发中就几乎可以满足我们的所有需求，但是一般涉及到需要启动服务器下的开发，如在React应用开发中，就需要将mockjs整合到服务器中，通常前端启动服务器监听一个端口，mockjs启动另外一个服务器，监听另一个端口，那么，跨域就来了，webpack可以很方便的实现服务器跨域代理，如果应用中没有集成webpack呢？json-server启动的服务器可以直接支持跨域！
 
 
 ### json-server
@@ -126,7 +126,7 @@ description: 一寸柔肠情几许？薄衾孤枕，梦回人静。侵晓潇潇�
 
 在服务器目录server/下执行json-server db.json -w -p 3000命令，json-server带三个参数，第一个db.json为json-server启动服务器数据模板，第二个-w即watch，监控db.json的更改，第三个即port，服务器监听的端口。浏览器访问[http://localhost:3000](http://localhost:3000)即可看到json-server为我们提供的数据接口，浏览器访问json-server启动的服务器可以看到所有数据接口列表。访问相应借口得到对应数据。如此，前端可直接调用这个接口访问数据。
 
-使用json-server启动数据库，其为开发者注册一些列标准的RESTFull风格的API接口路由，以players为例：
+使用json-server启动数据库，其为开发者注册一些列标准的RESTFull风格的API接口路由，以news为例：
 
 - GET/news 获取新闻列表的接口
 - GET/news/:id 获取单个新闻的接口
@@ -209,7 +209,7 @@ index.js文件如下：
 <p><img src="https://beyondouyuan.github.io/img/other/other_2.png" align="center"></p>
 </center>
 
-is ok！但是在服务器启动应用时，我们知道无论时ajax还是fetch数据都是不能获取本地数据的，我们需要将mockjs整合到服务器并呗服务器识别。
+is ok！但是在服务器启动应用时，我们知道无论是ajax还是fetch数据都是不能获取本地数据的，我们需要将mockjs整合到服务器并被服务器识别。
 
 在server/目录下新建mock.js文件：
 
@@ -378,6 +378,7 @@ note:当我们想在项目中使用json-server的api自定义的启动服务器�
 也可以将json-server整合到pakage.json的scripts命令中。
 
 初始化项目
+
     npm init
 
 pakage.json配置node script命令来启动json-server：
