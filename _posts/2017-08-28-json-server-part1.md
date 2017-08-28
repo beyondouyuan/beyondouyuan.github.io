@@ -144,6 +144,67 @@ description: 一寸柔肠情几许？薄衾孤枕，梦回人静。侵晓潇潇�
 
 ### Mockjs
 
+在纯静态开发中，可以直接引入mock.js病使用：
+
+HTML：结构：
+
+  <div id="container" class="container">
+    <section>
+      <div id="box"></div>
+      <div id="box-list"></div>
+    </section>
+  </div>
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="http://mockjs.com/dist/mock.js"></script>
+  <script src="scripts/index.js"></script>
+
+index.js文件：
+
+  $(function() {
+      var $box = $('#box');
+      $('<pre>').text(JSON.stringify(data))
+          .appendTo($box);
+
+      Mock.mock('/api/user', {
+              'user|1-10':[{
+                  'name' : '@cname',
+                  'age|1-100' : 100,
+                  'id|+1' : 89,
+                  'birthday' : '@date("yyy-MM-dd")',
+                  'city' : '@city(true)',
+                  'isMale|1' : true
+              }]
+          }
+      );
+
+      $.ajax({
+          url: '/api/user',
+          dataType: 'json'
+      }).done(function(data, status, xhr) {
+          var $container = $('#box-list');
+          var $box = $('<div></div>');
+          $.each(data.user, function(index, $data) {
+              $(
+                  '<ul>'+
+                      '<li>姓名：'+$data.name+'</li>'+
+                      '<li>年龄：'+$data.age+'</li>'+
+                      '<li>id：'+$data.id+'</li>'+
+                      '<li>生日：'+$data.birthday+'</li>'+
+                      '<li>城市：'+$data.city+'</li>'+
+                      '<li>性别：'+$data.isMale+'</li>'+
+                  '</ul>'
+              ).appendTo($box);
+          });
+          $container.append($box);
+      })
+  })
+
+<center>
+<p><img src="https://beyondouyuan.github.io/img/other/other_2.png" align="center"></p>
+</center>
+
+is ok！但是在服务器启动应用时，我们知道无论时ajax还是fetch数据都是不能获取本地数据的，我们需要将mockjs整合到服务器并呗服务器识别。
+
 在server/目录下新建mock.js文件：
 
     /*
