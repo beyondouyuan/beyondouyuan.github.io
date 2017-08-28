@@ -131,10 +131,14 @@ react-redux为我们提供供的api有：Provider、connect、connectAdvanced。
 
 #### Provider
 
-Provider是一个React组件，它接受两个参数state和children，Provider的render方法返回props.children。
+Provider是一个React组件，其相当于一个中间件。它接受两个参数state和children，Provider的render方法返回props.children。
 
 Provider的主要作用是提供在组件树的某一个节点通过context获取store的能力。
 
+
+### connect
+
+在Redux中，组件一般分为容器组件和展示组件，容器组件中调用Redux的API，负责从Stroe中获取状态等数据，并将与Redux交互的数据以Props形式传递到展示组件，展示组件址负责数据渲染，不调用Redux的API，connect的作用就是一个桥梁，用于连接容器组件和展示组件。
 
 一般在项目中，会将Provider这个组件放在整个应用的最顶层，然后将使用Redux.createStore方法创建的store对象传给Provider：
 
