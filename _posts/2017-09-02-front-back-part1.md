@@ -24,6 +24,12 @@ description: 一寸柔肠情几许？薄衾孤枕，梦回人静。侵晓潇潇�
 产生这个想法其实挺久的了，但是广州、上海、深圳三个分部的所有前端都是我自己干完了，想再有点时间来写点东西，真的太难了，到如今，离职、休息后，一方面是想明白了<strong>所有的web都是前端！</strong>这个道理，另一个就是更加坚定走<strong>全栈的目标</strong>，于是，终于写下这篇博客笔记了。
 
 
+### 项目github地址
+
+[https://github.com/beyondouyuan/node-web-react](https://github.com/beyondouyuan/node-web-react)
+
+
+
 ## 技术栈
 
 使用到的技术栈主要包括一下几个：
