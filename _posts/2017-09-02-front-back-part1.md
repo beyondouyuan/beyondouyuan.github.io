@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Webpack + React + React-Router + React-Redux + Express + MongoDB 开发前后端分离CMS系统
+title: Webpack + React + React-Router + React-Redux + Express搭建前后端分离项目
 author: beyondouyuan
 date: 2017-09-02
 categories: blog
@@ -800,6 +800,303 @@ menu是我此前创建的一个集合
     }
 
 
+此时，完整的配置以及一些实例如下：
+
+### 配置
+
+#### package.json
+
+    {
+      "name": "web-react",
+      "version": "1.0.0",
+      "description": "node and webpack use react",
+      "main": "index.js",
+      "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "webpack-dev-server",
+        "server": "nodemon ./server/app.js --exec babel-node",
+        "dev": "webpack && nodemon ./server/app.js --exec babel-node",
+        "build": "webpack && nodemon ./server/app.js --exec babel-node"
+      },
+      "keywords": [
+        "node",
+        "webpack",
+        "react"
+      ],
+      "author": "beyondouyuan",
+      "license": "ISC",
+      "dependencies": {
+        "antd": "^2.12.8",
+        "autoprefixer": "^7.1.3",
+        "body-parser": "~1.17.1",
+        "cookie-parser": "~1.4.3",
+        "css-loader": "^0.28.5",
+        "debug": "~2.6.3",
+        "ejs": "^2.5.7",
+        "express": "~4.15.2",
+        "file-loader": "^0.11.2",
+        "jade": "~1.11.0",
+        "mongodb": "^2.2.31",
+        "mongoose": "^4.11.9",
+        "morgan": "~1.8.1",
+        "node-sass": "^4.5.3",
+        "postcss-loader": "^2.0.6",
+        "react": "^15.6.1",
+        "react-dom": "^15.6.1",
+        "react-redux": "^5.0.6",
+        "react-router": "^4.2.0",
+        "redux": "^3.7.2",
+        "sass-loader": "^6.0.6",
+        "serve-favicon": "~2.4.2",
+        "style-loader": "^0.18.2",
+        "url-loader": "^0.5.9"
+      },
+      "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-core": "^6.26.0",
+        "babel-loader": "^7.1.2",
+        "babel-plugin-import": "^1.4.0",
+        "babel-preset-es2015": "^6.24.1",
+        "babel-preset-react": "^6.24.1",
+        "babel-preset-stage-1": "^6.24.1",
+        "extract-text-webpack-plugin": "^3.0.0",
+        "mockjs": "^1.0.1-beta3",
+        "path": "^0.12.7",
+        "webpack": "^3.5.5",
+        "webpack-dev-server": "^2.7.1"
+      }
+    }
+
+
+#### webpack.config.js
+
+
+    const webpack = require('webpack');
+    // extract-text-webpack-plugin：将css单独打包成一个文件
+    const ExtractTextPlugin = require('extract-text-webpack-plugin')
+
+    const config = {
+        // 入口文件
+        entry: {
+            index: __dirname + '/client/src/main.js',
+            // 将react和react-dom这些单独打包出来，减小打包文件体积
+            vender: [
+                'react',
+                'react-dom'
+            ]
+        },
+        // 打包输出
+        output: {
+            path: __dirname + '/client/dist',
+            filename: 'js/[name].js'
+        },
+        // resolve: {
+        //     extensions: [".js", ".json"]//当requrie的模块找不到时，添加这些后缀
+        // },
+        // 模块加载
+        module: {
+            loaders: [{
+                test: /\.js|.jsx$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader' // 旧版本的webpack可以省略写成babel，新版本的每个loader都不克在省略
+            }, {
+                test: /\.(scss|sass|css)$/,
+                loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader!postcss-loader', {
+                    pubkicPath: '../'
+                })
+            }, {
+                test: /\.(png|jpg|jpng|eot|ttf)$/,
+                loader: 'url-loader?limit=8192&name=images/[name].[ext]'
+            }]
+        },
+        // 插件配置
+        plugins: [
+            // 这是之前单独打包出来的react、react-dom等文件
+            new webpack.optimize.CommonsChunkPlugin({ name: 'vender', filename: 'js/vender.bundle.js' }),
+            // 将所有sass/css文件打包成一个index.css文件
+            new ExtractTextPlugin('css/index.css'),
+            new webpack.DefinePlugin({
+                'process.env': {
+                    NODE_ENV: JSON.stringify('production')
+                }
+            }),
+            //  压缩打包后的代码
+            new webpack.optimize.UglifyJsPlugin({
+                compress: {
+                    warnings: true
+                }
+            }),
+            // 热更新
+            new webpack.HotModuleReplacementPlugin()
+        ],
+        devServer: {
+            // contentBase: __dirname + '/public', // 本地服务器说加载的页面所在目录 可以不添加该选项
+            contentBase: __dirname + '/client/dist',
+            historyApiFallback: true, // 不跳转
+            inline: true, // 实时刷新
+            // hot: true
+            // webpack-dev-server2.x后不再支持colors、hot、prosses等参数
+            // 配置webpack dev server单独启动而不是结合exprees服务器时的代理 如执行npm start 而不是执行其他命令时即是单独使用webpack dev server
+            proxy: {
+                "/api/*": {
+                    target: "http://localhost:4000",
+                    secure: true,
+                }
+            }
+        }
+    }
+
+    module.exports = config;
+
+
+### 服务器
+
+#### app.js
+
+    import express from 'express';
+    import mongoose from 'mongoose';
+    import path from 'path';
+    import favicon from 'serve-favicon';
+    import logger from 'morgan';
+    import cookieParser from 'cookie-parser';
+    import bodyParser from 'body-parser';
+    import ejs from 'ejs';
+    import api from './api'
+    import config from './config/db'
+
+
+    const app = express();
+
+    app.set('views', path.join(__dirname, '../client/dist'));
+    app.set('view engine', 'html');
+    app.engine('html', ejs.renderFile)
+
+    app.use(logger('dev'));
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(cookieParser());
+    app.use(express.static(path.join(__dirname, '../client/dist')));
+
+    const port = 4000;
+    app.get("/", (req, res, next) => {
+        res.render('index');
+    });
+
+    // 引入API接口
+    app.use('/api', api)
+    // 解构赋值
+    const { db: { mongodb }, options } = config;
+    // mongodb测试
+    mongoose.connect(mongodb, options);
+
+    // 实例化连接
+    const db = mongoose.connection;
+
+    db.on('error', (err) => {
+      console.error('MongoDB连接失败！！' + err)
+    });
+
+    db.once('open', () => {
+      console.log('MongoDB连接成功！！')
+    })
+
+    app.listen(port, () => {
+        console.info('server is runing on port ' + port)
+    })
+
+    // catch 404 and forward to error handler
+    app.use((req, res, next) => {
+      var err = new Error('Not Found');
+      err.status = 404;
+      next(err);
+    });
+
+    // error handler
+    app.use((err, req, res, next) => {
+      // set locals, only providing error in development
+      res.locals.message = err.message;
+      res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+      // render the error page
+      res.status(err.status || 500);
+      res.render('error');
+    });
+
+    module.exports = app;
+
+#### api/index.js
+
+    import express from 'express'
+
+    import db from '../model'
+
+    import newsData from '../mock/news'
+
+    const router = express.Router();
+
+    router.get('/user', (req, res, next) => {
+        db.User.find((err, user) => {
+            res.send(user)
+        })
+    })
+
+    router.get('/news', (req, res, next) => {
+        const data = newsData();
+        const news = data.news;
+        res.send(news)
+    })
+
+    router.get('/menu', (req, res, next) => {
+        db.Menu.find((err, menu) => {
+            res.send(menu)
+        })
+    })
+    export default router
+
+#### config/db.js
+
+    const config = {
+        db: {
+            mongodb: "mongodb://localhost/node-cms"
+        },
+        options: {
+            user: "ouyuan",
+            pass: "ouyuan"
+        }
+    };
+
+    export default config;
+
+#### model/index.js
+
+    import mongoose from 'mongoose'
+
+    const Schema = mongoose.Schema;
+
+    const menuSchema = new Schema({
+        name: String,
+        link: String,
+        icon: String
+    });
+
+    const userSchema = new Schema({
+        name: String,
+        email: String,
+        pwd: String
+    });
+
+    const Models = {
+        User: mongoose.model('User', userSchema),
+        Menu: mongoose.model('Menu', menuSchema)
+    }
+
+    export default Models
+
+
+### 客户端
+
+客户端即以上前端部分。
+
 
 此时访问浏览器的[http://localhost:8080/](http://localhost:8080/)即可看到我们的模拟的数据以及从mongodb数据库读取回来的数据：
 
@@ -810,6 +1107,8 @@ menu是我此前创建的一个集合
 我们成功拿到了user和menu的数据！
 
 ### 总结
+
+
 
 项目结构反应了开发者在整体项目的高度去考虑产品或者项目的构架，清晰的项目让我们有条理的开发以及维护项目。
 
@@ -822,5 +1121,5 @@ menu是我此前创建的一个集合
 前后端已经打通，此时只写了两个简单的API接口，所有的数据也全部显示在Home跟页面下，那么后期，后端只需要添加想要的API接口并设计相应的数据模型并插入到数据库中，前端则构建对应组件，并借助React-Router去控制组件的渲染，以便在不同的组件中显示相对应的数据。至于组件状态的管理，后期可响应的根据项目需求，考虑是否使用Redux、React-Redux来构建我们的状态树。
 
 
-后续将会抽空实现一个简单的前后端分离的电商商城系统。
+后续将会抽空以此搭建的前后端分离的模式实现一个简单的前后端分离的电商商城系统。
 
