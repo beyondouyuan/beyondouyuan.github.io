@@ -12,10 +12,14 @@ description: 一寸柔肠情几许？薄衾孤枕，梦回人静。侵晓潇潇�
 
 ### 写在前面
 
+前后端分离，听了很久，想了很久，今日便动手撸一撸！
+
 #### 为什么要前后端分离？
 
 
-首先，前后端分离将会是之后web开发的一个趋势，这也是前端开发者必须学习的工作方式。其次，之前开发中，公司的种种原因并为实现前后端分离的方式，前端狗的我只能默默的等待，到后等不了了，就用mockjs模拟了后端接口，但是，依然觉得缺点什么，这不是真正的后端数据，等，寂寞到夜深，很不爽，工作效率实在是太低了。
+前后端分离将会是之后web开发的一个趋势，这也是前端开发者必须学习的工作方式.
+
+此前开发中，公司的种种原因并未实现前后端分离的方式，前端狗的我只能默默的等待，到后等不了了，就用mockjs模拟了后端接口，但是，依然觉得缺点什么，这不是真正的后端数据，等，寂寞到夜深，很不爽，工作效率实在是太低了。
 
 #### 为什么有此想法？
 
@@ -33,6 +37,16 @@ description: 一寸柔肠情几许？薄衾孤枕，梦回人静。侵晓潇潇�
 ## 技术栈
 
 使用到的技术栈主要包括一下几个：
+
+- webpack 3.x
+- react
+- react-dom
+- react-router
+- redux
+- react-redux
+- express
+- mongodb
+
 
 ### webpack
 
@@ -136,7 +150,7 @@ NOTE:在传统的MVC模式开发中，或者一般的Express模式开发时，�
         ./package.json                       //==>依赖包信息
         ./webpack.config.js                  //==>webpack配置文件
 
-一个良好的项目目录结构可以高效的进行开发工作，无需发太多精力在考虑代码放到哪里，以及频繁的切换代码目录。同时，项目结构也可以让自己的思维更佳清晰。
+一个良好的项目目录结构可以高效的进行开发工作，无需花太多精力在考虑代码放到哪里，以及频繁的切换代码目录。同时，项目结构也可以让自己的思维更加清晰，以便我们从全局去考虑我们的产品以及开发项目。
 
 构建项目分两步进行，前端部分，后端部分，前端部分主要是选择了React，所以需要使用webpack配置React和ES6的编译。后端部分，主要是Express和MongoDB部分。
 
@@ -150,12 +164,12 @@ NOTE:在传统的MVC模式开发中，或者一般的Express模式开发时，�
 
 - react react-dom redux react-redux react-router为React的全家桶依赖
 - antd为蚂蚁金服提供的React的UI组件库
-- ss-loader style-loader node-sass sass-loader postcss-loader autoprefixer 主要用于处理css和sass等预处理css
-- file-loader url-loader主要用于处理css中引入的图片inco等部分
+- css-loader style-loader node-sass sass-loader postcss-loader autoprefixer 主要用于处理css和sass等预处理css
+- file-loader url-loader主要用于处理css中引入的图片icon等部分
 
 ### Webpack
 
-首先安装webpack，以webpack来打包React组件以及配置Express的ES6余发环境
+首先安装webpack，以webpack来打包React组件以及配置Express的ES6语法开发环境
 
     npm install webpack -g  
     npm install extract-text-webpack-plugin --save-dev // 将css单独打包的插件
@@ -659,7 +673,7 @@ mongoose作为我们的mongodb驱动的同时，也为我们提供了Schema这�
 mongodb是一个NoSQL数据库，它不需要预先设计表，而且它也没有表的概念，一般称之为集合Cllection，它的具体的数据着是类JS的JSON，被称之为文档Document，多个文档组成一个集合，多个集合组成一个数据库Database。
 >
 
-### Nodel
+### Model
 
 在server/目录下新建model目录，新建index.js文件定义数据库文档模型：
 
@@ -1118,7 +1132,7 @@ menu是我此前创建的一个集合
 
 项目结构反应了开发者在整体项目的高度去考虑产品或者项目的构架，清晰的项目让我们有条理的开发以及维护项目。
 
-构建的项目的过程也算是自己第一次又了产品整体上的思考思维。
+构建的项目的过程也算是自己第一次有了产品整体上的思考思维。
 
 在这期间遇到的问题主要有两个，第一个就是mongodb的安装配置的问题了，刚换到Mac OS上，安装的mongodb版本和社区上都不太一样，所以多化了点时间，另外一个express连接mongodb，使用了mongoose模块作为驱动，但是由于版本不同，API也不一样，总算看着API文档链接上了，
 
