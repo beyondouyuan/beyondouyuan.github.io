@@ -26,7 +26,7 @@ description: 一寸柔肠情几许？薄衾孤枕，梦回人静。侵晓潇潇�
 
 ### 项目github地址
 
-[https://github.com/beyondouyuan/node-web-react](https://github.com/beyondouyuan/node-web-react)
+[仓库地址](https://github.com/beyondouyuan/node-web-react)
 
 
 
