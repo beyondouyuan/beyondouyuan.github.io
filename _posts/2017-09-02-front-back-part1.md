@@ -543,6 +543,8 @@ components/目录下新建三个文件如下
     npm install express-generator -g
     npm install nodemon -g
 
+项目根目录下执行express server命令，express-generator脚手架将会为我们自动创建express项目结构，删除掉不需要的public和views目录，并把server/目录下的pakage.json的依赖包信息移动到根目录的pakage.json内，然后删除server/目录下的pakage.json文件。别忘了使用npm install下载express的依赖噢。
+
 nodemon监听node的变化，当我们修改服务器文件时，无需手动重启服务器。
 修改package.json的scripts命令：
 
