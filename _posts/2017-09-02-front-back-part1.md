@@ -670,7 +670,7 @@ nodemon ./server/app.js --exec babel-node可以是的我们的Express也可以�
 mongoose作为我们的mongodb驱动的同时，也为我们提供了Schema这个强大的数据模型定义模块。
 
 >
-mongodb是一个NoSQL数据库，它不需要预先设计表，而且它也没有表的概念，一般称之为集合Cllection，它的具体的数据着是类JS的JSON，被称之为文档Document，多个文档组成一个集合，多个集合组成一个数据库Database。
+mongodb是一个NoSQL数据库，它不需要预先设计表，而且它也没有表的概念，一般称之为集合Collection，它的具体的数据着是类JS的JSON，被称之为文档Document，多个文档组成一个集合，多个集合组成一个数据库Database。
 >
 
 ### Model
@@ -735,7 +735,7 @@ mongodb是一个NoSQL数据库，它不需要预先设计表，而且它也没�
     export default router
 
 
-### 传入数据
+### 插入集合数据
 
 
 启动mongo并按照我们设置的数据模型插入一些测试数据
@@ -783,7 +783,12 @@ mongodb是一个NoSQL数据库，它不需要预先设计表，而且它也没�
     WriteResult({ "nRemoved" : 1 })
 
 
-node-cms对应Database，menus为menus集合Cllection，users为users集合Cllection，集合内的数据称为文档。
+node-cms对应Database，menus为menus集合Collection，users为users集合Collection，集合内的数据称为文档。
+
+
+>
+NOTE:mongodb在自动创建集合时会自动给集合名加上s，所以手动创建集合时建议加上s，此前手动创建了一个menu而不是menus的集合，然后获取数据时是空数据。。。
+>
 
 查看集合：
     
