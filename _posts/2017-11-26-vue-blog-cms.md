@@ -155,9 +155,11 @@ demo只足以了解某一些知识点，再多的demo也不是系统性的学习
 
 超级简易，但也五脏俱全。
 
-## 学习时间轴
+### 知识点
 
-### vue.js
+简单记录一下学习路线和过程，首先当然是Vue.js基础语法，然后逐渐进入Vue的生态圈了，本次学习大题经历Vue全家桶了，Vue基础支撑前端搭建，Vur-Router控制前端路由，实现页面切换，Vuex掌控状态管理，Vue-Resource提供http请求。
+
+## vue.js
 
 [官网](https://cn.vuejs.org/v2/guide/)
 
@@ -691,13 +693,214 @@ Vue主要包含以下几个生命周期：
 
 
 
+## Vue-Router
+
+Vue-router将组件components映射到路由，并按一定规则将组件渲染出来。
+
+### 配置路由
+
+要使用Vue-Router则需要引入依赖以及组件，Vue-Router依赖于Vue，所以在实例化Vue-Router时需要首先引入Vue。同时再讲需要映射到路由的组件引入，形如以下。
+
+    import Vue from 'vue'
+    import VueRouter from 'vue-router'
+
+    import Login from './components/Login.vue'
+    import Register from './components/Register.vue'
+
+    const routes = [
+        { pathe: './login', component: Register },
+        { pathe: './register', component: Register }
+    ]
+
+    const router = new VueRouter({
+        routes
+    })
+
+    const App = new Vue({
+        router
+    }).$mount('#app')
+
+
+>
+当应用中，<router-link>对应的路由匹配成功，vue将自动设置其class属性值为.router-link-active
+>
+
+### 动态路由匹配
+
+有时，我们需要把某种模式匹配到的所有路由，全部映射到同一个组件中，如，我们有一个文章组件，对于数据库中查询到id不相同的文件，都将会渲染到这个组件中，则，动态路径参数可以达到此效果。
+
+动态路径参数以冒号开头：
+
+    const router = new VueRouter({
+        routes: [
+            { path: '/article/:id', component: Article }
+        ]
+    })
+
+
+当vue匹配到一个路由时，参数值将会被设置到this.$router.params，则可在每个组件中使用：
+
+    conts Article = {
+        template: '<div>文章id：{{ $router.params.id }}</div>'
+    }
+
+Vue-Router除提供$.router.paramsAPI外，还提供其他的很有用的API，如当路由/URL中带有查询参数?，则$router.query就可以获得查询参数?后的信息，而$router.hash则可获取地址栏#后的参数。
+
+### 响应路由参数
+
+当使用路由参数时，如，路由从article/1导航到article/2时，实际上，这两个文章1和2使用的是同一个Article组件，即组件实例被复用，正是这种复用方式将我们从DOM中解放了出来，但是，复用组件意味着组件没有重复经历创建=>销毁=>创建这个过程，也就是说，组件的生命周期钩子不会再次被带调用，这样以来我们在生命周期内定义的一些事务就达不到响应的效果，这就需要我们去监控$router对象的变化，从而做出响应了。
+
+watch可以做到：
+
+    <template>
+        <div id="app">
+            {{message}}
+        </div>
+    </template>
+
+    <script>
+        export default {
+            data() {
+                return {
+                    message: 'Router'
+                }
+            },
+            watch: {
+                '$router' (to, from) {
+                    //..doSomething
+                }
+            }
+        }
+    </script>
+
+
+但是，watch也不可滥用了，这可能会增大性能开销，我们可以使用beforeRouterUpdate来实现这个效果：
+
+    <template>
+        <div id="app">
+            {{message}}
+        </div>
+    </template>
+
+    <script>
+        export default {
+            data() {
+                return {
+                    message: 'Router'
+                }
+            },
+            beforeRouteUpdate(to, from, next) {
+                //..doSomething
+                //别忘了调用next()
+            }
+        }
+    </script>
 
 
 
+### 嵌套路由
+
+通过chidren参数配置嵌套路由
+
+路由入口文件如下：
+
+    ./router
+        ./index.js
+
+    import Vue                          from 'vue'
+    import Router                       from 'vue-router'
+
+    import Blog                         from '../components/website/Blog.vue'
+    import Article                      from '../components/website/Article.vue'
+    import Archive                      from '../components/website/Archive.vue'
 
 
+    import Home                         from '../components/admin/Home.vue'
+    import Login                        from '../components/admin/Login.vue'
+    import Editor                       from '../components/admin/Editor.vue'
+    import Account                      from '../components/admin/Account.vue'
+    import Articles                     from '../components/admin/Articles.vue'
 
 
+    Vue.use(Router)
 
+    export default new Router({
+        mode: 'history',
+        routes: [{
+                path: '/',
+                name: 'Login',
+                component: Login
+            },
+            {
+                path: '/login',
+                name: 'login',
+                component: Login
+            },
+            {
+                path: '/blog',
+                name: 'blog',
+                component: Blog,
+                children: [
+                    { path: '', component: Archive },
+                    { path: 'article', name: 'article',component: Article }
+                ]
+            },
+            {
+                path: '/admin',
+                component: Home,
+                children: [
+                    { path: '', component: Articles },
+                    { path: 'articles', name: 'articles', component: Articles },
+                    { path: 'editor', name: 'editor', component: Editor },
+                    { path: 'account', name: 'account', component: Account }
+                ]
+            }
+
+        ]
+    })
+
+Home.vue如下：
+
+    <template>
+        <section class="container">
+            <Submenu></Submenu>
+            <over-view></over-view>
+        </section>
+    </template>
+    <script>
+        import Submenu              from './Aside.vue'
+        import OverView             from './OverView.vue'
+
+        export default {
+            name: 'Home',
+            components: {Submenu, OverView}
+        }
+    </script>
+    <style lang="sass" rel="stylesheet/scss" scoped>
+        section.container {
+            height: 100%;
+            min-height: 800px;
+            display: flex;
+        }
+    </style>
+
+根据以上，当路由匹配为/admin时，Articles组件将会在Home.vue的<router-view>中被渲染，而当路由匹配为/admin/account时，则是Account组件在Home.vue的<router-view>中被渲染，由此即可实现路由的切换，
+
+>
+TIPS：以上几处需要注意：
+
+    {
+        path: '/admin', ==>>表示以下所有路径匹配皆以此为基础，即/admin/xx
+        component: Home, ==>>表示children中的组件都是在Home的<router-view>中渲染
+        children: [
+            { path: '', component: Articles },==>>表示仅匹配/admin时的默认渲染的组件
+            { path: 'articles', name: 'articles', component: Articles }, =>/admin/articles
+            { path: 'editor', name: 'editor', component: Editor },=>/admin/editor
+            { path: 'account', name: 'account', component: Account }=>/admin/account
+        ]
+    }
+
+另一个，在Home.vue中有一个Message组件，并不需要经过new VueRouter实例化和配置，因为这只是一个普通的子组件，它不是zai<router-view>中渲染以达到切换路由，所以，他不是路由，只是淡村的组件
+>
 
 
