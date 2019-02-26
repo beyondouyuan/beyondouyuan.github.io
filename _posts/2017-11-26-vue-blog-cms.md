@@ -900,7 +900,147 @@ TIPS：以上几处需要注意：
         ]
     }
 
-另一个，在Home.vue中有一个Message组件，并不需要经过new VueRouter实例化和配置，因为这只是一个普通的子组件，它不是zai<router-view>中渲染以达到切换路由，所以，他不是路由，只是淡村的组件
+另一个，在Home.vue中有一个Message组件，并不需要经过new VueRouter实例化和配置，因为这只是一个普通的子组件，它不是zai<router-view>中渲染以达到切换路由，所以，他不是路由，只是普通的组件，通过路径时无法切换风闻到的，所有想通过URL切换的组件必须在VueRouter中注册
 >
+
+
+## Vuex
+
+Vuex是官方提供的Vue.js的状态管理模式，其采用集中式（即Redux所描述的单一状态树）存储管理应用的所有组件的状态，并以响应的规则保证状态已可预测的方式发生变化。
+
+一个简单的计时器状态管理：
+
+    <script>
+        new Vue({
+            // state
+            data() {
+                return {
+                    conut: 0
+                }
+            },
+            // view
+            template: `
+                <div>{{count}}</div>
+            `,
+            // actions
+            methods: {
+                increment() {
+                    this.count++
+                }
+            }
+        })
+    </script>
+
+其包括：
+
+- state 驱动应用的数据源
+- view 以声明形式将state映射到视图 
+- actions 响应view上用户交互导致的状态变化
+
+显而易见，这是一个单向数据流的模型
+
+用户在组件上的交互触发action，action通知state去驱动数据以及状态，从而去触发视图响应数据状态的变化使视图的UI发生更新。看起来很完美，理想状态下，一切数据流由父组件单向的向下传递到子组件，子组件通过props接收父组件的数据，父组件监听子组件状态的变化，然则，当应用遇到多个组件共享状态时，如，兄弟组件共享状态时，多层传参显得很无力，且各个组件之间如何通信以及视图UI如何响应状态，就会乱成一锅粥。
+
+那么将组件共享的状态抽取出来到全局中，那么，无论组件嵌套得多深，都可以轻易的放问道需要的状态。或者触发行为。
+
+
+### Vuex核心
+
+Vuex的核心就是一个仓库store，store本质上可以理解为一个容器，其中包含着应用大部分的状态state。他是一种响应式的模式，当Vue组件从store中读取状态时，若store中的状态发生变化，那么响应的组件也将得到更新。
+
+Vuex不允许直接改变store中的状态，改变store中的状态的唯一途径是现实的提交（commit） mutation，如此也就可以便捷的跟踪状态变化以快速高效做出响应。
+
+    <script>
+        const store = new Vuex.Store({
+            state: {
+                count: 0
+            },
+
+            mutations: {
+                increment: (state) {
+                    state.count++
+                }
+            }
+            methods: {
+                add() {
+                    sotre.commit('increment')
+                }
+            }
+        })
+    </script>
+
+
+以上，Vuex使用了单一状态树，用一个state对象包含了应用所有的状态，state是唯一数据源，由此，每个应用将紧紧包含一个store实例，单一状态树可以让我们直接定位任一特定状态片段。
+
+### Vue组件中获取Vuex状态
+
+vuex的状态是响应式的，从store实例中读取状态最简单的方式就是在计算属性中返回某个状态：
+
+    <template>
+        <div id="app">
+            {{count}}
+        </div>
+    </template>
+    <script>
+        export default {
+            computed: {
+                count() {
+                    return store.state.count
+                }
+            }
+        }
+    </script>
+
+
+组件需要使用vuex状态，就需要导入状态，如果有很多个组件都需要使用vuex状态，很显然，不可能在每一个字组件中都各自的import vuex状态，好在Vuex通过store选项，可以从根组件注入到每一个字组件中
+    
+
+    <template>
+        <div id="app">
+            
+        </div>
+    </template>
+    <script>
+        import Vue from 'vue'
+        import Vuex from 'vuex'
+        import Counter from './components/Counter.vue'
+        Vue.use(Vuex)
+        const store = new Vuex.Store({
+            state: {
+                count: 0
+            }
+        })
+        const App = new Vue({
+            el: '#app',
+            store,
+            components: {Counter, ...}
+        })
+    </script>
+
+
+
+由此，App目录下的所有字组件都将会被注入Vuex的state
+
+
+    <template>
+        <div id="count">{{count}}</div>
+    </template>
+    <script>
+        computed: {
+            count() {
+                return this.$store.state.count
+            }
+        }
+    </script>
+
+
+
+字组件可通过this.$store可以放问道store中的state状态树
+
+
+
+
+
+
 
 
