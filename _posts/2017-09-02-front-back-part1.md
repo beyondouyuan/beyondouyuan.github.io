@@ -6,7 +6,7 @@ date: 2017-09-02
 categories: blog
 tags: [JavaScript]
 javascript: javascript
-description: 一寸柔肠情几许？薄衾孤枕，梦回人静。侵晓潇潇雨。
+description: 忽见陌头杨柳色，悔教夫婿觅封侯。
 ---
 
 

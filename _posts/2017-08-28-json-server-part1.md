@@ -6,7 +6,7 @@ date: 2017-08-28
 categories: blog
 tags: [JavaScript]
 javascript: javascript
-description: 一寸柔肠情几许？薄衾孤枕，梦回人静。侵晓潇潇雨。
+description: 花褪残红青小，燕子飞时绿水人家绕。
 ---
 
 ### 写在前面

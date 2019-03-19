@@ -6,7 +6,7 @@ date: 2017-08-27
 categories: blog
 tags: [JavaScript]
 javascript: javascript
-description: 一寸柔肠情几许？薄衾孤枕，梦回人静。侵晓潇潇雨。
+description: 墙里秋千墙外道，墙外星人墙里佳人笑。
 ---
 
 ### 写在前面
