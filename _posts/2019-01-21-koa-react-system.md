@@ -132,6 +132,29 @@ jsdoc -c conf.json
 - 评论
 - 电影搜索
 
+### 踩坑记录
+
+koa2中，使用koa-body即可实现图片上传接收的需求，但是有一个需要注意的点，koaBody的中间件必须在router中间之前配置，否则，ctx.request.files将是undefined
+
+app.js中：
+
+```javascript
+// middlewares
+// form-data
+app.use(koaBody({
+  multipart: true,
+  // encoding:'gzip',
+  formidable: {
+    uploadDir: path.join(__dirname, './public/upload/'), // path
+    maxFieldsSize:10*1024*1024,
+    multipart: true
+  }
+}))
+
+// api 必须将router 中间件放在koaBody中间件之间 否则无法获取得到文件
+app.use(router.routes()).use(router.allowedMethods())
+```
+
 
 ### 管理后台效果图
 

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Express + Nuxt构建CMS
+title: 使用Express和Nuxt实现一个对SEO友好的CMS系统
 author: beyondouyuan
 date: 2018-12-22
 categories: blog
