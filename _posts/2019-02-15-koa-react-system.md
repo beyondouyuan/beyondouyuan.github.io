@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Koa2 + React构建类豆瓣电影管理系统
+title: Koa2 + React构建电影管理系统
 author: beyondouyuan
-date: 2019-01-21
+date: 2019-02-15
 categories: blog
 tags: [NodeJs, Koa2, React]
 node: node
@@ -14,6 +14,8 @@ description: 小山重叠金明灭，鬓云欲度香腮雪。
 ### 写在前面
 
 此前都在用express和vue以及mogodb，这一次就是想玩玩koa和react以及mysql
+
+film-system-api依然是restful的分离接口，同时可供管理系统以及前端的使用，那么，以此就可以扩展为前端的管理系统，前端的电影app或者网站的使用
 
 ## [film-system-api](https://github.com/beyondouyuan/film-system-api.git)
 
