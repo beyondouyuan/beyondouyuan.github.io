@@ -2,10 +2,11 @@
 layout: post
 title: Express + Vue + Vuex构建简版类免展h5制作器
 author: beyondouyuan
-date: 2018-12-22
+date: 2019-01-10
 categories: blog
-tags: [NodeJs, express]
+tags: [NodeJs, express, vue]
 node: node
+vue: vue
 description: 蝴蝶儿，晚春时，阿娇初着淡黄衣，依春学画伊。
 ---
 
@@ -21,9 +22,9 @@ LightCreater是一个基于express vue vuex开发类似于免展h5简化版制�
 
 ### 参考
 
-[express](http://www.expressjs.com.cn/)
-[mongodb](https://www.mongodb.com/)
-[vue](https://vuejs.bootcss.com/v2/guide/)
+- [express](http://www.expressjs.com.cn/)
+- [mongodb](https://www.mongodb.com/)
+- [vue](https://vuejs.bootcss.com/v2/guide/)
 
 
 ## Light开发说明
@@ -81,10 +82,10 @@ $ npm run dev
 
 ### 功能特性
 
-- vuex管理编辑作品状态
+- vuex管理编辑作品状态、包括元素动画、元素位置尺寸等属性
 - animate和swiper作为动画库
 - 服务端使用ejs将作品编译为html存储与服务端的静态文件中，后续即可访问作品
-
+- 使用html5拖拽实现页面元素拖动编辑
 
 效果图
 

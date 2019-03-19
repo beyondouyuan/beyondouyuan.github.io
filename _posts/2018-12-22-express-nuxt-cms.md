@@ -4,8 +4,9 @@ title: Express + Nuxt构建CMS
 author: beyondouyuan
 date: 2018-12-22
 categories: blog
-tags: [NodeJs, express]
+tags: [NodeJs, express, vue, nuxt]
 node: node
+vue: vue
 description: 人言落日是天涯，望极天涯不见家。
 ---
 
@@ -23,9 +24,9 @@ LightCMS采用前后端分离的模式，数据使用express提供restful接口�
 
 ### 参考
 
-[express](http://www.expressjs.com.cn/)
-[mongodb](https://www.mongodb.com/)
-[nuxt](https://zh.nuxtjs.org/)
+- [express](http://www.expressjs.com.cn/)
+- [mongodb](https://www.mongodb.com/)
+- [nuxt](https://zh.nuxtjs.org/)
 
 
 ## Light开发说明
