@@ -4,8 +4,7 @@ title: Express + Nuxt构建CMS
 author: beyondouyuan
 date: 2018-12-22
 categories: blog
-tags: [express, vue]
-javascript: express
+node: [node, express]
 description: 人言落日是天涯，望极天涯不见家。
 ---
 
