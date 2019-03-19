@@ -6,8 +6,7 @@ date: 2018-12-09
 categories: blog
 tags: [JavaScript]
 javascript: javascript
-description: 试问闲愁都几许！一川烟草，满城风絮，梅子黄时雨
-
+description: 相思相见知何日？此时此夜难为情！入我相思门，知我相思苦，长相思兮长相忆，短相思兮无穷极，早知如此绊人心，何如当初莫相识。
 ---
 
 ## 写在前面
