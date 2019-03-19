@@ -167,6 +167,10 @@ vue使用Object.defineProperty劫持数据，将data递归地转换getter和sett
 
 
 ## 实现watcher
+监听器的原理，将data中需监听的属性写在watch对象中，并给其提供一个方法，当被监听属性的值改变时，调用该方法。​​
+
+
+[参考](https://blog.csdn.net/xuyangxinlei/article/details/81408200)
 
 在app.js中或者utils/中封装watcher也可以，我直接在app.js中开始了
 
@@ -252,7 +256,8 @@ onLoad() {
   },
 watch: {
     opengid(newVal, oldVal) {
-    console.log('111::', newVal)
+        console.log('111::', newVal)
+    }
 }
 
 ```
