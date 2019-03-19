@@ -1,10 +1,10 @@
 ---
 layout: post
-title: 记录Taro开发小程序天坑过程
+title: 记录Taro开发小程序填坑过程
 author: beyondouyuan
 date: 2019-01-03
 categories: blog
-tags: [Reatc, Taro, 小程序]
+tags: [Reat, Taro, 小程序]
 React: React
 Javascript: Javascript
 description: 红酥手，黄縢酒，满城春色宫墙柳。
