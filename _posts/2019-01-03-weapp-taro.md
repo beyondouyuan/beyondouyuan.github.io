@@ -113,6 +113,19 @@ import image from '../../assets/iamges/1.png'
 
 ## 媒体
 
+
+### 富文本图片
+
+Taro中提供RichText，对于文字类的富文本没什么问题，但是，若是图片的富文本需要做一次替换，否则样式将会无效，呗小程序默认的样式代替：
+
+```javascript
+const richText = contents && contents.replace(/\<img/gi, `<img style="max-width:100%;height:auto;display:block"`)
+```
+```
+```html
+<RichText className="contents" nodes={richText} />
+```
+```
 ### 音频
 
 使用小程序音频api时，需要在app.js中加入一下配置声明：
@@ -132,3 +145,22 @@ requiredBackgroundModes: ["audio"],
 ### 视频
 
 Vedio组件作为原生组件，具有最高层级，当我们想在视频组件上添加自定义的一些元素时，将会被覆盖掉，所以微信又提供了cover-view来解决这一需求，但是cover却是有条件限制的，其内只允许是，cover-view\image\button等，其他元素将会失效，所以，当你想在视频组件上使用slider自定义进度条时，他是无效的，只能使用其他解决方案
+
+
+### 小程序效果图
+
+- 首页
+<center>
+<p><img src="https://beyondouyuan.github.io/img/weapp/1.png" align="center"></p>
+</center>
+
+
+- 音频播放
+
+<center>
+<p><img src="https://beyondouyuan.github.io/img/weapp/2.png" align="center"></p>
+</center>
+- 视频播放
+<center>
+<p><img src="https://beyondouyuan.github.io/img/weapp/3.png" align="center"></p>
+</center>
