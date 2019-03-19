@@ -34,7 +34,7 @@ LightCreater是一个基于express vue vuex开发类似于免展h5简化版制�
 - Node/Npm/Express
 - Mongodb
 
-### 前端仕途
+### 前端视图
 
 - Vue/Vue/Vuex
 
