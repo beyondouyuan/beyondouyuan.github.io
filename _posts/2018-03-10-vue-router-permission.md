@@ -6,7 +6,7 @@ date: 2018-03-10
 categories: blog
 tags: [vue, vuex, vue-router]
 vue: vue
-description: 蝴蝶儿，晚春时，阿娇初着淡黄衣，依春学画伊。
+description: 蝴蝶儿，晚春时，阿娇初着淡黄衣，倚窗学画伊。
 ---
 
 ## 写在前面
