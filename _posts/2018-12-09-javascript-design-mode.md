@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 记录一次工作用使用发布-订阅模式的过程
+title: 记录一次工作使用发布-订阅模式的过程
 author: beyondouyuan
 date: 2018-12-09
 categories: blog

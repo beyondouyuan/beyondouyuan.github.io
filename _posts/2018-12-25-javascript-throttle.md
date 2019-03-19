@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 防抖动与节流函数实战
+title: 记录一次工作使用防抖动与节流函数的过程
 author: beyondouyuan
 date: 2018-11-20
 categories: blog
@@ -59,9 +59,9 @@ function throttle(handler, interval) {
 }
 
 // 用throttle来包装scroll的回调
-const better_scroll = throttle(() => console.log('触发了滚动事件'), 1000)
+const betterScroll = throttle(() => sendLogInfo(data), 1000)
 
-document.addEventListener('scroll', better_scroll)
+document.addEventListener('scroll', betterScroll)
 ```
 ## 防抖
 
@@ -98,9 +98,9 @@ function debounce(handler, delay) {
 }
 
 // 用debounce来包装scroll的回调
-const better_scroll = debounce(() => console.log('触发了滚动事件'), 1000)
+const betterScroll = debounce(() => sendLogInfo(data), 1000)
 
-document.addEventListener('scroll', better_scroll)
+document.addEventListener('scroll', betterScroll)
 
 ```
 
@@ -130,11 +130,22 @@ function throttling(handler, wait, delay) {
         }
     }
 }
-function handle() {
-    console.log('hello')
-}
+function sendLogInfo(data) {
+    $.ajax({
+        url: path,
+        method: 'post',
+        type: 'json',
+        async: false,
+        data: {
+            ...data
+        },
+        success: function(res) {
+
+        },
+    })
+} 
 // 监听
-window.addEventListener('scroll', throttling(handle, 1000, 2000));
+window.addEventListener('scroll', throttling(sendLogInfo, 1000, 2000));
 ```
 或者是这样的
 
@@ -170,7 +181,7 @@ function throttle(handler, delay) {
 }
 
 // 用新的throttle包装scroll的回调
-const better_scroll = throttle(() => console.log('触发了滚动事件'), 1000)
+const betterScroll = throttle(() => sendLogInfo(data), 1000)
 
-document.addEventListener('scroll', better_scroll)
+document.addEventListener('scroll', betterScroll)
 ```
