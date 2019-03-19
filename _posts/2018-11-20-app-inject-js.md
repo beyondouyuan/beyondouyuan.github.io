@@ -1033,6 +1033,74 @@ function handleFetchData(data) {
     })
 }
 ```
+handleEduRender和handleEduTransform这两个主要是针对每一家银行对于教育学历的划分不同，页面使用的值也不同，有的是123有的是321有的则只直接是学历中文名，所以初始化需要做一次转换，才能使用，同时，在提交的时候，学历值也需要按照自己服务器后台的值做对应转换，否则会数据错乱，五大的到正确的学历数据
+
+
+```javascript
+
+const EDULIST = {
+    doctor: {
+        val: 1,
+        text: '博士及以上'
+    },
+    master: {
+        val: 2,
+        text: '硕士'
+    },
+    regular: {
+        val: 3,
+        text: '本科'
+    },
+    college: {
+        val: 4,
+        text: '专科及以下'
+    }
+}
+
+// 渲染学历文本至页面
+function handleEduRender(edu) {
+    switch (Number(edu)) {
+        case 1:
+            return {
+                ...EDULIST.doctor
+            }
+        case 2:
+            return {
+                ...EDULIST.master
+            }
+        case 3:
+            return {
+                ...EDULIST.regular
+            }
+        case 4:
+        case 5:
+        case 6:
+            return {
+                ...EDULIST.college
+            }
+        default:
+            return {
+                ...EDULIST.regular
+            }
+    }
+}
+
+// 转换学历值用于保存至服务器
+function handleEduTransform(edu) {
+    switch (edu) {
+        case EDULIST.doctor.text:
+            return 1
+        case EDULIST.master.text:
+            return 2
+        case EDULIST.regular.text:
+            return 3
+        case EDULIST.college.text:
+            return 4
+        default:
+            return 3
+    }
+}
+```
 
 
 就这么简单！！！
