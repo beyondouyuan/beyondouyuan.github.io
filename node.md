@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "NodeJs"
+title: "NODEJS"
 author: "beyondouyuan"
 description: "墙里秋千墙外道，墙外行人墙里佳人笑。笑渐不问声渐消，多情却被无情恼。"
 header-img: "img/green.jpg"
@@ -9,11 +9,6 @@ header-img: "img/green.jpg"
 
 <center>
     <p><img src="https://beyondouyuan.github.io/img/ouyuan.jpg" align="center"></p>
-</center>
-
-<center>
-<p>他们从这片黑暗森林逃往另一片黑暗森林！
-</p>
 </center>
 
 

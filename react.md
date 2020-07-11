@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "ReactJs"
+title: "React"
 author: "beyondouyuan"
 description: "蝴蝶儿，晚春时，阿娇初着淡黄衣。倚窗学画伊。"
 header-img: "img/blue.jpg"

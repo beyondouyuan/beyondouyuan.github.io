@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "Html/Css"
+title: "HTML/CSS"
 author: "beyondouyuan"
 description: "深院静，小庭空。断续寒砧断续风。"
 header-img: "img/tw_lan.jpg"
@@ -11,8 +11,6 @@ header-img: "img/tw_lan.jpg"
     <p><img src="https://beyondouyuan.github.io/img/ouyuan.jpg" align="center"></p>
 </center>
 
-
-<center><p>我们，是同志了！</p></center>
 
 <!-- 文章列表 -->
 <ul class="listing">

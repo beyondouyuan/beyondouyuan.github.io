@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "Javascript"
+title: "JavaScript"
 author: "beyondouyuan"
 description: "北方有佳人，绝世而独立。一顾倾人城，再顾倾人国。宁不知倾城与倾国，佳人难再得。"
 header-img: "img/zhihu.jpg"

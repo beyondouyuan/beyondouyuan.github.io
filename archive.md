@@ -6,9 +6,7 @@ description: "却爱蓝罗裙子，羡他长束纤腰。"
 header-img: "img/orange.jpg"
 ---
 
-我是欧元，一切从这里开始！
-
-我们，是同志了！
+Hello, World!
 
 
 <center>
