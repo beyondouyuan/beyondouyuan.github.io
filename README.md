@@ -23,7 +23,7 @@ resume-online/
 │   ├── Irving-接单简历.pdf       平台上传用（构建生成）
 │   └── Irving-接单简历-v2.docx   平台上传用（构建生成）
 ├── tools/build.py                一键重建脚本（纯 Python 标准库）
-├── netlify.toml / vercel.json / .github/workflows/pages.yml
+├── netlify.toml / vercel.json
 └── README.md
 ```
 
@@ -63,7 +63,7 @@ python3 -m http.server 8080
 
 整个 `resume-online/` 目录就是一个静态站点根目录，零依赖、零构建命令。
 
-**GitHub Pages**：本套已部署到用户级仓库 `beyondouyuan/beyondouyuan.github.io` 的 `master` 根，站点为 https://beyondouyuan.github.io/，push 即自动重建。通用做法：把本目录内容推到目标仓库的发布分支根；若改用 Actions 发布，workflow 必须放在**仓库根**的 `.github/workflows/`，且 `path` 要指向本目录（子目录里的 workflow 不会被 GitHub 识别）。
+**GitHub Pages**：本套已部署到用户级仓库 `beyondouyuan/beyondouyuan.github.io` 的 `master` 根，站点为 https://beyondouyuan.github.io/，push 即自动重建。通用做法：把本目录内容推到目标仓库的发布分支根；若改用 Actions 发布，需另行在**仓库根**的 `.github/workflows/` 新建 workflow，`path` 指向本目录；本交付目录不附带 workflow（子目录里的 workflow 不会被 GitHub 识别）。
 
 **Vercel**：导入该仓库，Framework 选 Other / 留空，Build Command 与 Output Directory 都留空（`vercel.json` 已声明纯静态），Deploy。
 
