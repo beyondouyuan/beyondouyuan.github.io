@@ -63,13 +63,13 @@ python3 -m http.server 8080
 
 整个 `resume-online/` 目录就是一个静态站点根目录，零依赖、零构建命令。
 
-**GitHub Pages**：把本目录内容推到一个仓库的根分支（`main`），仓库 Settings → Pages → Source 选 **GitHub Actions**，已有的 `.github/workflows/pages.yml` 会自动发布。若站点放在仓库子目录，把 workflow 里 `path: '.'` 改成对应子目录名。
+**GitHub Pages**：本套已部署到用户级仓库 `beyondouyuan/beyondouyuan.github.io` 的 `master` 根，站点为 https://beyondouyuan.github.io/，push 即自动重建。通用做法：把本目录内容推到目标仓库的发布分支根；若改用 Actions 发布，workflow 必须放在**仓库根**的 `.github/workflows/`，且 `path` 要指向本目录（子目录里的 workflow 不会被 GitHub 识别）。
 
 **Vercel**：导入该仓库，Framework 选 Other / 留空，Build Command 与 Output Directory 都留空（`vercel.json` 已声明纯静态），Deploy。
 
 **Netlify**：导入该仓库，`netlify.toml` 已写好 `publish = "."` 且 `command` 为空；也可以直接把整个目录拖到 Netlify Drop。
 
-部署后做两件事：把 `index.html` 里 `og:image` 的相对路径换成完整 URL（社交分享缩略图要用绝对地址），把拿到的网址填回 `data/profile.json` 的 `identity.contacts` 中「在线简历」那条，重跑构建。
+本套已完成这两项回填：`index.html` 的 `og:image` 用绝对地址 `https://beyondouyuan.github.io/assets/og-cover-3d.jpg`，`identity.contacts` 的「在线简历」填为站点地址并用 `display` 短版展示。换到别的域名时按同样方式改这两处，再重跑构建。
 
 ## 个人信息与剩余待补项
 
@@ -82,15 +82,15 @@ python3 -m http.server 8080
 | 备用邮箱 | `oujunyuan@163.com` |
 | 电话 / 微信 | `18620902160`（同号） |
 | GitHub | `https://github.com/beyondouyuan` |
+| 在线简历 | `https://beyondouyuan.github.io/` |
 
 GitHub 那条用了可选的 `display` 字段：页面和打印版显示不带协议头的短版 `github.com/beyondouyuan`，点击复制拿到的是完整 `https://` 地址，避免长网址在卡片里硬折行。
 
-还有 2 处 `〔〕` **没有代填**——用户没提供，不编造：
+还有 1 处 `〔〕` **没有代填**——用户没提供，不编造：
 
 - `identity.experience` → `〔工作年限〕`。另一会话文案里出现过「10 年+（2015 年起从事互联网研发）」，记在 `identity.knownCandidates` 里作来源记录，未经确认所以没启用。
-- `identity.contacts` 里「在线简历」→ `〔部署后的网址〕`，要等站点上线才有。
 
-**渲染层会自动跳过未填项**：打印版（`print/resume.html` → Word / PDF）不输出占位字段；在线站点「关于」不显示 EXPERIENCE 行、联系区不显示占位条目。所以现在这份 Word / PDF 可以直接上传平台，不会露出 `〔〕`。补齐后重跑构建即全量生效；部署后的两项回填动作见上文。
+**渲染层会自动跳过未填项**：打印版（`print/resume.html` → Word / PDF）不输出占位字段；在线站点「关于」不显示 EXPERIENCE 行、联系区不显示占位条目。所以现在这份 Word / PDF 可以直接上传平台，不会露出 `〔〕`。补齐后重跑构建即全量生效。
 
 对外发布前还要确认一件事：广告 SDK 与聚合平台相关内容若涉及公司项目，需先做脱敏（去掉客户名、后台地址、接口细节）。动环大屏卡片与分享封面用的是项目自带运行效果截图，不含客户名称；其余从并发会话复制来的截图已做过客户标识马赛克。
 
@@ -128,3 +128,9 @@ GitHub 那条用了可选的 `display` 字段：页面和打印版显示不带�
 - 旧的 `work-idc.jpg`、`og-cover.jpg` 是现场实拍裁切件，**已弃用**，保留仅供回溯。
 
 关于 3D 开关的核实结论：项目 `frontend/src/store/config.ts` 的 `renderMode: '3d' | '2d'` **默认就是 `'3d'`**，`ConfigPanel.vue` 里有「3D 数字孪生 / 2D 平面」切换组，值会写进 localStorage；`RoomView.vue` 用 `v-if="config.renderMode === '3d'"` 决定挂不挂 Three.js 组件。所以不是配置没勾 3D，而是 10-16 那张 TV 端验收图拍在 T-027（10-17 归档的 Three.js 3D 改造）之前，中央那块只是 2D 平面 skew 伪 3D 的温度色块。项目里没有留存 3D 模式截图，这才本地补了一张。
+
+## 公开副本的脱敏
+
+对外部署的副本（`beyondouyuan.github.io`）只放**运行所需**的数据：`tools/build.py` 生成 `data/profile.js` 时会剔除 `meta.factBoundary`、`identity.knownCandidates`、`statusLegend` 以及各项目的 `status` / `tone` 等内部字段，完整真源 `data/profile.json` 不随公开副本发布。
+
+对外联系方式（邮箱、电话、微信、GitHub、在线简历）按接单需要保留在页面与 Word / PDF 中，这是简历的用途所在；不公开的是内部状态口径与来源记录。若之后要把电话等也改成「面谈后提供」，改 `identity.contacts` 后重跑构建即可。
