@@ -1,42 +1,143 @@
----
-layout: page
-signs: "小楼昨夜听风雨，风增相思雨添愁。西窗今霄纵酒诗，酒伤离情诗怀忧。"
-description: "beyondouyuan"
----
+<!doctype html>
+<html lang="zh-CN" data-theme="deep-space">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>接单简历与作品集 · 广告变现 × 数据可视化工程师</title>
+<meta name="description" content="资深全栈 / 大前端工程师作品集：多端聚合广告 SDK、数据可视化大屏、中后台与跨端应用、微信小游戏。可承接整包开发、技术咨询与长期合作。">
+<meta name="keywords" content="广告聚合SDK,广告变现,eCPM,数据大屏,ECharts,Vue3,TypeScript,Flutter,React Native,Cocos Creator,外包,接单,作品集">
+<meta property="og:type" content="website">
+<meta property="og:title" content="接单简历与作品集 · 广告变现 × 数据可视化工程师">
+<meta property="og:description" content="从架构设计到多端落地、真机验收、上线变现，一个人走完整条链路。">
+<meta property="og:image" content="assets/og-cover-3d.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23070B14'/%3E%3Ctext x='32' y='44' font-family='monospace' font-size='34' font-weight='bold' text-anchor='middle' fill='%2300E5FF'%3E%26gt;_%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div id="progress" aria-hidden="true"></div>
+<canvas id="starfield" aria-hidden="true"></canvas>
+<div id="aurora" aria-hidden="true"></div>
 
-{% for post in paginator.posts %}
-<div class="post-preview">
-    <a href="{{ post.url | prepend: site.baseurl }}">
-        <h2 class="post-title">
-            {{ post.title }}
-        </h2>
-        {% if post.subtitle %}
-        <h3 class="post-subtitle">
-            {{ post.subtitle }}
-        </h3>
-        {% endif %}
-        <div class="post-content-preview">
-            {{ post.content | strip_html | truncate:150 }}
-        </div>
-    </a>
-    <p class="post-meta">Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} on {{ post.date | date: "%B %-d, %Y" }}</p>
+<header class="topbar">
+  <div class="shell topbar-in">
+    <div class="brand"><span class="prompt">~/</span><span id="brandName">portfolio</span><span class="cursor" aria-hidden="true"></span></div>
+    <nav class="nav" id="nav" aria-label="主导航">
+      <a href="#about">关于</a><a href="#skills">能力</a><a href="#works">作品</a>
+      <a href="#services">服务</a><a href="#process">流程</a><a href="#contact">联系</a>
+    </nav>
+    <div class="theme-switch" role="group" aria-label="切换视觉主题">
+      <button class="sw-a" data-t="deep-space" aria-label="深空终端主题" aria-pressed="true" title="A · 深空终端"></button>
+      <button class="sw-b" data-t="aurora-glass" aria-label="极光玻璃主题" aria-pressed="false" title="B · 极光玻璃"></button>
+      <button class="sw-c" data-t="neon-grid" aria-label="霓虹网格主题" aria-pressed="false" title="C · 霓虹网格"></button>
+      <button class="sw-d" data-t="blueprint" aria-label="工程蓝图主题" aria-pressed="false" title="D · 工程蓝图"></button>
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-label="展开导航">菜单</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="top">
+    <div class="shell">
+      <div class="hero-kicker">available for freelance · remote</div>
+      <h1><span class="accent" id="heroName">Irving</span><br><span class="typed" id="typed">广告变现 × 数据可视化</span></h1>
+      <p class="hero-sub" id="heroRole">资深全栈 / 大前端工程师 · 独立开发者</p>
+      <p class="hero-pitch" id="heroPitch">从架构设计到多端落地、真机验收、上线变现，一个人走完整条链路。</p>
+      <div class="hero-actions">
+        <a class="btn" href="#works">看作品 <span class="arw">→</span></a>
+        <a class="btn btn-ghost" href="#services">服务与报价 <span class="arw">↗</span></a>
+        <a class="btn btn-ghost" href="downloads/Irving-接单简历.pdf" download>下载 PDF <span class="arw">↓</span></a>
+        <a class="btn btn-ghost" href="downloads/Irving-接单简历-v2.docx" download>下载 Word <span class="arw">↓</span></a>
+      </div>
+      <div class="facts" id="factsGrid"></div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="shell">
+      <div class="sec-head"><span class="idx">01 /</span><h2>关于我</h2><span class="desc">about.md</span></div>
+      <div class="divider"></div>
+      <div class="about-grid">
+        <div class="about" id="aboutText"></div>
+        <aside class="side-card" id="sideInfo"></aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="shell">
+      <div class="sec-head"><span class="idx">02 /</span><h2>能力矩阵</h2><span class="desc">七个能力域 · 都有项目支撑</span></div>
+      <div class="divider"></div>
+      <div class="skill-grid" id="skillGrid"></div>
+    </div>
+  </section>
+
+  <section id="works">
+    <div class="shell">
+      <div class="sec-head"><span class="idx">03 /</span><h2>代表作品</h2></div>
+      <div class="divider"></div>
+      <div class="filter-bar" id="filterBar" role="group" aria-label="按类别筛选作品"></div>
+      <div class="work-grid" id="workGrid"></div>
+      <div class="extras" id="extrasGrid"></div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="shell">
+      <div class="sec-head"><span class="idx">04 /</span><h2>服务与参考报价</h2><span class="desc">起步价 · 以需求评估为准</span></div>
+      <div class="divider"></div>
+      <div class="rows" id="serviceRows"></div>
+      <p class="price-note" id="priceNote"></p>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="shell">
+      <div class="sec-head"><span class="idx">05 /</span><h2>怎么合作</h2><span class="desc">按周可演示，不做黑盒</span></div>
+      <div class="divider"></div>
+      <div class="timeline" id="timeline"></div>
+    </div>
+  </section>
+
+  <section id="boundary">
+    <div class="shell">
+      <div class="sec-head"><span class="idx">06 /</span><h2>边界与原则</h2><span class="desc">先把不做的说清楚</span></div>
+      <div class="divider"></div>
+      <div class="boundary">
+        <div class="card"><h3>// 不接</h3><ul id="boundaryNo"></ul></div>
+        <div class="card ok"><h3>// 坚持</h3><ul id="boundaryOk"></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="shell">
+      <div class="contact">
+        <h2>有需求，直接聊</h2>
+        <p>说明目标、范围和时间，我给一页需求确认单和报价。远程为主，广州可面谈。</p>
+        <div class="contact-grid" id="contactGrid"></div>
+        <p class="copy-hint">点击任一条可复制 · 电话与微信同号</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="shell foot-in">
+    <span id="footMeta">© 2026 · 作品集</span>
+    <span>纯静态单页 · 零依赖 · 可部署 GitHub Pages / Vercel / Netlify</span>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="项目详情">
+  <button class="lb-close" id="lbClose" aria-label="关闭详情">×</button>
+  <div class="lb-in" id="lbIn"></div>
 </div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<hr>
-{% endfor %}
-
-<!-- Pager -->
-{% if paginator.total_pages > 1 %}
-<ul class="pager">
-    {% if paginator.previous_page %}
-    <li class="previous">
-        <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&larr; 最新</a>
-    </li>
-    {% endif %}
-    {% if paginator.next_page %}
-    <li class="next">
-        <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">更早 &rarr;</a>
-    </li>
-    {% endif %}
-</ul>
-{% endif %}
+<noscript><div class="shell" style="padding:32px 0">本站内容由本地数据文件渲染，请开启 JavaScript。若需纯文本简历，请下载 <a href="downloads/Irving-接单简历.pdf">PDF 版</a>。</div></noscript>
+<script src="data/profile.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
