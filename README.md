@@ -1,4 +1,4 @@
-# 接单简历与作品集
+# 简历与作品集
 
 - **日期**：2026-11-12
 - **owner**：WorkBuddy
@@ -20,8 +20,8 @@ resume-online/
 │   └── profile.js                构建生成，供 file:// 直接打开时用
 ├── print/resume.html             A4 打印版（构建生成）
 ├── downloads/
-│   ├── Irving-接单简历.pdf       平台上传用（构建生成）
-│   └── Irving-接单简历-v2.docx   平台上传用（构建生成）
+│   ├── Irving-简历.pdf           平台上传用（构建生成）
+│   └── Irving-简历-v2.docx       平台上传用（构建生成）
 ├── tools/build.py                一键重建脚本（纯 Python 标准库）
 ├── netlify.toml / vercel.json
 └── README.md
@@ -115,7 +115,7 @@ GitHub 那条用了可选的 `display` 字段：页面和打印版显示不带�
 
 本目录是**独立新建**的，没有改动以下任何文件：
 
-- `portfolio/resume-site/`（已有的 `Irving-接单简历.docx` 与 `build_resume_docx.py`）
+- `portfolio/resume-site/`（已有的简历 docx 与 `build_resume_docx.py`，该目录现已不存在，仅作历史说明）
 - `portfolio/resume-20261112/`（另一会话并行产出的文案、站点与素材）
 
 `assets/` 里 5 张脱敏作品截图与 2 张架构图，是从 `resume-20261112/site/assets/` **复制**过来的，原文件保持只读未改；`work-idc-3d.png`、`work-idc-screen*.png`、`og-cover-3d.jpg`、`og-cover-screen.jpg` 是本项目自行生成的 idc-monitor 效果图，与 Doubao 的现场实拍件 `work-idc.jpg` / `og-cover.jpg` 不是一回事。两份 `owner: Doubao` 的文案只作为内容参考，未写入、未覆盖。
@@ -133,4 +133,4 @@ GitHub 那条用了可选的 `display` 字段：页面和打印版显示不带�
 
 对外部署的副本（`beyondouyuan.github.io`）只放**运行所需**的数据：`tools/build.py` 生成 `data/profile.js` 时会剔除 `meta.factBoundary`、`identity.knownCandidates`、`statusLegend` 以及各项目的 `status` / `tone` 等内部字段，完整真源 `data/profile.json` 不随公开副本发布。
 
-对外联系方式（邮箱、电话、微信、GitHub、在线简历）按接单需要保留在页面与 Word / PDF 中，这是简历的用途所在；不公开的是内部状态口径与来源记录。若之后要把电话等也改成「面谈后提供」，改 `identity.contacts` 后重跑构建即可。
+对外联系方式（邮箱、电话、微信、GitHub、在线简历）按需保留在页面与 Word / PDF 中，这是简历的用途所在；不公开的是内部状态口径与来源记录。若之后要把电话等也改成「面谈后提供」，改 `identity.contacts` 后重跑构建即可。

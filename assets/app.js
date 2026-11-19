@@ -34,7 +34,7 @@
   function renderAll() {
     var id = P.identity;
     document.documentElement.lang = 'zh-CN';
-    document.title = (isPH(id.name) ? '接单简历与作品集' : id.name + ' · 接单简历与作品集') + ' · 广告变现 × 数据可视化';
+    document.title = 'Yuan Ou (Irving) 作品集 · 广告变现 × 数据可视化工程师';
     $('#brandName').textContent = isPH(id.name) ? 'portfolio' : String(id.name).toLowerCase().replace(/\s+/g, '-');
     $('#heroName').textContent = id.name;
     $('#heroRole').textContent = id.role + ' · ' + id.location;

@@ -21,8 +21,8 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / 'data' / 'profile.json'
 PROFILE_JS = ROOT / 'data' / 'profile.js'
 PRINT_HTML = ROOT / 'print' / 'resume.html'
-DOCX = ROOT / 'downloads' / 'Irving-接单简历-v2.docx'
-PDF = ROOT / 'downloads' / 'Irving-接单简历.pdf'
+DOCX = ROOT / 'downloads' / 'Irving-简历-v2.docx'
+PDF = ROOT / 'downloads' / 'Irving-简历.pdf'
 W = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'
 
 
@@ -134,7 +134,7 @@ h2, .pj, .kv, .li, .note { break-inside: avoid; page-break-inside: avoid; }
 
 def build_print_html(P, blocks):
     parts = ['<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">',
-             '<title>接单简历</title><style>', PRINT_CSS, '</style></head><body><div class="doc">']
+             '<title>Yuan Ou (Irving) 作品集 · 简历</title><style>', PRINT_CSS, '</style></head><body><div class="doc">']
     cur = None
     for b in blocks:
         k, t, l = b['kind'], xesc(b['text']), xesc(b['label'])
@@ -247,7 +247,7 @@ def build_docx(P, blocks):
             '<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" '
             'xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" '
             'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'
-            '<dc:title>接单简历与作品集</dc:title><dc:creator>' + xesc(P['identity']['name']) + '</dc:creator>'
+            '<dc:title>Yuan Ou (Irving) 作品集 · 简历</dc:title><dc:creator>' + xesc(P['identity']['name']) + '</dc:creator>'
             '<cp:lastModifiedBy>WorkBuddy</cp:lastModifiedBy>'
             '<dcterms:created xsi:type="dcterms:W3CDTF">' + date.today().isoformat() + 'T00:00:00Z</dcterms:created>'
             '</cp:coreProperties>')
@@ -295,7 +295,7 @@ def verify(P):
         if not (ROOT / p['image']).exists():
             problems.append('缺图：' + p['image'])
     for f in ['index.html', 'assets/style.css', 'assets/app.js', 'data/profile.js',
-              'print/resume.html', 'downloads/Irving-接单简历-v2.docx']:
+              'print/resume.html', 'downloads/Irving-简历-v2.docx']:
         if not (ROOT / f).exists(): problems.append('缺产物：' + f)
     html = (ROOT / 'index.html').read_text(encoding='utf-8')
     for src in re.findall(r'(?:src|href)="(assets/[^"]+|data/[^"]+|downloads/[^"]+)"', html):
@@ -315,8 +315,8 @@ def main():
     blocks = content_blocks(P)
     build_profile_js(P); print('  ✓ data/profile.js')
     build_print_html(P, blocks); print('  ✓ print/resume.html')
-    build_docx(P, blocks); print('  ✓ downloads/Irving-接单简历-v2.docx')
-    if build_pdf(): print('  ✓ downloads/Irving-接单简历.pdf')
+    build_docx(P, blocks); print('  ✓ downloads/Irving-简历-v2.docx')
+    if build_pdf(): print('  ✓ downloads/Irving-简历.pdf')
     print('[verify]')
     ok = verify(P)
     print('[done] ' + ('全部产物就绪。' if ok else '存在待修项，见上。'))
