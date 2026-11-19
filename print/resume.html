@@ -60,8 +60,8 @@ h2, .pj, .kv, .li, .note { break-inside: avoid; page-break-inside: avoid; }
 <div class="li">Loader / Provider / Proxy 三层架构，插件层只保留通道、句柄与事件转发，复用原生竞价与投放能力</div>
 <div class="li">Flutter 用 MethodChannel / EventChannel 双通道 + 13 类事件枚举；RN 用 NativeModule / RCTEventEmitter；Android 桥接层 Kotlin</div>
 <p>结果：Android / iOS 各 3 类广告位（激励、插屏、Native）在真机上跑通了 loadSuccess → show → adShow 三步；以 adShow 为成功判据，Flutter 单轮验收从 184s 压到 35s。开屏与 Banner 仍需后台配位，iOS 侧 Swift module 工厂符号问题仍在排查。</p>
-<div class="note">技术栈：Kotlin · Flutter · React Native · 聚合 SDK · 竞价 / 瀑布流　|　证据：docs/discovery/2026-10-28 双端验收报告 · apps/projects/uju_flutter_sdk、uju_rn_sdk</div>
-<div class="pj">03 · Tidewell 广告聚合平台</div>
+<div class="note">技术栈：Kotlin · Flutter · React Native · 聚合 SDK · 竞价 / 瀑布流　|　证据：docs/discovery/2026-10-28 双端验收报告 · 公司内部仓库（Flutter / RN 广告 SDK）</div>
+<div class="pj">03 · 某广告聚合 SDK 平台</div>
 <div class="kv"><b>角色：</b>全栈 / 架构</div>
 <p>把开发者建应用、配广告位与瀑布流，和发布者看报表，放进同一套权限与数据模型里。</p>
 <div class="li">Node.js（Koa2 + TypeScript + Zod）+ Prisma + MySQL 35 张表 + Redis + BullMQ；三端 261 个前端接口</div>

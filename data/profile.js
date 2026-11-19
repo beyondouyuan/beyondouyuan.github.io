@@ -231,12 +231,12 @@ window.PROFILE = {
           "label": "类事件枚举"
         }
       ],
-      "evidence": "docs/discovery/2026-10-28 双端验收报告 · apps/projects/uju_flutter_sdk、uju_rn_sdk"
+      "evidence": "docs/discovery/2026-10-28 双端验收报告 · 公司内部仓库（Flutter / RN 广告 SDK）"
     },
     {
       "id": "tidewell",
       "no": "03",
-      "title": "Tidewell 广告聚合平台",
+      "title": "某广告聚合 SDK 平台",
       "subtitle": "API + 开发者后台 + 发布者后台",
       "category": "fullstack",
       "role": "全栈 / 架构",
