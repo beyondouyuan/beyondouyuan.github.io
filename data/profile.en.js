@@ -10,7 +10,7 @@ window.PROFILE_EN = {
     ]
   },
   "identity": {
-    "name": "Yuan Ou (Irving)",
+    "name": "Irving",
     "role": "Ad Monetization & Mobile SDK Engineer — independent developer",
     "location": "Guangzhou, China · remote",
     "experience": "〔years of experience〕",

@@ -53,7 +53,7 @@ LANGS = {
 # 打印/Word 版的版式文案（数据字段来自真源，这里是章节标题等固定标签）
 UI = {
     'zh': {
-        'doc_title': 'Yuan Ou (Irving) 作品集 · 简历',
+        'doc_title': 'Irving 作品集 · 简历',
         'h2_summary': '职业概述', 'h2_skills': '核心技能', 'h2_projects': '代表项目',
         'h2_extras': '其他可直接展示', 'h2_services': '服务与参考报价', 'h2_process': '合作流程',
         'h2_boundary': '边界与原则', 'h2_notes': '说明',
@@ -66,7 +66,7 @@ UI = {
         'doc_note': '本简历由 data/{src} 生成',
     },
     'en': {
-        'doc_title': 'Yuan Ou (Irving) — Ad Monetization & Mobile SDK Engineer',
+        'doc_title': 'Irving — Ad Monetization & Mobile SDK Engineer',
         'h2_summary': 'Summary', 'h2_skills': 'Technical skills', 'h2_projects': 'Selected projects',
         'h2_extras': 'Additional builds', 'h2_services': 'Services & indicative rates', 'h2_process': 'How we work',
         'h2_boundary': 'Boundaries & principles', 'h2_notes': 'Notes',

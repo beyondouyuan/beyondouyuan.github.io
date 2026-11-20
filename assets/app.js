@@ -14,8 +14,9 @@
       'sec.boundary':'边界与原则','sec.boundaryDesc':'先把不做的说清楚','boundary.no':'// 不接','boundary.ok':'// 坚持',
       'contact.title':'有需求，直接聊','contact.desc':'说明目标、范围和时间，我给一页需求确认单和报价。远程为主，广州可面谈。',
       'contact.hint':'点击任一条可复制 · 电话与微信同号','foot.tech':'纯静态单页 · 零依赖 · 可部署 GitHub Pages / Vercel / Netlify',
-      'doc.title':'Yuan Ou (Irving) 作品集 · 广告变现 × 数据可视化工程师',
+      'doc.title':'Irving 作品集 · 广告变现 × 数据可视化工程师',
       'doc.desc':'资深全栈 / 大前端工程师作品集：多端聚合广告 SDK、数据可视化大屏、中后台与跨端应用、微信小游戏。可承接整包开发、技术咨询与长期合作。',
+      'og.title':'Irving 作品集 · 广告变现 × 数据可视化工程师','og.desc':'从架构设计到多端落地、真机验收、上线变现，一个人走完整条链路。',
       'label.pitch':'一句话定位：','label.role':'ROLE','label.location':'LOCATION','label.experience':'EXPERIENCE','label.focus':'FOCUS',
       'filter.all':'全部','filter.ads':'广告 / SDK','filter.viz':'可视化','filter.fullstack':'中后台 / 全栈','filter.game':'小游戏',
       'table.hash':'#','table.service':'服务','table.deliver':'交付内容','table.price':'参考起步价',
@@ -35,8 +36,9 @@
       'sec.boundary':'Boundaries & principles','sec.boundaryDesc':'What I do not take, stated up front','boundary.no':'// Not taking','boundary.ok':'// Standing by',
       'contact.title':'Have a project? Let’s talk','contact.desc':'Send the goal, scope and timeline; I reply with a one-page confirmation and a quote. Remote by default; face-to-face in Guangzhou possible.',
       'contact.hint':'Click any row to copy · phone and WeChat share the same number','foot.tech':'Pure static single page · zero dependencies · deployable to GitHub Pages / Vercel / Netlify',
-      'doc.title':'Yuan Ou (Irving) — Ad Monetization & Mobile SDK Engineer',
+      'doc.title':'Irving — Ad Monetization & Mobile SDK Engineer',
       'doc.desc':'Ad monetization & mobile SDK engineer: mediation SDK, data visualization walls, admin and cross-platform apps, WeChat mini games.',
+      'og.title':'Irving — Ad Monetization & Mobile SDK Engineer','og.desc':'From architecture to multi-platform delivery, device acceptance and monetization — one person through the whole chain.',
       'label.pitch':'In one line:','label.role':'ROLE','label.location':'LOCATION','label.experience':'EXPERIENCE','label.focus':'FOCUS',
       'filter.all':'All','filter.ads':'Ads / SDK','filter.viz':'Visualization','filter.fullstack':'Full-stack','filter.game':'Games',
       'table.hash':'#','table.service':'Service','table.deliver':'Deliverables','table.price':'Indicative rate',
@@ -90,6 +92,8 @@
     document.documentElement.lang = LANG === 'en' ? 'en' : 'zh-CN';
     document.title = T('doc.title');
     var dm = $('meta[name=description]'); if (dm) dm.setAttribute('content', T('doc.desc'));
+    var ot = $('meta[property="og:title"]'); if (ot) ot.setAttribute('content', T('og.title'));
+    var od = $('meta[property="og:description"]'); if (od) od.setAttribute('content', T('og.desc'));
     $('#brandName').textContent = isPH(id.name) ? 'portfolio' : String(id.name).toLowerCase().replace(/\s+/g, '-');
     $('#heroName').textContent = id.name;
     $('#heroRole').textContent = id.role + ' · ' + id.location;
@@ -184,6 +188,8 @@
     document.documentElement.lang = next === 'en' ? 'en' : 'zh-CN';
     document.title = T('doc.title');
     var dm = $('meta[name=description]'); if (dm) dm.setAttribute('content', T('doc.desc'));
+    var ot = $('meta[property="og:title"]'); if (ot) ot.setAttribute('content', T('og.title'));
+    var od = $('meta[property="og:description"]'); if (od) od.setAttribute('content', T('og.desc'));
     var dl = $('#dlPdf'), dw = $('#dlWord');
     if (dl) dl.setAttribute('href', next === 'en' ? 'downloads/Irving-Ou-Resume-EN.pdf' : 'downloads/Irving-简历.pdf');
     if (dw) dw.setAttribute('href', next === 'en' ? 'downloads/Irving-Ou-Resume-EN.docx' : 'downloads/Irving-简历-v2.docx');
