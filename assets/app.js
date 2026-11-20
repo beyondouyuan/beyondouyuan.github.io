@@ -8,7 +8,7 @@
   var DICT = {
     zh: {
       'nav.about':'关于','nav.skills':'能力','nav.works':'作品','nav.services':'服务','nav.process':'流程','nav.contact':'联系',
-      'hero.kicker':'available for freelance · remote','hero.works':'看作品','hero.services':'服务与报价','hero.pdf':'下载 PDF','hero.word':'下载 Word',
+      'hero.kicker':'开放合作 · 远程','hero.works':'看作品','hero.services':'服务与报价','hero.pdf':'下载 PDF','hero.word':'下载 Word',
       'sec.about':'关于我','sec.aboutDesc':'about.md','sec.skills':'能力矩阵','sec.skillsDesc':'七个能力域 · 都有项目支撑','sec.works':'代表作品',
       'sec.services':'服务与参考报价','sec.servicesDesc':'起步价 · 以需求评估为准','sec.process':'怎么合作','sec.processDesc':'按周可演示，不做黑盒',
       'sec.boundary':'边界与原则','sec.boundaryDesc':'先把不做的说清楚','boundary.no':'// 不接','boundary.ok':'// 坚持',
