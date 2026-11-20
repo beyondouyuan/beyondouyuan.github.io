@@ -1,0 +1,131 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>Yuan Ou (Irving) — Ad Monetization &amp; Mobile SDK Engineer</title><style>
+
+@page { size: A4; margin: 13mm 15mm 12mm; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+  color: #20242B; font-size: 10pt; line-height: 1.5; background: #fff; }
+.doc { max-width: 180mm; margin: 0 auto; }
+.title { font-size: 21pt; font-weight: 700; color: #1F4E79; margin: 0 0 2mm; letter-spacing: .5px; }
+.role { font-size: 10pt; color: #4A5568; margin: 0 0 2mm; }
+.contact { font-size: 8.6pt; color: #5A6575; border-bottom: 1.2pt solid #1F4E79;
+  padding-bottom: 2.2mm; margin-bottom: 3.5mm; line-height: 1.55; }
+h2 { font-size: 12pt; color: #1F4E79; margin: 4mm 0 1.8mm; padding-bottom: 1mm;
+  border-bottom: .5pt solid #B8C6D9; page-break-after: avoid; }
+p { margin: 0 0 1.2mm; text-align: justify; }
+.kv { margin: 0 0 1.2mm; text-align: justify; }
+.kv b { color: #1F4E79; }
+.li { margin: 0 0 0.9mm 5mm; padding-left: 2mm; position: relative; }
+.li::before { content: "·"; position: absolute; left: -2mm; color: #1F4E79; font-weight: 700; }
+.pj { font-size: 10.6pt; font-weight: 700; color: #16283F; margin: 2.8mm 0 1mm; page-break-after: avoid; }
+.note { font-size: 8.4pt; color: #68738A; margin: 0 0 1.5mm; }
+h2, .pj, .kv, .li, .note { break-inside: avoid; page-break-inside: avoid; }
+.foot { margin-top: 4mm; padding-top: 2mm; border-top: .5pt solid #D8DEE8;
+  font-size: 8pt; color: #8A94A6; text-align: center; }
+@media screen { body { background: #E9EDF2; padding: 12mm 0; }
+  .doc { background: #fff; padding: 16mm; box-shadow: 0 4px 24px rgba(0,0,0,.14); max-width: 210mm; } }
+
+</style></head><body><div class="doc">
+<div class="title">Yuan Ou (Irving)</div>
+<div class="role">Ad Monetization &amp; Mobile SDK Engineer — independent developer · Guangzhou, China · remote</div>
+<div class="contact"><!-- CONTACT:START -->Email: beyondouyuan@gmail.com  |  Backup email: oujunyuan@163.com  |  Phone: 18620902160  |  WeChat: 18620902160  |  GitHub: github.com/beyondouyuan  |  Online resume: beyondouyuan.github.io<!-- CONTACT:END --></div>
+<section>
+<h2>Summary</h2>
+<p>Engineer specialising in ad monetization infrastructure: mediation SDK architecture, ad-network adapter integration, and the cross-platform bridges that expose one native ad engine to Android, Flutter and React Native apps. Six years building and shipping this stack inside an ad-tech company, from the SDK layer through the developer and publisher consoles that configure it.
+
+Also a heavy practitioner of data visualization and internal tooling: delivered a data-centre monitoring wall that runs on four screen classes from one codebase, and multi-tenant admin platforms with data isolation and button-level permissions. I work in written, milestone-based steps — scope, evidence, acceptance — and I do not claim a system is live before it is.</p>
+<p>Core focus: Ad monetization (multi-platform mediation SDK) × data visualization (display walls / admin). From architecture to multi-platform delivery, device acceptance and monetization — one person through the whole chain.</p>
+</section>
+<section>
+<h2>Technical skills</h2>
+<div class="kv"><b>Ad monetization / SDK: </b>Mediation three-layer architecture (Loader / Provider / Proxy) · Rewarded, interstitial, splash, native and banner formats · 10+ network integrations (AdMob, Pangle, Tencent GDT, Kuaishou, Mintegral and others) · Both template-rendered and self-rendered modes · eCPM and waterfall tuning · monetization consulting</div>
+<div class="kv"><b>Data visualization / display walls: </b>ECharts deep customization: multi-axis overlap, tooltip layering, small-value scaling · AntV G2 / G6 / X6 · three.js 3D scenes · Fixed-ratio scaling and multi-resolution layout · One codebase across PC / mobile / factory wall / TV</div>
+<div class="kv"><b>Full-stack / admin: </b>Vue 3.5 + TypeScript + Vite + Element Plus / Ant Design · pnpm monorepo · Pinia · vue-i18n · Node.js (Koa2 + TS + Zod) · Prisma + MySQL · Redis · BullMQ · gRPC · RBAC to button and endpoint level · OSS direct upload · observability alerting</div>
+<div class="kv"><b>Cross-platform / mobile: </b>Flutter (Dart 3 · Riverpod · drift · Material 3) · React Native · Kotlin (Android native) · MethodChannel / EventChannel · NativeModule / RCTEventEmitter · WebView shells / Capacitor / kiosk</div>
+<div class="kv"><b>Mini programs / H5: </b>WeChat mini programs native · uni-app · Taro · Campaign H5 · responsive PC / mobile layout · WeChat Cloud Development: login, remote config, cloud saves</div>
+<div class="kv"><b>Games: </b>Cocos Creator 3.x (TypeScript) · Level generator and solvability checks · economy and difficulty curve · IAA rewarded / interstitial integration · analytics · release process</div>
+<div class="kv"><b>Team delivery / engineering practice: </b>Can coordinate PHP (Laravel / ThinkPHP), Java (Spring Boot) and Android native delivery · Requirements → design → milestones → acceptance, all traceable · Technology research, code review, performance tuning</div>
+</section>
+<section>
+<h2>Selected projects</h2>
+<div class="pj">01 · Data-centre monitoring wall</div>
+<div class="kv"><b>Role: </b>Front-end lead / independent delivery</div>
+<p>Temperature, humidity, leak, HVAC, UPS and alarm events had to fit on one screen for shift laptops, factory TVs and phones.</p>
+<div class="li">One Vue 3 + TypeScript + ECharts codebase across PC / mobile / factory wall / TV, with fixed-ratio scaling and centred margins</div>
+<div class="li">Three.js digital twin of the server room on the wall display: perspective racks, floating temperature labels, alarm pulse rings, plus a 2D fallback; an Android APK keeps the TV display always on</div>
+<p>Result: Usable for 7×24 shift duty; 26 devices and five alarm classes readable at a glance, turning alarm review from list-scrolling into a single glance.</p>
+<div class="note">Stack: Vue 3 · TypeScript · ECharts · three.js · fixed-ratio scaling  |  Evidence: 3D screenshot of the idc-monitor front-end dist running locally with renderMode=3d</div>
+<div class="pj">02 · Mediation SDK — three platform bridges</div>
+<div class="kv"><b>Role: </b>Architecture and three platform bridges</div>
+<p>One ad capability had to be reused by native, Flutter and React Native apps, each with a different mix of ad networks.</p>
+<div class="li">Loader / Provider / Proxy three-layer architecture; the plugin layer keeps only channels, handles and event forwarding, reusing native bidding and delivery logic</div>
+<div class="li">Flutter uses MethodChannel / EventChannel with 13 event types; React Native uses NativeModule / RCTEventEmitter; the Android bridge is Kotlin</div>
+<p>Result: Rewarded, interstitial and native formats passed loadSuccess → show → adShow on Android and iOS devices. With adShow as the success criterion, one Flutter acceptance cycle dropped from 184s to 35s. Splash and banner still need console-side configuration; an iOS Swift module factory symbol issue is still under investigation.</p>
+<div class="note">Stack: Kotlin · Flutter · React Native · mediation SDK · bidding / waterfall  |  Evidence: Dual-platform acceptance report · internal repository (Flutter / RN ad SDK)</div>
+<div class="pj">03 · Ad aggregation platform</div>
+<div class="kv"><b>Role: </b>Full-stack / architecture</div>
+<p>Developer app and ad-unit setup, waterfall configuration and publisher reporting had to share one permission and data model.</p>
+<div class="li">Node.js (Koa2 + TypeScript + Zod) + Prisma + MySQL (35 tables) + Redis + BullMQ; 261 front-end endpoints</div>
+<div class="li">OSS direct upload; packaging service builds per-network SDK bundles on demand (6 platforms, 31 smoke checks)</div>
+<p>Result: Developer self-service for apps, ad units, waterfalls and account binding, and publisher self-service reporting are feature-complete. Runs local-first; production grey release is not approved and is not claimed as live.</p>
+<div class="note">Stack: Koa2 · Prisma · MySQL · Redis · BullMQ · Vue 3 · RBAC  |  Evidence: Two-project stage review · internal repository</div>
+<div class="pj">04 · Multi-app mini-program platform</div>
+<div class="kv"><b>Role: </b>Full-stack</div>
+<p>Three industries' mini programs had to share one admin backend without data bleed between them.</p>
+<div class="li">Vue 3.5 pnpm monorepo admin backend + Koa server</div>
+<div class="li">Per-app data domains, menu sync with diff preview, audit log, Flutter client package</div>
+<p>Result: One backend serves three live mini programs (beauty booking, coffee ordering, restaurant ordering): 27 admin pages and 164 backend test cases; adding an app is configuration, not code. Real payment integration is blocked until a merchant account with actual settlement is available, so payment is not claimed.</p>
+<div class="note">Stack: Vue 3 · Monorepo · Prisma · RBAC · Flutter  |  Evidence: E2E booking home verification · internal repository</div>
+<div class="pj">05 · Meow Stack — WeChat mini game</div>
+<div class="kv"><b>Role: </b>Independent development (gameplay / front-end / monetization / release)</div>
+<p>I wanted one complete mini game to run gameplay, levels, analytics and release end to end on my own.</p>
+<div class="li">Cocos Creator 3.x + TypeScript; stack-match elimination with deadlock detection and progress-preserving shuffle</div>
+<div class="li">60-level difficulty curve, solvability checked level by level in simulation (115 unit tests, 42 simulation cases)</div>
+<p>Result: Released on WeChat; I ran gameplay, levels, analytics and release end to end. Ad slots are not enabled and there are no public revenue figures; TapTap, Google Play and overseas web are not published.</p>
+<div class="note">Stack: Cocos Creator 3.x · TypeScript · WeChat Cloud Development · IAA  |  Evidence: Gameplay screenshots · internal repository</div>
+<div class="pj">06 · Pixel nonogram / Hidden-object night</div>
+<div class="kv"><b>Role: </b>Independent development</div>
+<p>I wanted a reusable template for level generation, difficulty curves and collection systems rather than rewriting each game.</p>
+<div class="li">Cocos Creator level generator with machine checks (90 level variants, 0 anomalies)</div>
+<div class="li">Pixel nonogram organises levels and collectibles into cat / classical / food themes; hidden-object night uses a night scene, collection album and ten progressive levels</div>
+<p>Result: Both games are at release-ready state and remain unpublished; there are no operating figures.</p>
+<div class="note">Stack: Cocos Creator · level generation · difficulty and economy curves  |  Evidence: Release screenshots · internal repository</div>
+</section>
+<section>
+<h2>Additional builds</h2>
+<div class="kv"><b>Easy Reader: </b>Flutter cross-platform novel reader with Riverpod / drift layering and the mediation SDK wired in. M11–M17 feature-complete; device testing pending. (Feature-complete)</div>
+<div class="kv"><b>eCPM calculator: </b>Zero-dependency HTML/CSS/JS single-page tool: 12 unit tests, 41 UI regression checks and screenshot baselines; usable as a live web tool. (Ready to demo)</div>
+<div class="kv"><b>Education &amp; languages: </b>Xi'an Technological University — Bachelor's degree, Optoelectronic Information Engineering, 2011–2015. Chinese (native); English (professional working proficiency, written and spoken). (Background)</div>
+</section>
+<section>
+<h2>Services &amp; indicative rates</h2>
+<div class="kv"><b>Ad SDK integration / acceptance: </b>Single-network integration, ad-unit setup, device acceptance, acceptance report — ¥3,000 – 8,000 / network</div>
+<div class="kv"><b>Monetization consulting / tuning: </b>Mediation architecture review, waterfall and bidding strategy, eCPM diagnosis, optimisation list — ¥2,000 – 5,000 / engagement</div>
+<div class="kv"><b>Display wall / visualization: </b>Single-screen design, development, multi-screen adaptation, deployment — ¥5,000 – 15,000 / screen</div>
+<div class="kv"><b>Admin / mini program / cross-platform: </b>Quoted per package or feature, including integration and release — On request</div>
+<div class="kv"><b>Mini game package: </b>Gameplay + levels + monetization + release support — On request</div>
+<div class="kv"><b>Team package: </b>Front-end + PHP / Java back-end + Android native coordination — On request</div>
+<div class="note">Figures above are starting points; final quotes follow scope, timeline and acceptance criteria. Remote by default; available for face-to-face meetings in Guangzhou.</div>
+</section>
+<section>
+<h2>How we work</h2>
+<div class="kv"><b>01  </b>Requirements (1–2 days): Confirm goal, scope, acceptance criteria and dependencies; deliver a one-page confirmation.</div>
+<div class="kv"><b>02  </b>Design &amp; quote (After mutual confirmation): Technical design, milestone breakdown, timeline and quote.</div>
+<div class="kv"><b>03  </b>Milestone development (Weekly delivery): A runnable build every week, demoable at any time; no big-bang reveal on the final day.</div>
+<div class="kv"><b>04  </b>Acceptance &amp; delivery (Item by item): Source code, deployment docs and integration notes.</div>
+<div class="kv"><b>05  </b>30 days after delivery (Free defect fixes): Scope changes are quoted separately.</div>
+</section>
+<section>
+<h2>Boundaries &amp; principles</h2>
+<div class="kv"><b>Not taking: </b>Gambling / betting games; Credential stuffing, grey-market scraping and unauthorised data collection; Pure cut-and-paste work; Long-term on-site attendance; Unlimited free maintenance after delivery</div>
+<div class="li">For eCPM, retention and revenue I report only verifiable figures and never promise revenue numbers</div>
+<div class="li">Client materials, accounts and keys are never stored or shared; portfolio evidence is redacted before display</div>
+<div class="li">Project status follows the source of truth — in-progress work is never presented as live</div>
+</section>
+<section>
+<h2>Notes</h2>
+<div class="note">Years of experience remain an unfilled 〔〕 placeholder in data/profile.en.json; print and online views skip unfilled items automatically. Fill it in and rerun python3 tools/build.py to refresh Word / PDF / online outputs together.</div>
+<div class="note">Project status follows workspace documents — in-progress work is never presented as live; revenue and eCPM figures are only reported on verifiable bases.</div>
+</section>
+<div class="foot">Generated from data/profile.en.json2026-11-20 · online, Word and PDF share one source</div></div></body></html>

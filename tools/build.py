@@ -1,10 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""一键重建：data/profile.json -> profile.js / 打印页 / Word / PDF。
+"""一键重建：data/profile.json + data/profile.en.json -> 双语站点数据 / 打印页 / Word / PDF。
 
 用法：python3 tools/build.py
 依赖：Python 3 标准库 + 本机 Google Chrome（仅用于 HTML -> PDF）。
-改文案只改 data/profile.json，然后重跑本脚本，三份产物同步更新。
+改文案只改 data/profile.json（中文）或 data/profile.en.json（英文），然后重跑本脚本。
+
+产出：
+  data/profile.js       中文站点运行数据
+  data/profile.en.js    英文站点运行数据
+  print/resume.html     中文 A4 打印/ PDF 源
+  print/resume-en.html  英文 A4 打印/ PDF 源
+  downloads/Irving-简历.pdf                 中文 PDF
+  downloads/Irving-简历-v2.docx             中文 Word
+  downloads/Irving-Ou-Resume-EN.pdf         英文 PDF（完整）
+  downloads/Irving-Ou-Resume-EN.docx        英文 Word
+  downloads/Irving-Ou-Resume-EN-upwork.pdf  英文 PDF（去联系方式，平台上传用）
 """
 import json
 import os
@@ -18,22 +29,68 @@ from pathlib import Path
 from xml.sax.saxutils import escape as xesc
 
 ROOT = Path(__file__).resolve().parent.parent
-DATA = ROOT / 'data' / 'profile.json'
-PROFILE_JS = ROOT / 'data' / 'profile.js'
-PRINT_HTML = ROOT / 'print' / 'resume.html'
-DOCX = ROOT / 'downloads' / 'Irving-简历-v2.docx'
-PDF = ROOT / 'downloads' / 'Irving-简历.pdf'
 W = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'
 
+# 语言配置：真源 -> 各产物路径
+LANGS = {
+    'zh': {
+        'data': ROOT / 'data' / 'profile.json',
+        'js': ROOT / 'data' / 'profile.js',
+        'print_html': ROOT / 'print' / 'resume.html',
+        'docx': ROOT / 'downloads' / 'Irving-简历-v2.docx',
+        'pdf': ROOT / 'downloads' / 'Irving-简历.pdf',
+    },
+    'en': {
+        'data': ROOT / 'data' / 'profile.en.json',
+        'js': ROOT / 'data' / 'profile.en.js',
+        'print_html': ROOT / 'print' / 'resume-en.html',
+        'docx': ROOT / 'downloads' / 'Irving-Ou-Resume-EN.docx',
+        'pdf': ROOT / 'downloads' / 'Irving-Ou-Resume-EN.pdf',
+        'pdf_upwork': ROOT / 'downloads' / 'Irving-Ou-Resume-EN-upwork.pdf',
+    },
+}
 
-def load():
-    with DATA.open(encoding='utf-8') as f:
+# 打印/Word 版的版式文案（数据字段来自真源，这里是章节标题等固定标签）
+UI = {
+    'zh': {
+        'doc_title': 'Yuan Ou (Irving) 作品集 · 简历',
+        'h2_summary': '职业概述', 'h2_skills': '核心技能', 'h2_projects': '代表项目',
+        'h2_extras': '其他可直接展示', 'h2_services': '服务与参考报价', 'h2_process': '合作流程',
+        'h2_boundary': '边界与原则', 'h2_notes': '说明',
+        'core': '核心方向：', 'result': '结果：', 'stack': '技术栈：', 'evidence': '证据：',
+        'role': '角色：', 'no_work': '不接：',
+        'note_years': '工作年限与在线简历网址尚未确认，data/profile.json 中仍为 〔〕 占位符；打印版与在线页面会自动跳过未填项，'
+                      '确认后填进去并重跑 python3 tools/build.py，Word / PDF / 在线站点会同步更新。',
+        'note_status': '项目状态按工作区文档标注，未把开发中写成已上线；涉及收益、eCPM 的数据只报可核实口径。',
+        'foot': '本简历由 data/{src} 生成', 'foot_tail': ' · 在线版与 Word / PDF 三份同源',
+        'doc_note': '本简历由 data/{src} 生成',
+    },
+    'en': {
+        'doc_title': 'Yuan Ou (Irving) — Ad Monetization & Mobile SDK Engineer',
+        'h2_summary': 'Summary', 'h2_skills': 'Technical skills', 'h2_projects': 'Selected projects',
+        'h2_extras': 'Additional builds', 'h2_services': 'Services & indicative rates', 'h2_process': 'How we work',
+        'h2_boundary': 'Boundaries & principles', 'h2_notes': 'Notes',
+        'core': 'Core focus: ', 'result': 'Result: ', 'stack': 'Stack: ', 'evidence': 'Evidence: ',
+        'role': 'Role: ', 'no_work': 'Not taking: ',
+        'note_years': 'Years of experience remain an unfilled 〔〕 placeholder in data/profile.en.json; print and online views skip unfilled items automatically. '
+                      'Fill it in and rerun python3 tools/build.py to refresh Word / PDF / online outputs together.',
+        'note_status': 'Project status follows workspace documents — in-progress work is never presented as live; revenue and eCPM figures are only reported on verifiable bases.',
+        'foot': 'Generated from data/{src}', 'foot_tail': ' · online, Word and PDF share one source',
+        'doc_note': 'Generated from data/{src}',
+    },
+}
+
+
+def load(path):
+    with path.open(encoding='utf-8') as f:
         return json.load(f)
 
 
 # ---------------------------------------------------------------- 内容模型
-def content_blocks(P):
-    """三份产物共用的唯一内容模型。"""
+def content_blocks(P, lang):
+    """打印页与 Word 共用的唯一内容模型。"""
+    u = UI[lang]
+    src = 'profile.en.json' if lang == 'en' else 'profile.json'
     id = P['identity']
     b = []
     add = lambda kind, text='', label='': b.append({'kind': kind, 'text': text, 'label': label})
@@ -41,54 +98,54 @@ def content_blocks(P):
     add('title', id['name'])
     # 未确认字段（〔〕 占位）不进打印版，避免 Word / PDF 对外露出占位符
     add('role', ' · '.join(x for x in [id['role'], id['location'], id['experience']] if '〔' not in x))
-    add('contact', '　|　'.join(c['label'] + '：' + c.get('display', c['value'])
-                               for c in id['contacts'] if '〔' not in c['value']))
+    sep = '　|　' if lang == 'zh' else '  |  '
+    add('contact', sep.join(c['label'] + (':' if lang == 'zh' else ': ') + c.get('display', c['value'])
+                            for c in id['contacts'] if '〔' not in c['value']))
 
-    add('h2', '职业概述')
+    add('h2', u['h2_summary'])
     add('p', id['intro'])
-    add('p', '核心方向：' + id['focus'] + '。' + id['pitch'])
+    add('p', u['core'] + id['focus'] + ('。' if lang == 'zh' else '. ') + id['pitch'])
 
-    add('h2', '核心技能')
+    add('h2', u['h2_skills'])
     for s in P['skills']:
-        add('kv', ' · '.join(s['items']), s['name'] + '：')
+        add('kv', ' · '.join(s['items']), s['name'] + (':' if lang == 'zh' else ': '))
 
-    add('h2', '代表项目')
+    add('h2', u['h2_projects'])
     for p in P['projects']:
         add('pj', p['no'] + ' · ' + p['title'])
-        add('kv', p['role'], '角色：')
+        add('kv', p['role'], u['role'])
         add('p', p['context'])
         for a in p['approach'][:2]:
             add('li', a)
-        add('p', '结果：' + p['result'])
-        add('note', '技术栈：' + ' · '.join(p['stack']) + '　|　证据：' + p['evidence'])
-    add('h2', '其他可直接展示')
+        add('p', u['result'] + p['result'])
+        add('note', u['stack'] + ' · '.join(p['stack']) + sep + u['evidence'] + p['evidence'])
+    add('h2', u['h2_extras'])
     for e in P['extras']:
-        add('kv', e['desc'] + '（' + e['status'] + '）', e['name'] + '：')
+        add('kv', e['desc'] + ('（' if lang == 'zh' else ' (') + e['status'] + ('）' if lang == 'zh' else ')'), e['name'] + (':' if lang == 'zh' else ': '))
 
-    add('h2', '服务与参考报价')
+    add('h2', u['h2_services'])
     for s in P['services']:
-        add('kv', s['deliver'] + '　—　' + s['price'], s['name'] + '：')
+        add('kv', s['deliver'] + ('　—　' if lang == 'zh' else ' — ') + s['price'], s['name'] + (':' if lang == 'zh' else ': '))
     add('note', P['priceNote'])
 
-    add('h2', '合作流程')
+    add('h2', u['h2_process'])
     for s in P['process']:
-        add('kv', s['name'] + '（' + s['time'] + '）：' + s['desc'], s['step'] + '　')
+        add('kv', s['name'] + ('（' if lang == 'zh' else ' (') + s['time'] + ('）：' if lang == 'zh' else '): ') + s['desc'], s['step'] + '  ')
 
-    add('h2', '边界与原则')
-    add('kv', '；'.join(P['boundaries']['no']), '不接：')
+    add('h2', u['h2_boundary'])
+    add('kv', ('；' if lang == 'zh' else '; ').join(P['boundaries']['no']), u['no_work'])
     for x in P['boundaries']['principles']:
         add('li', x)
 
-    add('h2', '说明')
-    add('note', '工作年限与在线简历网址尚未确认，data/profile.json 中仍为 〔〕 占位符；打印版与在线页面会自动跳过未填项，'
-                '确认后填进去并重跑 python3 tools/build.py，Word / PDF / 在线站点会同步更新。')
-    add('note', '项目状态按工作区文档标注，未把开发中写成已上线；涉及收益、eCPM 的数据只报可核实口径。')
-    return b
+    add('h2', u['h2_notes'])
+    add('note', u['note_years'])
+    add('note', u['note_status'])
+    return b, src
 
 
 # ---------------------------------------------------------------- 1. profile.js
-def build_profile_js(P):
-    # 站点运行只需渲染字段；公开副本剔除内部真源信息（完整数据仍在 data/profile.json）
+def build_profile_js(P, out):
+    # 站点运行只需渲染字段；公开副本剔除内部真源信息（完整数据仍在真源 json）
     pub = json.loads(json.dumps(P))
     for k in ('factBoundary', 'purpose', 'owner', 'version', 'updated'):
         pub['meta'].pop(k, None)
@@ -97,9 +154,11 @@ def build_profile_js(P):
     for p in pub.get('projects', []):
         p.pop('status', None)
         p.pop('tone', None)
-    PROFILE_JS.write_text(
-        '/* GENERATED by tools/build.py — 公开运行数据，内部字段已剔除；完整真源见 data/profile.json */\n'
-        'window.PROFILE = ' + json.dumps(pub, ensure_ascii=False, indent=2) + ';\n',
+    out.write_text(
+        '/* GENERATED by tools/build.py — public runtime data; internal fields stripped. '
+        'Full source of truth stays in data/profile*.json */\n'
+        + ('window.PROFILE = ' if 'en' not in out.name else 'window.PROFILE_EN = ')
+        + json.dumps(pub, ensure_ascii=False, indent=2) + ';\n',
         encoding='utf-8')
 
 
@@ -108,7 +167,7 @@ PRINT_CSS = """
 @page { size: A4; margin: 13mm 15mm 12mm; }
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
-body { font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+body { font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
   color: #20242B; font-size: 10pt; line-height: 1.5; background: #fff; }
 .doc { max-width: 180mm; margin: 0 auto; }
 .title { font-size: 21pt; font-weight: 700; color: #1F4E79; margin: 0 0 2mm; letter-spacing: .5px; }
@@ -132,9 +191,10 @@ h2, .pj, .kv, .li, .note { break-inside: avoid; page-break-inside: avoid; }
 """
 
 
-def build_print_html(P, blocks):
-    parts = ['<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">',
-             '<title>Yuan Ou (Irving) 作品集 · 简历</title><style>', PRINT_CSS, '</style></head><body><div class="doc">']
+def build_print_html(P, blocks, lang, src, out):
+    u = UI[lang]
+    parts = ['<!doctype html><html lang="' + ('en' if lang == 'en' else 'zh-CN') + '"><head><meta charset="utf-8">',
+             '<title>' + xesc(u['doc_title']) + '</title><style>', PRINT_CSS, '</style></head><body><div class="doc">']
     cur = None
     for b in blocks:
         k, t, l = b['kind'], xesc(b['text']), xesc(b['label'])
@@ -144,7 +204,7 @@ def build_print_html(P, blocks):
             cur = 'section'
         if k == 'title': parts.append('<div class="title">' + t + '</div>')
         elif k == 'role': parts.append('<div class="role">' + t + '</div>')
-        elif k == 'contact': parts.append('<div class="contact">' + t + '</div>')
+        elif k == 'contact': parts.append('<div class="contact"><!-- CONTACT:START -->' + t + '<!-- CONTACT:END --></div>')
         elif k == 'h2': parts.append('<h2>' + t + '</h2>')
         elif k == 'p': parts.append('<p>' + t + '</p>')
         elif k == 'kv': parts.append('<div class="kv"><b>' + l + '</b>' + t + '</div>')
@@ -152,9 +212,9 @@ def build_print_html(P, blocks):
         elif k == 'pj': parts.append('<div class="pj">' + t + '</div>')
         elif k == 'note': parts.append('<div class="note">' + t + '</div>')
     if cur: parts.append('</section>')
-    parts.append('<div class="foot">本简历由 data/profile.json 生成 · ' + date.today().isoformat() +
-                 ' · 在线版与 Word / PDF 三份同源</div></div></body></html>')
-    PRINT_HTML.write_text('\n'.join(parts), encoding='utf-8')
+    parts.append('<div class="foot">' + u['foot'].format(src=src) + date.today().isoformat() +
+                 u['foot_tail'] + '</div></div></body></html>')
+    out.write_text('\n'.join(parts), encoding='utf-8')
 
 
 # ---------------------------------------------------------------- 3. Word
@@ -178,7 +238,6 @@ def para_xml(text, size=20, bold=False, color=None, before=0, after=60,
                 'w:color="1F4E79"/></w:pBdr>')
     ppr += '</w:pPr>'
     runs = ''
-    # 支持 <b>label</b> + text 的组合：由调用方分段传入
     if isinstance(text, list):
         for seg, segbold, segcolor in text:
             runs += '<w:r>' + rpr(size, segbold, segcolor) + '<w:t xml:space="preserve">' + xesc(seg) + '</w:t></w:r>'
@@ -199,7 +258,8 @@ STYLE = {
 }
 
 
-def build_docx(P, blocks):
+def build_docx(P, blocks, lang, src, out):
+    u = UI[lang]
     body = []
     for b in blocks:
         k, t, l = b['kind'], b['text'], b['label']
@@ -209,8 +269,8 @@ def build_docx(P, blocks):
             body.append(para_xml('·  ' + t, **STYLE['li']))
         else:
             body.append(para_xml(t, **STYLE.get(k, STYLE['p'])))
-    body.append(para_xml('本简历由 data/profile.json 生成 · ' + date.today().isoformat() +
-                         ' · 在线版与 Word / PDF 三份同源', size=16, color='8A94A6', before=200, align='center'))
+    body.append(para_xml(u['doc_note'].format(src=src) + ' · ' + date.today().isoformat() +
+                         u['foot_tail'], size=16, color='8A94A6', before=200, align='center'))
 
     sect = ('<w:sectPr><w:pgSz w:w="11906" w:h="16838"/>'
             '<w:pgMar w:top="850" w:right="850" w:bottom="800" w:left="850" '
@@ -247,7 +307,7 @@ def build_docx(P, blocks):
             '<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" '
             'xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" '
             'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'
-            '<dc:title>Yuan Ou (Irving) 作品集 · 简历</dc:title><dc:creator>' + xesc(P['identity']['name']) + '</dc:creator>'
+            '<dc:title>' + xesc(u['doc_title']) + '</dc:title><dc:creator>' + xesc(P['identity']['name']) + '</dc:creator>'
             '<cp:lastModifiedBy>WorkBuddy</cp:lastModifiedBy>'
             '<dcterms:created xsi:type="dcterms:W3CDTF">' + date.today().isoformat() + 'T00:00:00Z</dcterms:created>'
             '</cp:coreProperties>')
@@ -255,8 +315,8 @@ def build_docx(P, blocks):
            '<Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties">'
            '<Application>WorkBuddy portfolio builder</Application></Properties>')
 
-    DOCX.parent.mkdir(parents=True, exist_ok=True)
-    with zipfile.ZipFile(DOCX, 'w', zipfile.ZIP_DEFLATED) as z:
+    out.parent.mkdir(parents=True, exist_ok=True)
+    with zipfile.ZipFile(out, 'w', zipfile.ZIP_DEFLATED) as z:
         for name, content in [('[Content_Types].xml', content_types), ('_rels/.rels', rels),
                               ('word/document.xml', document), ('word/_rels/document.xml.rels', doc_rels),
                               ('word/styles.xml', styles), ('docProps/core.xml', core), ('docProps/app.xml', app)]:
@@ -272,53 +332,74 @@ def chrome_path():
     return shutil.which('google-chrome') or shutil.which('chromium') or None
 
 
-def build_pdf():
+def print_pdf(html, out, strip_contact=False):
     exe = chrome_path()
     if not exe:
-        print('  ! 未找到 Chrome，跳过 PDF（可手动把 print/resume.html 打印为 PDF）')
+        print('  ! 未找到 Chrome，跳过 PDF：' + out.name)
         return False
-    PDF.parent.mkdir(parents=True, exist_ok=True)
+    if strip_contact:
+        src = html.read_text(encoding='utf-8')
+        stripped = re.sub(r'<!-- CONTACT:START -->.*?<!-- CONTACT:END -->', '', src, flags=re.S)
+        tmp = html.parent / ('.build-' + html.stem + '-nocontact.html')
+        tmp.write_text(stripped, encoding='utf-8')
+        source = tmp
+    else:
+        source = html
+    out.parent.mkdir(parents=True, exist_ok=True)
     cmd = [exe, '--headless=new', '--disable-gpu', '--no-sandbox', '--no-pdf-header-footer',
            '--allow-file-access-from-files', '--print-to-pdf-no-header',
-           '--print-to-pdf=' + str(PDF), PRINT_HTML.resolve().as_uri()]
+           '--print-to-pdf=' + str(out), source.resolve().as_uri()]
     r = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=120)
-    ok = r.returncode == 0 and PDF.exists() and PDF.stat().st_size > 5000
+    if strip_contact:
+        tmp.unlink(missing_ok=True)
+    ok = r.returncode == 0 and out.exists() and out.stat().st_size > 5000
     if not ok:
-        print('  ! PDF 生成失败：' + r.stderr.decode('utf-8', 'ignore')[-400:])
+        print('  ! PDF 生成失败：' + out.name + ' ' + r.stderr.decode('utf-8', 'ignore')[-400:])
     return ok
 
 
 # ---------------------------------------------------------------- 5. 机检
-def verify(P):
+def verify(P_by_lang):
     problems = []
-    for p in P['projects']:
-        if not (ROOT / p['image']).exists():
-            problems.append('缺图：' + p['image'])
-    for f in ['index.html', 'assets/style.css', 'assets/app.js', 'data/profile.js',
-              'print/resume.html', 'downloads/Irving-简历-v2.docx']:
-        if not (ROOT / f).exists(): problems.append('缺产物：' + f)
+    all_files = set()
+    for lang, cfg in LANGS.items():
+        for key in ('js', 'print_html', 'docx', 'pdf', 'pdf_upwork'):
+            if key in cfg: all_files.add(cfg[key])
+    all_files |= {ROOT / 'index.html', ROOT / 'assets/style.css', ROOT / 'assets/app.js'}
+    for f in sorted(all_files):
+        if not f.exists(): problems.append('缺产物：' + str(f.relative_to(ROOT)))
+    for lang, P in P_by_lang.items():
+        for p in P['projects']:
+            if not (ROOT / p['image']).exists():
+                problems.append('缺图[%s]：%s' % (lang, p['image']))
     html = (ROOT / 'index.html').read_text(encoding='utf-8')
     for src in re.findall(r'(?:src|href)="(assets/[^"]+|data/[^"]+|downloads/[^"]+)"', html):
         if not (ROOT / src).exists(): problems.append('index.html 引用不存在：' + src)
-    ph = sum(str(v).count('〔') for c in P['identity']['contacts'] for v in c.values())
-    ph += P['identity']['name'].count('〔') + P['identity']['experience'].count('〔')
-    print('  · 项目图：%d / %d 存在' % (len(P['projects']) - len([x for x in problems if x.startswith('缺图')]), len(P['projects'])))
-    print('  · 未确认占位符：%d 处（渲染层自动跳过，未代填）' % ph)
+    for lang, P in P_by_lang.items():
+        ph = sum(str(v).count('〔') for c in P['identity']['contacts'] for v in c.values())
+        ph += P['identity']['name'].count('〔') + P['identity']['experience'].count('〔')
+        print('  · [%s] 未确认占位符 %d 处（渲染层自动跳过，未代填）' % (lang, ph))
+    print('  · 产物 %d 份、项目图双语检查：%s' % (len(all_files), '全部通过' if not [x for x in problems if x.startswith('缺图')] else '有缺失'))
     print('  · 引用与产物检查：' + ('全部通过' if not problems else '发现 %d 处问题' % len(problems)))
     for x in problems: print('    - ' + x)
     return not problems
 
 
 def main():
-    P = load()
-    print('[build] 数据源：' + str(DATA))
-    blocks = content_blocks(P)
-    build_profile_js(P); print('  ✓ data/profile.js')
-    build_print_html(P, blocks); print('  ✓ print/resume.html')
-    build_docx(P, blocks); print('  ✓ downloads/Irving-简历-v2.docx')
-    if build_pdf(): print('  ✓ downloads/Irving-简历.pdf')
+    P_by_lang = {}
+    for lang, cfg in LANGS.items():
+        P = load(cfg['data'])
+        P_by_lang[lang] = P
+        print('[build %s] 数据源：%s' % (lang, cfg['data'].name))
+        blocks, src = content_blocks(P, lang)
+        build_profile_js(P, cfg['js']); print('  ✓ ' + str(cfg['js'].relative_to(ROOT)))
+        build_print_html(P, blocks, lang, src, cfg['print_html']); print('  ✓ ' + str(cfg['print_html'].relative_to(ROOT)))
+        build_docx(P, blocks, lang, src, cfg['docx']); print('  ✓ ' + str(cfg['docx'].relative_to(ROOT)))
+        if print_pdf(cfg['print_html'], cfg['pdf']): print('  ✓ ' + str(cfg['pdf'].relative_to(ROOT)))
+        if 'pdf_upwork' in cfg and print_pdf(cfg['print_html'], cfg['pdf_upwork'], strip_contact=True):
+            print('  ✓ ' + str(cfg['pdf_upwork'].relative_to(ROOT)))
     print('[verify]')
-    ok = verify(P)
+    ok = verify(P_by_lang)
     print('[done] ' + ('全部产物就绪。' if ok else '存在待修项，见上。'))
     return 0 if ok else 1
 

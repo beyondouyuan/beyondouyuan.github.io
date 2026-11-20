@@ -112,6 +112,11 @@ button { font-family: inherit; cursor: pointer; }
 .nav { display: flex; gap: var(--sp-4); margin-left: auto; }
 .nav a { color: var(--text-2); font-size: 13px; font-family: var(--font-mono); transition: color .2s; }
 .nav a:hover, .nav a.active { color: var(--primary); text-decoration: none; }
+.lang-switch { display: flex; gap: 2px; padding: 3px; border: 1px solid var(--line); border-radius: var(--r-pill); background: var(--surface); }
+.lang-switch button { min-width: 30px; height: 22px; border: 1px solid transparent; border-radius: var(--r-pill); padding: 0 6px;
+  background: transparent; color: var(--text-2); font-family: var(--font-mono); font-size: 11px; font-weight: 600; cursor: pointer; transition: color .2s, background .2s; }
+.lang-switch button:hover { color: var(--primary); }
+.lang-switch button[aria-pressed="true"] { background: var(--primary); color: var(--bg); }
 .theme-switch { display: flex; gap: var(--sp-1); padding: 3px; border: 1px solid var(--line); border-radius: var(--r-pill); background: var(--surface); }
 .theme-switch button { width: 22px; height: 22px; border: 0; border-radius: 50%; padding: 0; background: transparent;
   border: 1px solid var(--line-strong); transition: transform .2s, box-shadow .2s; }

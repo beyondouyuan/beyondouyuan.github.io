@@ -3,6 +3,55 @@
    Rebuild everything with: python3 tools/build.py                              */
 (function () {
   'use strict';
+
+  /* ---------- i18n: UI chrome strings (data content lives in profile*.json) ---------- */
+  var DICT = {
+    zh: {
+      'nav.about':'关于','nav.skills':'能力','nav.works':'作品','nav.services':'服务','nav.process':'流程','nav.contact':'联系',
+      'hero.kicker':'available for freelance · remote','hero.works':'看作品','hero.services':'服务与报价','hero.pdf':'下载 PDF','hero.word':'下载 Word',
+      'sec.about':'关于我','sec.aboutDesc':'about.md','sec.skills':'能力矩阵','sec.skillsDesc':'七个能力域 · 都有项目支撑','sec.works':'代表作品',
+      'sec.services':'服务与参考报价','sec.servicesDesc':'起步价 · 以需求评估为准','sec.process':'怎么合作','sec.processDesc':'按周可演示，不做黑盒',
+      'sec.boundary':'边界与原则','sec.boundaryDesc':'先把不做的说清楚','boundary.no':'// 不接','boundary.ok':'// 坚持',
+      'contact.title':'有需求，直接聊','contact.desc':'说明目标、范围和时间，我给一页需求确认单和报价。远程为主，广州可面谈。',
+      'contact.hint':'点击任一条可复制 · 电话与微信同号','foot.tech':'纯静态单页 · 零依赖 · 可部署 GitHub Pages / Vercel / Netlify',
+      'doc.title':'Yuan Ou (Irving) 作品集 · 广告变现 × 数据可视化工程师',
+      'doc.desc':'资深全栈 / 大前端工程师作品集：多端聚合广告 SDK、数据可视化大屏、中后台与跨端应用、微信小游戏。可承接整包开发、技术咨询与长期合作。',
+      'label.pitch':'一句话定位：','label.role':'ROLE','label.location':'LOCATION','label.experience':'EXPERIENCE','label.focus':'FOCUS',
+      'filter.all':'全部','filter.ads':'广告 / SDK','filter.viz':'可视化','filter.fullstack':'中后台 / 全栈','filter.game':'小游戏',
+      'table.hash':'#','table.service':'服务','table.deliver':'交付内容','table.price':'参考起步价',
+      'card.view':'查看','card.more':'展开详情 →','card.ariaView':'查看 ','card.ariaViewTail':' 详情与图片',
+      'card.role':'角色：','lb.background':'// 背景','lb.approach':'// 做法','lb.result':'// 结果','lb.stack':'// 技术栈','lb.evidence':'证据：',
+      'copy.aria':'复制','copy.ph':'这是待填占位符，请在 data/profile.json 中替换','copy.ok':'已复制：','copy.fail':'复制失败，请手动选中','copy.manual':'请手动复制：',
+      'toast.theme':'主题已切换：','theme.names':{'deep-space':'A 深空终端','aurora-glass':'B 极光玻璃','neon-grid':'C 霓虹网格','blueprint':'D 工程蓝图'},
+      'typed.lines':['从架构到上线，一个人全做','可接整包 / 咨询 / 长期合作'],
+      'foot.meta':'数据源于 data/profile.json','foot.fallback':'作品集',
+      'count.note':'熟练度','data.fail':'数据文件未加载：请运行 python3 tools/build.py'
+    },
+    en: {
+      'nav.about':'About','nav.skills':'Skills','nav.works':'Work','nav.services':'Services','nav.process':'Process','nav.contact':'Contact',
+      'hero.kicker':'available for freelance · remote','hero.works':'View work','hero.services':'Services & rates','hero.pdf':'Download PDF','hero.word':'Download Word',
+      'sec.about':'About me','sec.aboutDesc':'about.md','sec.skills':'Skill matrix','sec.skillsDesc':'Seven domains, each backed by projects','sec.works':'Selected work',
+      'sec.services':'Services & indicative rates','sec.servicesDesc':'Starting points · quoted per scope','sec.process':'How we work','sec.processDesc':'Weekly demos, no black box',
+      'sec.boundary':'Boundaries & principles','sec.boundaryDesc':'What I do not take, stated up front','boundary.no':'// Not taking','boundary.ok':'// Standing by',
+      'contact.title':'Have a project? Let’s talk','contact.desc':'Send the goal, scope and timeline; I reply with a one-page confirmation and a quote. Remote by default; face-to-face in Guangzhou possible.',
+      'contact.hint':'Click any row to copy · phone and WeChat share the same number','foot.tech':'Pure static single page · zero dependencies · deployable to GitHub Pages / Vercel / Netlify',
+      'doc.title':'Yuan Ou (Irving) — Ad Monetization & Mobile SDK Engineer',
+      'doc.desc':'Ad monetization & mobile SDK engineer: mediation SDK, data visualization walls, admin and cross-platform apps, WeChat mini games.',
+      'label.pitch':'In one line:','label.role':'ROLE','label.location':'LOCATION','label.experience':'EXPERIENCE','label.focus':'FOCUS',
+      'filter.all':'All','filter.ads':'Ads / SDK','filter.viz':'Visualization','filter.fullstack':'Full-stack','filter.game':'Games',
+      'table.hash':'#','table.service':'Service','table.deliver':'Deliverables','table.price':'Indicative rate',
+      'card.view':'View','card.more':'Read more →','card.ariaView':'View ','card.ariaViewTail':' details and images',
+      'card.role':'Role:','lb.background':'// Background','lb.approach':'// Approach','lb.result':'// Result','lb.stack':'// Stack','lb.evidence':'Evidence:',
+      'copy.aria':'Copy ','copy.ph':'This is an unfilled placeholder; replace it in data/profile.en.json','copy.ok':'Copied: ','copy.fail':'Copy failed, please select manually','copy.manual':'Please copy manually: ',
+      'toast.theme':'Theme switched: ','theme.names':{'deep-space':'A Deep Space','aurora-glass':'B Aurora Glass','neon-grid':'C Neon Grid','blueprint':'D Blueprint'},
+      'typed.lines':['From architecture to release, end to end','Packages / consulting / long-term work'],
+      'foot.meta':'Data from data/profile.en.json','foot.fallback':'portfolio',
+      'count.note':'Proficiency','data.fail':'Data failed to load: run python3 tools/build.py'
+    }
+  };
+  var LANG = 'zh';
+  var T = function (key) { var d = DICT[LANG]; return (d && d[key] != null) ? d[key] : key; };
+  var PF = function () { return LANG === 'en' ? (window.PROFILE_EN || window.PROFILE) : window.PROFILE; };
   var P = window.PROFILE || null;
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fine = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
@@ -19,27 +68,33 @@
   }
 
   /* ---------- boot: allow fetch fallback when profile.js is missing ---------- */
-  function boot(data) {
-    P = data;
+  function boot() {
+    try { LANG = localStorage.getItem('portfolio-lang') === 'en' ? 'en' : 'zh'; } catch (e) {}
+    var d = PF();
+    if (d) { P = d; start(); }
+    else {
+      var url = LANG === 'en' ? 'data/profile.en.json' : 'data/profile.json';
+      fetch(url).then(function (r) { return r.json(); }).then(function (data) { P = data; start(); })
+        .catch(function () { toast(T('data.fail')); });
+    }
+  }
+  function start() {
     try { renderAll(); } catch (e) { console.error('[portfolio] render failed', e); }
-    initTheme(); initMotion(); initInteractions();
+    initTheme(); initMotion(); initInteractions(); initLang();
   }
-  if (P) { boot(P); }
-  else {
-    fetch('data/profile.json').then(function (r) { return r.json(); }).then(boot)
-      .catch(function () { toast('数据文件未加载：请运行 python3 tools/build.py'); });
-  }
+  boot();
 
   /* ---------- render ---------- */
   function renderAll() {
     var id = P.identity;
-    document.documentElement.lang = 'zh-CN';
-    document.title = 'Yuan Ou (Irving) 作品集 · 广告变现 × 数据可视化工程师';
+    document.documentElement.lang = LANG === 'en' ? 'en' : 'zh-CN';
+    document.title = T('doc.title');
+    var dm = $('meta[name=description]'); if (dm) dm.setAttribute('content', T('doc.desc'));
     $('#brandName').textContent = isPH(id.name) ? 'portfolio' : String(id.name).toLowerCase().replace(/\s+/g, '-');
     $('#heroName').textContent = id.name;
     $('#heroRole').textContent = id.role + ' · ' + id.location;
     $('#heroPitch').textContent = id.pitch;
-    $('#footMeta').textContent = '© ' + new Date().getFullYear() + ' · ' + (isPH(id.name) ? '作品集' : id.name) + ' · 数据源于 data/profile.json';
+    $('#footMeta').textContent = '© ' + new Date().getFullYear() + ' · ' + (isPH(id.name) ? T('foot.fallback') : id.name) + ' · ' + T('foot.meta');
 
     $('#factsGrid').innerHTML = P.facts.map(function (f) {
       return '<div class="fact reveal"><div class="num"><span class="count" data-to="' + esc(f.value) + '">' + esc(f.value) + '</span><small>' + esc(f.unit) + '</small></div>' +
@@ -48,29 +103,29 @@
 
     var intro = id.intro.split(/\n\n+/).filter(Boolean);
     $('#aboutText').innerHTML = intro.map(function (t) { return '<p class="reveal">' + esc(t) + '</p>'; }).join('') +
-      '<p class="reveal"><strong>一句话定位：</strong>' + esc(id.focus) + '。</p>';
+      '<p class="reveal"><strong>'+T('label.pitch')+'</strong>' + esc(id.focus) + '。</p>';
     $('#sideInfo').innerHTML = '<h3>// identity</h3><dl>' +
-      '<dt>ROLE</dt><dd>' + esc(id.role) + '</dd>' +
-      '<dt>LOCATION</dt><dd>' + esc(id.location) + '</dd>' +
-      (isPH(id.experience) ? '' : '<dt>EXPERIENCE</dt><dd>' + esc(id.experience) + '</dd>') +
-      '<dt>FOCUS</dt><dd>' + esc(id.focus) + '</dd></dl>';
+      '<dt>' + T('label.role') + '</dt><dd>' + esc(id.role) + '</dd>' +
+      '<dt>' + T('label.location') + '</dt><dd>' + esc(id.location) + '</dd>' +
+      (isPH(id.experience) ? '' : '<dt>' + T('label.experience') + '</dt><dd>' + esc(id.experience) + '</dd>') +
+      '<dt>' + T('label.focus') + '</dt><dd>' + esc(id.focus) + '</dd></dl>';
 
     $('#skillGrid').innerHTML = P.skills.map(function (s) {
       return '<article class="skill-card reveal" style="--level:' + Number(s.level) + '%">' +
         '<div class="skill-top"><h3>' + esc(s.name) + '</h3>' + (s.tag ? '<span class="tag">' + esc(s.tag) + '</span>' : '') + '</div>' +
-        '<div class="bar" role="img" aria-label="熟练度 ' + Number(s.level) + ' / 100"><i></i></div>' +
+        '<div class="bar" role="img" aria-label="' + T('count.note') + ' ' + Number(s.level) + ' / 100"><i></i></div>' +
         '<ul>' + s.items.map(function (i) { return '<li>' + esc(i) + '</li>'; }).join('') + '</ul></article>';
     }).join('');
 
-    var cats = [{ k: 'all', n: '全部' }, { k: 'ads', n: '广告 / SDK' }, { k: 'visualization', n: '可视化' },
-      { k: 'fullstack', n: '中后台 / 全栈' }, { k: 'game', n: '小游戏' }];
+    var cats = [{ k: 'all', n: T('filter.all') }, { k: 'ads', n: T('filter.ads') }, { k: 'visualization', n: T('filter.viz') },
+      { k: 'fullstack', n: T('filter.fullstack') }, { k: 'game', n: T('filter.game') }];
     $('#filterBar').innerHTML = cats.map(function (c, i) {
       return '<button data-cat="' + c.k + '" aria-pressed="' + (i === 0) + '">' + esc(c.n) + '</button>';
     }).join('');
 
     $('#workGrid').innerHTML = P.projects.map(function (p) {
       return '<article class="work-card reveal" data-cat="' + esc(p.category) + '" data-id="' + esc(p.id) + '">' +
-        '<div class="work-media" data-open="' + esc(p.id) + '" role="button" tabindex="0" aria-label="查看 ' + esc(p.title) + ' 详情与图片">' +
+        '<div class="work-media" data-open="' + esc(p.id) + '" role="button" tabindex="0" aria-label="' + T('card.ariaView') + ' ' + esc(p.title) + '' + T('card.ariaViewTail') + '">' +
           '<img src="' + esc(p.image) + '" alt="' + esc(p.alt) + '" loading="lazy">' +
           '<span class="no">' + esc(p.no) + '</span></div>' +
         '<div class="work-body">' +
@@ -80,14 +135,14 @@
           }).join('') + '</div>' +
           '<p class="ctx">' + esc(p.context) + '</p>' +
           '<div class="chips">' + p.stack.map(function (s) { return '<span class="chip">' + esc(s) + '</span>'; }).join('') + '</div></div>' +
-        '<button class="work-more" data-open="' + esc(p.id) + '">展开详情 →</button></article>';
+        '<button class="work-more" data-open="' + esc(p.id) + '">' + T('card.more') + '</button></article>';
     }).join('');
 
     $('#extrasGrid').innerHTML = P.extras.map(function (e) {
       return '<div class="extra reveal"><h4>' + esc(e.name) + ' <span class="st">' + esc(e.status) + '</span></h4><p>' + esc(e.desc) + '</p></div>';
     }).join('');
 
-    $('#serviceRows').innerHTML = '<div class="row head"><span>#</span><span>服务</span><span>交付内容</span><span style="text-align:right">参考起步价</span></div>' +
+    $('#serviceRows').innerHTML = '<div class="row head"><span>'+T('table.hash')+'</span><span>'+T('table.service')+'</span><span>'+T('table.deliver')+'</span><span style="text-align:right">'+T('table.price')+'</span></div>' +
       P.services.map(function (s) {
         return '<div class="row reveal"><span class="p">' + esc(s.priority) + '</span><span class="name">' + esc(s.name) +
           '</span><span class="deliver">' + esc(s.deliver) + '</span><span class="price">' + esc(s.price) + '</span></div>';
@@ -102,9 +157,51 @@
     $('#boundaryOk').innerHTML = P.boundaries.principles.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('');
 
     $('#contactGrid').innerHTML = id.contacts.filter(function (c) { return !isPH(c.value); }).map(function (c) {
-      return '<button class="contact-item reveal" data-copy="' + esc(c.value) + '" aria-label="复制' + esc(c.label) + '">' +
+      return '<button class="contact-item reveal" data-copy="' + esc(c.value) + '" aria-label="' + T('copy.aria') + ' ' + esc(c.label) + '">' +
         '<div class="k">' + esc(c.label.toUpperCase()) + '</div><div class="v ' + (isPH(c.value) ? 'ph' : '') + '">' + esc(c.display || c.value) + '</div></button>';
     }).join('');
+  }
+
+  /* ---------- language ---------- */
+  function applyDataI18n() {
+    $$('[data-i18n]').forEach(function (el) {
+      var v = T(el.getAttribute('data-i18n'));
+      if (typeof v === 'string') el.textContent = v;
+    });
+  }
+  function refreshReveal() {
+    // 语言切换重渲染后，新节点默认 opacity:0；立即标记可见，避免依赖滚动观察造成空白。
+    $$('.reveal').forEach(function (el) { el.classList.add('in-view'); });
+    $$('.count').forEach(function (el) { if (!el.dataset.done) { el.dataset.done = '1'; el.textContent = el.dataset.to; } });
+    var typed = $('#typed'); if (typed) typed.textContent = P.identity.focus;
+  }
+  function switchLang(next) {
+    if (next === LANG) return;
+    var d = next === 'en' ? (window.PROFILE_EN || window.PROFILE) : window.PROFILE;
+    if (!d) { toast(T('data.fail')); return; }
+    LANG = next; P = d;
+    try { localStorage.setItem('portfolio-lang', next); } catch (e) {}
+    document.documentElement.lang = next === 'en' ? 'en' : 'zh-CN';
+    document.title = T('doc.title');
+    var dm = $('meta[name=description]'); if (dm) dm.setAttribute('content', T('doc.desc'));
+    var dl = $('#dlPdf'), dw = $('#dlWord');
+    if (dl) dl.setAttribute('href', next === 'en' ? 'downloads/Irving-Ou-Resume-EN.pdf' : 'downloads/Irving-简历.pdf');
+    if (dw) dw.setAttribute('href', next === 'en' ? 'downloads/Irving-Ou-Resume-EN.docx' : 'downloads/Irving-简历-v2.docx');
+    $('#langZh').setAttribute('aria-pressed', String(next === 'zh'));
+    $('#langEn').setAttribute('aria-pressed', String(next === 'en'));
+    try { renderAll(); } catch (e) { console.error('[portfolio] re-render failed', e); }
+    applyDataI18n();
+    refreshReveal();
+  }
+  function initLang() {
+    applyDataI18n();
+    $('#langZh').setAttribute('aria-pressed', String(LANG === 'zh'));
+    $('#langEn').setAttribute('aria-pressed', String(LANG === 'en'));
+    var dl = $('#dlPdf'), dw = $('#dlWord');
+    if (dl) dl.setAttribute('href', LANG === 'en' ? 'downloads/Irving-Ou-Resume-EN.pdf' : 'downloads/Irving-简历.pdf');
+    if (dw) dw.setAttribute('href', LANG === 'en' ? 'downloads/Irving-Ou-Resume-EN.docx' : 'downloads/Irving-简历-v2.docx');
+    $('#langZh').addEventListener('click', function () { switchLang('zh'); });
+    $('#langEn').addEventListener('click', function () { switchLang('en'); });
   }
 
   /* ---------- theme ---------- */
@@ -116,7 +213,7 @@
       b.addEventListener('click', function () {
         setTheme(b.dataset.t);
         try { localStorage.setItem('portfolio-theme', b.dataset.t); } catch (e) {}
-        toast('主题已切换：' + ({ 'deep-space': 'A 深空终端', 'aurora-glass': 'B 极光玻璃', 'neon-grid': 'C 霓虹网格', 'blueprint': 'D 工程蓝图' })[b.dataset.t]);
+        toast(T('toast.theme') + T('theme.names')[b.dataset.t]);
       });
     });
   }
@@ -173,7 +270,7 @@
   }
   function typewriter() {
     var el = $('#typed'); if (!el) return;
-    var lines = [P.identity.focus, '从架构到上线，一个人全做', '可接整包 / 咨询 / 长期合作'];
+    var lines = [P.identity.focus].concat(T('typed.lines'));
     var li = 0, ci = 0, deleting = false;
     el.textContent = '';
     (function tick() {
@@ -270,12 +367,12 @@
       $('#lbIn').innerHTML = '<img class="lb-img" src="' + esc(p.image) + '" alt="' + esc(p.alt) + '">' +
         '<div class="lb-body">' +
         '<h3>' + esc(p.no) + ' · ' + esc(p.title) + '</h3>' +
-        '<p class="sub">' + esc(p.subtitle) + '　|　角色：' + esc(p.role) + '</p>' +
-        '<h4>// 背景</h4><p>' + esc(p.context) + '</p>' +
-        '<h4>// 做法</h4><ul>' + p.approach.map(function (a) { return '<li>' + esc(a) + '</li>'; }).join('') + '</ul>' +
-        '<h4>// 结果</h4><p>' + esc(p.result) + '</p>' +
-        '<h4>// 技术栈</h4><p>' + esc(p.stack.join(' · ')) + '</p>' +
-        '<div class="ev">证据：' + esc(p.evidence) + '</div></div>';
+        '<p class="sub">' + esc(p.subtitle) + '　|　' + T('card.role') +  + esc(p.role) + '</p>' +
+        '<h4>' + T('lb.background') + '</h4><p>' + esc(p.context) + '</p>' +
+        '<h4>' + T('lb.approach') + '</h4><ul>' + p.approach.map(function (a) { return '<li>' + esc(a) + '</li>'; }).join('') + '</ul>' +
+        '<h4>' + T('lb.result') + '</h4><p>' + esc(p.result) + '</p>' +
+        '<h4>' + T('lb.stack') + '</h4><p>' + esc(p.stack.join(' · ')) + '</p>' +
+        '<div class="ev">' + T('lb.evidence') +  + esc(p.evidence) + '</div></div>';
       lb.classList.add('open'); document.body.style.overflow = 'hidden';
       $('#lbClose').focus();
     }
@@ -292,11 +389,11 @@
       var cp = target.closest('[data-copy]');
       if (cp) {
         var v = cp.dataset.copy;
-        if (isPH(v)) { toast('这是待填占位符，请在 data/profile.json 中替换'); return; }
+        if (isPH(v)) { toast(T('copy.ph')); return; }
         if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(v).then(function () { toast('已复制：' + v); },
-            function () { toast('复制失败，请手动选中'); });
-        } else { toast('请手动复制：' + v); }
+          navigator.clipboard.writeText(v).then(function () { toast(T('copy.ok') + v); },
+            function () { toast(T('copy.fail')); });
+        } else { toast(T('copy.manual') + v); }
         return;
       }
     });

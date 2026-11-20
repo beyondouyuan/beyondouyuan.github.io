@@ -1,35 +1,41 @@
-# 简历与作品集
+# 简历与作品集（中英双语）
 
-- **日期**：2026-11-12
+- **日期**：2026-11-20
 - **owner**：WorkBuddy
-- **用途**：云队友等外包/自由工作平台上传用的 Word / PDF，以及可部署到 GitHub Pages / Vercel / Netlify 的在线简历。
+- **用途**：外包/自由工作平台上传用的 Word / PDF，以及可部署到 GitHub Pages / Vercel / Netlify 的在线简历；中英双语同一 URL 切换。
 
-一份数据，三份产物。改 `data/profile.json`，跑一次 `python3 tools/build.py`，Word、PDF、在线站点全部同步更新；加作品只需往 `projects` 数组里加一条，页面卡片、筛选、灯箱、打印版会自动带上。
+**一份页面代码 + 两份内容真源 → 双语 × PDF/Word**。改 `data/profile.json`（中文）或 `data/profile.en.json`（英文），跑一次 `python3 tools/build.py`，两语言的 Word、PDF、在线站点全部同步更新。在线页用右上角「中 / EN」按钮切换，不刷新，语言记在 localStorage。加作品往两份真源的 `projects` 数组各加一条（id 保持一致），卡片、筛选、灯箱、打印版自动带上。
+
+> 旧的独立英文站 `portfolio/resume-en/` 已删除、线上 `/en/` 已下线；英文内容并入本目录双语体系。
 
 ## 目录
 
 ```
 resume-online/
-├── index.html                    在线简历（单页 · 4 套可切换主题）
+├── index.html                    在线简历（单页 · 4 主题 · 中英切换按钮）
 ├── assets/
-│   ├── style.css                 设计令牌单源 + 4 套主题
-│   ├── app.js                    数据渲染、粒子场、打字机、3D 卡片、筛选、灯箱
-│   └── *.jpg / *.png / *.svg     作品证据图（含 idc-monitor 项目运行效果截图）
+│   ├── style.css                 设计令牌单源 + 4 套主题 + 语言切换按钮
+│   ├── app.js                    i18n 字典 + 数据渲染（按语言选真源）+ 粒子/打字机/筛选/灯箱
+│   └── *.jpg / *.png / *.svg     作品证据图（双语共用）
 ├── data/
-│   ├── profile.json              ★ 唯一真源，只改这里
-│   └── profile.js                构建生成，供 file:// 直接打开时用
-├── print/resume.html             A4 打印版（构建生成）
-├── downloads/
-│   ├── Irving-简历.pdf           平台上传用（构建生成）
-│   └── Irving-简历-v2.docx       平台上传用（构建生成）
-├── tools/build.py                一键重建脚本（纯 Python 标准库）
+│   ├── profile.json              ★ 中文唯一真源
+│   ├── profile.en.json           ★ 英文唯一真源（schema 与中文一致）
+│   ├── profile.js                构建生成（window.PROFILE）
+│   └── profile.en.js             构建生成（window.PROFILE_EN）
+├── print/resume.html / resume-en.html   A4 打印版（构建生成，双语各一）
+├── downloads/                    共 5 份文档（构建生成）
+│   ├── Irving-简历.pdf / Irving-简历-v2.docx                       中文
+│   ├── Irving-Ou-Resume-EN.pdf / Irving-Ou-Resume-EN.docx          英文完整版
+│   └── Irving-Ou-Resume-EN-upwork.pdf                              英文去联系方式版（平台上传）
+├── tools/build.py                一键重建（纯 Python 标准库 + Chrome）
+├── PLAN-多语言改造.md             本改造的方案与验收记录
 ├── netlify.toml / vercel.json
 └── README.md
 ```
 
 ## 改内容
 
-只要编辑 `data/profile.json`。常用字段：
+编辑 `data/profile.json`（中文）与 `data/profile.en.json`（英文）——**两份都要改**才会双语同步。schema 完全一致，项目 `id` 一一对应。常用字段：
 
 | 想改什么 | 改哪里 |
 |---|---|
@@ -47,7 +53,7 @@ cd /Users/irving/workstation/portfolio/resume-online
 python3 tools/build.py
 ```
 
-脚本会重建 `data/profile.js`、`print/resume.html`、Word、PDF，并跑一次引用机检（图片、CSS/JS、下载链接是否存在）。PDF 用本机 Google Chrome 无头打印生成；没装 Chrome 时会跳过 PDF，其余产物照常生成，可手动把 `print/resume.html` 在浏览器里「打印 → 存为 PDF」。
+脚本按中英两语言各重建一份 `profile*.js`、打印页，共产出 **5 份文档**（中文 PDF/Word + 英文 PDF/Word/Upwork PDF），并跑一次双语机检（图片、CSS/JS、下载链接、产物是否齐全）。PDF 用本机 Google Chrome 无头打印生成；英文 Upwork 版由打印页剥离 `<!-- CONTACT -->` 段后生成，不含邮箱与电话。没装 Chrome 时会跳过 PDF，其余产物照常生成，可手动把 `print/resume*.html` 在浏览器里「打印 → 存为 PDF」。
 
 ## 本地预览
 
