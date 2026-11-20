@@ -13,7 +13,7 @@
       'sec.services':'服务与参考报价','sec.servicesDesc':'起步价 · 以需求评估为准','sec.process':'怎么合作','sec.processDesc':'按周可演示，不做黑盒',
       'sec.boundary':'边界与原则','sec.boundaryDesc':'先把不做的说清楚','boundary.no':'// 不接','boundary.ok':'// 坚持',
       'contact.title':'有需求，直接聊','contact.desc':'说明目标、范围和时间，我给一页需求确认单和报价。远程为主，广州可面谈。',
-      'contact.hint':'点击任一条可复制 · 电话与微信同号','foot.tech':'纯静态单页 · 零依赖 · 可部署 GitHub Pages / Vercel / Netlify',
+      'contact.hint':'点击任一条可复制 · 电话与微信同号',
       'doc.title':'Irving 作品集 · 广告变现 × 数据可视化工程师',
       'doc.desc':'资深全栈 / 大前端工程师作品集：多端聚合广告 SDK、数据可视化大屏、中后台与跨端应用、微信小游戏。可承接整包开发、技术咨询与长期合作。',
       'og.title':'Irving 作品集 · 广告变现 × 数据可视化工程师','og.desc':'从架构设计到多端落地、真机验收、上线变现，一个人走完整条链路。',
@@ -25,7 +25,7 @@
       'copy.aria':'复制','copy.ph':'这是待填占位符，请在 data/profile.json 中替换','copy.ok':'已复制：','copy.fail':'复制失败，请手动选中','copy.manual':'请手动复制：',
       'toast.theme':'主题已切换：','theme.names':{'deep-space':'A 深空终端','aurora-glass':'B 极光玻璃','neon-grid':'C 霓虹网格','blueprint':'D 工程蓝图'},
       'typed.lines':['从架构到上线，一个人全做','可接整包 / 咨询 / 长期合作'],
-      'foot.meta':'数据源于 data/profile.json','foot.fallback':'作品集',
+      'foot.fallback':'作品集',
       'count.note':'熟练度','data.fail':'数据文件未加载：请运行 python3 tools/build.py'
     },
     en: {
@@ -35,7 +35,7 @@
       'sec.services':'Services & indicative rates','sec.servicesDesc':'Starting points · quoted per scope','sec.process':'How we work','sec.processDesc':'Weekly demos, no black box',
       'sec.boundary':'Boundaries & principles','sec.boundaryDesc':'What I do not take, stated up front','boundary.no':'// Not taking','boundary.ok':'// Standing by',
       'contact.title':'Have a project? Let’s talk','contact.desc':'Send the goal, scope and timeline; I reply with a one-page confirmation and a quote. Remote by default; face-to-face in Guangzhou possible.',
-      'contact.hint':'Click any row to copy · phone and WeChat share the same number','foot.tech':'Pure static single page · zero dependencies · deployable to GitHub Pages / Vercel / Netlify',
+      'contact.hint':'Click any row to copy · phone and WeChat share the same number',
       'doc.title':'Irving — Ad Monetization & Mobile SDK Engineer',
       'doc.desc':'Ad monetization & mobile SDK engineer: mediation SDK, data visualization walls, admin and cross-platform apps, WeChat mini games.',
       'og.title':'Irving — Ad Monetization & Mobile SDK Engineer','og.desc':'From architecture to multi-platform delivery, device acceptance and monetization — one person through the whole chain.',
@@ -47,7 +47,7 @@
       'copy.aria':'Copy ','copy.ph':'This is an unfilled placeholder; replace it in data/profile.en.json','copy.ok':'Copied: ','copy.fail':'Copy failed, please select manually','copy.manual':'Please copy manually: ',
       'toast.theme':'Theme switched: ','theme.names':{'deep-space':'A Deep Space','aurora-glass':'B Aurora Glass','neon-grid':'C Neon Grid','blueprint':'D Blueprint'},
       'typed.lines':['From architecture to release, end to end','Packages / consulting / long-term work'],
-      'foot.meta':'Data from data/profile.en.json','foot.fallback':'portfolio',
+      'foot.fallback':'portfolio',
       'count.note':'Proficiency','data.fail':'Data failed to load: run python3 tools/build.py'
     }
   };
@@ -98,7 +98,7 @@
     $('#heroName').textContent = id.name;
     $('#heroRole').textContent = id.role + ' · ' + id.location;
     $('#heroPitch').textContent = id.pitch;
-    $('#footMeta').textContent = '© ' + new Date().getFullYear() + ' · ' + (isPH(id.name) ? T('foot.fallback') : id.name) + ' · ' + T('foot.meta');
+    $('#footMeta').textContent = '© ' + new Date().getFullYear() + ' · ' + (isPH(id.name) ? T('foot.fallback') : id.name);
 
     $('#factsGrid').innerHTML = P.facts.map(function (f) {
       return '<div class="fact reveal"><div class="num"><span class="count" data-to="' + esc(f.value) + '">' + esc(f.value) + '</span><small>' + esc(f.unit) + '</small></div>' +
