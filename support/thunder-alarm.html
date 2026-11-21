@@ -24,6 +24,10 @@
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
   }
+  /* 语言切换核心：状态驱动显示/隐藏 */
+  body[data-lang="zh"] [lang="en"] { display: none !important; }
+  body[data-lang="en"] [lang="zh"] { display: none !important; }
+
   header {
     background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
     color: #fff;
@@ -46,6 +50,10 @@
     display: inline-block; margin: 0 4px;
     color: #fff; font-size: 13px; text-decoration: none;
     border: 1px solid rgba(255,255,255,0.6); border-radius: 999px; padding: 4px 14px;
+    cursor: pointer; transition: background 0.2s;
+  }
+  header .lang-switch a.active {
+    background: #fff; color: var(--brand-dark); border-color: #fff;
   }
   main { max-width: 720px; margin: 0 auto; padding: 32px 20px 64px; }
   .meta {
@@ -110,7 +118,6 @@
   }
   details[open] summary::after { content: "–"; }
   details p { margin: 10px 0 0; color: #44403C; }
-  details .answer-lead { margin-top: 10px; }
   details ol { padding-left: 22px; margin-top: 8px; }
   footer {
     text-align: center; color: var(--text-secondary);
@@ -123,24 +130,26 @@
   }
 </style>
 </head>
-<body>
+<body data-lang="en">
 
 <header>
   <div class="logo-mark">⚡</div>
   <h1>Support</h1>
-  <p>Thunder Alarm · Wake up with action</p>
+  <p lang="en">Thunder Alarm · Wake up with action</p>
+  <p lang="zh">雷霆闹钟 · 用动作叫醒自己</p>
   <div class="lang-switch">
-    <a href="#en">English</a>
-    <a href="#zh">中文</a>
+    <a href="#" id="lang-en" onclick="setLang('en'); return false;">English</a>
+    <a href="#" id="lang-zh" onclick="setLang('zh'); return false;">中文</a>
   </div>
 </header>
 
 <main>
-  <div class="meta">
-    <strong>App:</strong> Thunder Alarm (雷霆闹钟) &nbsp;·&nbsp; <strong>Version:</strong> 1.0.1 &nbsp;·&nbsp; <strong>Price:</strong> Free, Pro subscription unlocks advanced actions
+  <!-- ===== 英文内容 ===== -->
+  <div class="meta" lang="en">
+    <strong>App:</strong> Thunder Alarm &nbsp;·&nbsp; <strong>Version:</strong> 1.0.1 &nbsp;·&nbsp; <strong>Price:</strong> Free, Pro subscription unlocks advanced actions
   </div>
 
-  <section id="en">
+  <section id="en" lang="en">
     <h2>Contact Us</h2>
     <div class="highlight">
       <strong>Email:</strong> <a class="mail" href="mailto:beyondouyuan@gmail.com?subject=Thunder%20Alarm%20Support">beyondouyuan@gmail.com</a><br>
@@ -155,48 +164,48 @@
     </ul>
   </section>
 
-  <section>
+  <section lang="en">
     <h2>Frequently Asked Questions</h2>
 
     <details open>
       <summary>How does the action verification work?</summary>
-      <p>Thunder Alarm opens your camera when the reminder fires, runs a on-device pose-detection model (Google ML Kit), and confirms you completed the required action — head shake, nod, hand raise, squat or jumping jack — before the alarm stops. All processing happens locally on your device; nothing is uploaded to a server.</p>
+      <p>Thunder Alarm opens your camera when the reminder fires, runs a on-device pose-detection model (Google ML Kit), and confirms you completed the required action — head shake, nod, hand raise, squat or jumping jack — before the alarm stops. All processing happens locally; nothing is uploaded to a server.</p>
     </details>
 
     <details>
       <summary>Free vs. Pro — what's the difference?</summary>
-      <p><strong>Free:</strong> Head shake and nod actions, full history (3 items), basic completion stats.</p>
-      <p><strong>Pro:</strong> All actions including hand raise, squat and jumping jack; full history with trends; customizable target counts. $4.99/month or $19.99/year.</p>
+      <p><strong>Free:</strong> Head shake and nod actions, 3 recent history items, basic completion stats.</p>
+      <p><strong>Pro:</strong> All 5 actions including hand raise, squat and jumping jack; full history with 7/30-day trend charts; customizable target counts. $4.99/month or $19.99/year.</p>
     </details>
 
     <details>
       <summary>My alarm did not go off — what do I check?</summary>
       <ol>
         <li>Check <strong>iOS Settings → Notifications → Thunder Alarm</strong> — make sure notifications are allowed, with banners or alerts enabled, and <strong>Sounds</strong> is on.</li>
-        <li>In the app, open the reminder you expect and confirm the time, date and repeat schedule are correct.</li>
+        <li>In the app, open the reminder you expect and confirm time, date and repeat schedule are correct.</li>
         <li>If your phone was in <strong>Focus / Do Not Disturb</strong> at the alarm time, iOS may have suppressed it. Add Thunder Alarm to your Focus exceptions or switch to an Alarm-type reminder (iOS can ring even in Focus).</li>
         <li>Open the app once — this refreshes the local notification schedule, which iOS may throttle if the app has not run for days.</li>
       </ol>
-      <p>Thunder Alarm uses local notifications only. There is no server push, so it works fully offline.</p>
+      <p>Thunder Alarm uses local notifications only. No server push, so it works fully offline.</p>
     </details>
 
     <details>
       <summary>Camera access was denied — how do I enable it again?</summary>
-      <p>Open <strong>iOS Settings → Thunder Alarm → Camera</strong> and switch it on. The app needs camera access only at the moment the reminder fires to verify your action; it never records or stores video — only a single pose-detection pass.</p>
+      <p>Open <strong>iOS Settings → Thunder Alarm → Camera</strong> and switch it on. The app needs camera access only at the moment the reminder fires for a single pose-detection pass — no recording, no video stored.</p>
     </details>
 
     <details>
       <summary>Can I skip the action verification?</summary>
-      <p>No — the whole point is to make snoozing hard. You can, however, choose an <strong>Alarm-type reminder</strong> (not Water or Medicine), select a simpler action (head shake or nod), or adjust the required target count. On Pro, you can lower counts down to 1.</p>
+      <p>No — the whole point is to make snoozing hard. You can, however, choose an <strong>Alarm-type reminder</strong> (not Water or Medicine), select a simpler action (head shake or nod), or lower the target count down to 1 (Pro only).</p>
     </details>
 
     <details>
       <summary>Where is my data stored? Will it be deleted?</summary>
-      <p>Reminders and history live in a local database on your device. Uninstalling the app clears both. Your history is never uploaded — there is no server copy to delete or export. iCloud backups from iOS Settings may include the app container if you have not excluded it.</p>
+      <p>Reminders and history live in a local database on your device. Uninstalling the app clears both. There is no server copy to delete or export. iOS iCloud backups may include the app container unless you exclude it.</p>
     </details>
   </section>
 
-  <section>
+  <section lang="en">
     <h2>Privacy Policy</h2>
     <p>Our full privacy policy explains what the app stores, how camera data is handled, and how to contact us:
       <a href="https://beyondouyuan.github.io/privacy/thunder-alarm-en.html">English privacy policy</a> ·
@@ -204,7 +213,12 @@
     </p>
   </section>
 
-  <section id="zh">
+  <!-- ===== 中文内容 ===== -->
+  <div class="meta" lang="zh">
+    <strong>App：</strong>雷霆闹钟 &nbsp;·&nbsp; <strong>版本：</strong>1.0.1 &nbsp;·&nbsp; <strong>价格：</strong>免费，Pro 订阅解锁高级动作
+  </div>
+
+  <section id="zh" lang="zh">
     <h2>联系我们</h2>
     <div class="highlight">
       <strong>邮箱：</strong><a class="mail" href="mailto:beyondouyuan@gmail.com?subject=%E9%9B%B7%E9%9C%86%E9%97%B9%E9%92%9F%E5%8F%8D%E9%A6%88">beyondouyuan@gmail.com</a><br>
@@ -219,18 +233,18 @@
     </ul>
   </section>
 
-  <section>
+  <section lang="zh">
     <h2>常见问题</h2>
 
     <details open>
       <summary>动作验证是怎么回事？</summary>
-      <p>闹钟响起时会打开你的相机，在本机运行 Google ML Kit 的姿态识别模型，确认你已完成指定动作（摆头 / 点头 / 举手 / 深蹲 / 开合跳）后才会停止闹铃。所有处理都在本地进行，不上传任何图像或数据到服务器。</p>
+      <p>闹钟响起时会打开相机，在本机运行 Google ML Kit 的姿态识别模型，确认你已完成指定动作（摆头 / 点头 / 举手 / 深蹲 / 开合跳）后才会停止闹铃。所有处理都在本地进行，不上传任何图像或数据到服务器。</p>
     </details>
 
     <details>
       <summary>免费版和 Pro 有什么区别？</summary>
       <p><strong>免费版：</strong>摆头、点头两种动作，最近 3 条打卡历史，基础完成统计。</p>
-      <p><strong>Pro：</strong>解锁举手、深蹲、开合跳；完整历史和 7/30 天趋势；自定义目标次数。月 $4.99 / 年 $19.99。</p>
+      <p><strong>Pro：</strong>解锁举手、深蹲、开合跳；完整历史和 7/30 天趋势图；自定义目标次数。月 $4.99 / 年 $19.99。</p>
     </details>
 
     <details>
@@ -246,7 +260,7 @@
 
     <details>
       <summary>相机权限被拒绝了，怎么重新开？</summary>
-      <p>打开 <strong>iOS 设置 → 雷霆闹钟 → 相机</strong> 并开启。相机只在提醒响起那一刻打开，用于一次姿态识别——不录像、不存图。</p>
+      <p>打开 <strong>iOS 设置 → 雷霆闹钟 → 相机</strong> 并开启。相机只在提醒响起那一刻打开做一次姿态识别——不录像、不存图。</p>
     </details>
 
     <details>
@@ -259,6 +273,14 @@
       <p>提醒和打卡历史只保存在本机数据库，卸载应用会一并清除，服务器没有副本。iOS 设置里的 iCloud 备份可能包含应用容器——如果不想被备份进去，在 iCloud 管理页面手动排除。</p>
     </details>
   </section>
+
+  <section lang="zh">
+    <h2>隐私政策</h2>
+    <p>完整隐私政策（应用存什么、相机数据怎么处理、如何联系我们）：
+      <a href="https://beyondouyuan.github.io/privacy/thunder-alarm-en.html">英文隐私政策</a> ·
+      <a href="https://beyondouyuan.github.io/privacy/thunder-alarm.html">中文隐私政策</a>.
+    </p>
+  </section>
 </main>
 
 <footer>
@@ -266,5 +288,27 @@
   <a href="https://beyondouyuan.github.io/privacy/thunder-alarm-en.html">Privacy</a>
 </footer>
 
+<script>
+// 语言切换：状态驱动 + localStorage 持久化
+(function () {
+  var saved = localStorage.getItem('ta.lang') || 'en';
+  setLang(saved);
+
+  document.getElementById('lang-en').addEventListener('click', function (e) {
+    e.preventDefault(); setLang('en');
+  });
+  document.getElementById('lang-zh').addEventListener('click', function (e) {
+    e.preventDefault(); setLang('zh');
+  });
+})();
+
+function setLang(lang) {
+  document.body.setAttribute('data-lang', lang);
+  localStorage.setItem('ta.lang', lang);
+  // 高亮当前选中
+  document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+  document.getElementById('lang-zh').classList.toggle('active', lang === 'zh');
+}
+</script>
 </body>
 </html>
