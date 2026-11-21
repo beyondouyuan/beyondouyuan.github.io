@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>Privacy Policy · Thunder Alarm</title>
+<meta name="description" content="Thunder Alarm privacy policy: your reminders, action records, and preferences stay on your device only; camera frames are processed frame-by-frame and discarded immediately—no upload, no persistence.">
+<style>
+  :root {
+    --brand: #1E63FF;
+    --brand-dark: #0D47C7;
+    --header-bg: #10141D;
+    --header-accent: #1E63FF;
+    --bg: #F3F5F9;
+    --card: #FFFFFF;
+    --text: #171A22;
+    --text-secondary: #5A6270;
+    --border: #E2E6EE;
+    --danger: #DC2626;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  header {
+    background: linear-gradient(135deg, var(--header-bg) 0%, #1A1F2C 100%);
+    color: #fff;
+    padding: 56px 24px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, var(--header-accent) 0%, transparent 70%);
+    opacity: 0.25;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: -40px;
+    width: 160px; height: 160px;
+    background: radial-gradient(circle, var(--danger) 0%, transparent 70%);
+    opacity: 0.15;
+  }
+  header .logo-mark {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 72px; height: 72px; border-radius: 18px;
+    background: var(--brand);
+    margin-bottom: 16px;
+    box-shadow: 0 8px 32px rgba(30, 99, 255, 0.5);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  }
+  header .logo-mark img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  header h1 { font-size: 24px; font-weight: 700; letter-spacing: 0.5px; position: relative; z-index: 1; }
+  header p { margin-top: 8px; font-size: 14px; opacity: 0.85; position: relative; z-index: 1; }
+  main { max-width: 720px; margin: 0 auto; padding: 32px 20px 64px; }
+  .meta {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 28px;
+  }
+  section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 24px 8px;
+    margin-bottom: 16px;
+  }
+  h2 {
+    font-size: 17px; font-weight: 700;
+    color: var(--brand);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
+  h3 { font-size: 15px; font-weight: 600; margin: 16px 0 6px; }
+  p, li { font-size: 14px; margin-bottom: 10px; }
+  ul, ol { padding-left: 22px; margin-bottom: 10px; }
+  li { margin-bottom: 6px; }
+  .highlight {
+    background: #EAF0FB;
+    border-left: 4px solid var(--brand);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin: 12px 0;
+    font-size: 14px;
+  }
+  .highlight strong { color: var(--brand); }
+  .warn {
+    background: #FEF2F2;
+    border-left: 4px solid var(--danger);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin: 12px 0;
+    font-size: 14px;
+  }
+  .warn strong { color: var(--danger); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0 16px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { background: #F3F5F9; font-weight: 600; color: var(--text); }
+  footer {
+    text-align: center; color: var(--text-secondary);
+    font-size: 12px; padding: 24px 16px 48px;
+  }
+  footer a { color: var(--brand); text-decoration: none; }
+  a.lang-link {
+    display: inline-block;
+    margin-top: 16px;
+    color: #fff;
+    font-size: 13px;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 999px;
+    padding: 4px 14px;
+    position: relative;
+    z-index: 1;
+  }
+  a.lang-link:hover { background: rgba(255,255,255,0.1); }
+  code {
+    background: #F3F5F9;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+  @media (max-width: 480px) {
+    header { padding: 44px 16px 36px; }
+    header::before, header::after { display: none; }
+    section { padding: 20px 16px 4px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-mark">
+    <img src="./icon.png" alt="Thunder Alarm app icon" width="72" height="72" onerror="this.style.display='none'">
+  </div>
+  <h1>Privacy Policy</h1>
+  <p>Thunder Alarm · Reminders + Action Verification</p>
+  <a href="./privacy-policy.html" class="lang-link">中文</a>
+</header>
+
+<main>
+  <div class="meta">
+    <strong>Effective date:</strong> November 21, 2026 &nbsp;·&nbsp; <strong>Updated:</strong> November 21, 2026 &nbsp;·&nbsp; <strong>Applies to:</strong> Thunder Alarm<br>
+    We know your time and focus matter. Thunder Alarm is a personal productivity tool that reminds you at the scheduled time and verifies the action through your camera. Our design principle is <strong>data never leaves your device</strong>: all reminders, action records, and preferences are stored locally only.
+  </div>
+
+  <section>
+    <h2>1. Our Core Commitment</h2>
+    <div class="highlight">
+      <strong>Data stays on your device:</strong> your reminder settings, action completion records, and preferences are stored <b>only on your device</b>. No account is required and nothing is sent to any server.
+    </div>
+    <p>Thunder Alarm is built around a local-first principle. The camera-based action verification (head shake / nod / hand raise, etc.) that triggers at reminder time is processed <b>frame-by-frame on the device</b>. Once the recognition result confirms you have completed the target number of actions, the raw frames are released immediately — we do not capture, store, or upload your camera footage or pose data.</p>
+  </section>
+
+  <section>
+    <h2>2. Information We Collect</h2>
+    <h3>2.1 Reminder data you create (stored only on this device)</h3>
+    <table>
+      <tr><th>Data type</th><th>Storage</th><th>Purpose</th></tr>
+      <tr><td>Reminder settings (time, repeat rule, action type, target count)</td><td>Local SQLite database</td><td>Trigger system alarms at the scheduled time</td></tr>
+      <tr><td>Action completion records (validation time, duration, count)</td><td>Local SQLite database</td><td>Display completion history</td></tr>
+      <tr><td>Preferences (notification toggle, action recognition toggle, etc.)</td><td>Local key-value store</td><td>Application behavior configuration</td></tr>
+    </table>
+    <p>This data is stored locally on your device (drift SQLite + shared_preferences). It is <b>never</b> uploaded to any server and is not written to iCloud or other cloud backups. If you use a system-level device backup (iOS / Android), the backup is controlled by Apple or Google and Thunder Alarm has no access to it.</p>
+
+    <h3>2.2 Camera frames and raw pose data</h3>
+    <div class="highlight">
+      <strong>Frame-by-frame processing, discarded immediately:</strong> the camera turns on only when you enter verification. Frames are analyzed on the device by the pose recognition SDK. Once the target action count is confirmed, the <b>raw frames are released immediately — never written to disk, never uploaded</b>.
+    </div>
+
+    <h3>2.3 Local aggregated analytics (counts only)</h3>
+    <p>Thunder Alarm records <b>anonymous aggregate count events</b> (such as "app launched", "reminder created", "validation completed") in the local database to understand feature usage. These events:</p>
+    <ul>
+      <li>Stay in the local database and are <b>never reported to any server</b>;</li>
+      <li>Do not include camera footage, reminder body text, or any personally identifiable information;</li>
+      <li>Are cleared automatically when you uninstall the app.</li>
+    </ul>
+
+    <h3>2.4 Subscriptions, purchases, and account information</h3>
+    <p>The current version is fully free: no in-app purchases and no account system. We do not collect any payment information, email address, or phone number.</p>
+  </section>
+
+  <section>
+    <h2>3. Permission Usage and Your Control</h2>
+    <table>
+      <tr><th>Permission</th><th>Purpose</th><th>When requested</th></tr>
+      <tr><td><strong>Camera</strong></td><td>Action recognition verification (confirm you completed the required action before dismissing the alarm)</td><td>When you enter the verification flow for the first time; if denied, you can still exit verification but cannot complete actions</td></tr>
+      <tr><td><strong>AlarmKit (iOS 26+)</strong></td><td>Trigger system alarms at the scheduled time — they ring even when the device is locked or muted</td><td>When you create your first reminder; if denied, no alarm is scheduled for that reminder</td></tr>
+      <tr><td><strong>Exact alarms (Android 12+)</strong></td><td>Guarantee reminders trigger on time</td><td>Requested as needed when you create reminders</td></tr>
+      <tr><td><strong>Display over other apps (Android 10+)</strong></td><td>Relaunch the verification page even if the app was killed or backgrounded</td><td>Requested as needed on first verification</td></tr>
+      <tr><td><strong>Foreground service (Android)</strong></td><td>Keep the process alive when pending verifications exist</td><td>Started automatically when pending verifications exist</td></tr>
+    </table>
+    <p>All permissions follow the principle of least privilege: <b>denying a permission does not break other features and will not crash the app</b> (only the corresponding capability degrades — e.g., no alarms are scheduled without the alarm permission). You can revoke any permission at any time in the system settings.</p>
+  </section>
+
+  <section>
+    <h2>4. Third-Party SDKs and Network Transmission</h2>
+    <h3>4.1 Action recognition SDKs</h3>
+    <ul>
+      <li><strong>Android</strong>: Google ML Kit Pose Detection (<code>google_mlkit_pose_detection</code>)</li>
+      <li><strong>iOS</strong>: Apple Vision framework (bridged through the Google ML Kit iOS package)</li>
+    </ul>
+    <p>Pose recognition runs entirely on the device and <b>does not make any network requests</b>.</p>
+
+    <h3>4.2 Transitive network libraries</h3>
+    <div class="warn">
+      <strong>Honest disclosure:</strong> the dependency tree of Google ML Kit Pose Detection includes three libraries — Google DataTransport, GTMSessionFetcher, and nanopb. These are standard Firebase / Google Analytics network transport components that are theoretically capable of making requests to Google servers.<br><br>
+      <b>Thunder Alarm does not initialize Firebase and does not call any reporting API.</b> In our code paths, these libraries are only brought in as compile-time dependencies by the ML Kit package and <b>do not make network requests by default</b>. If Google silently reports telemetry inside their Pose Detection SDK (not under our control), please refer to the <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a>.
+    </div>
+
+    <h3>4.3 Remaining dependencies</h3>
+    <ul>
+      <li><strong>Local storage</strong>: drift SQLite (encrypted in the app sandbox), shared_preferences (key-value storage)</li>
+      <li><strong>Alarm scheduling</strong>: flutter_alarmkit (iOS AlarmKit native channel), flutter_local_notifications (local notification fallback)</li>
+      <li><strong>Permission queries</strong>: permission_handler (queries only, no reporting)</li>
+      <li><strong>Timezone</strong>: flutter_timezone (reads system timezone, no reporting)</li>
+    </ul>
+    <p>None of the above dependencies contain code that actively initiates network requests. <b>Thunder Alarm itself contains zero HTTP / HTTPS request logic</b>, apart from any implicit behavior inside system or third-party SDKs that is outside our control.</p>
+  </section>
+
+  <section>
+    <h2>5. Sharing and Disclosure</h2>
+    <p>We <b>do not</b> sell, rent, or share your data with any third party. We may disclose it only in the following cases:</p>
+    <ul>
+      <li>Where required by laws and regulations, by judicial or administrative authorities;</li>
+      <li>Where necessary to protect our lawful rights or public safety.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>6. Retention and Deletion</h2>
+    <ul>
+      <li><b>Local data:</b> kept on your device until you delete it. You can delete reminders in the app or uninstall the app (clearing all local data).</li>
+      <li><b>Raw camera frames:</b> released after per-frame processing — <b>never persisted</b>.</li>
+      <li><b>Local aggregated analytics:</b> shares the same lifecycle as local data and is cleared on uninstall.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>7. Children's Privacy</h2>
+    <p>Thunder Alarm is intended for adult users. Because the app <b>does not collect personally identifying information and does not provide an account system</b>, and because all data stays on the device, we do not knowingly collect personal information from children. If you believe any data has been mishandled, please contact us using the details below.</p>
+  </section>
+
+  <section>
+    <h2>8. Data Security</h2>
+    <ul>
+      <li>The local database is stored inside the app sandbox and protected by the device's system security mechanisms;</li>
+      <li>Camera frames are released after per-frame processing and never written to disk;</li>
+      <li>You grant or revoke permissions yourself in system settings;</li>
+      <li>We follow a data-minimization principle: any data that can stay on your device is never uploaded.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>9. Fees and In-App Purchases</h2>
+    <p>Thunder Alarm is fully free in the current version: no in-app purchases and no ads.</p>
+  </section>
+
+  <section>
+    <h2>10. Changes to This Policy</h2>
+    <p>We may update this policy from time to time. Material changes will be announced through the privacy policy page in the app. The effective date appears at the top of this page.</p>
+  </section>
+
+  <section>
+    <h2>11. Contact Us</h2>
+    <p>If you have any questions about this policy or your data, please contact us:</p>
+    <ul>
+      <li>Email: <a href="mailto:beyondouyuan@gmail.com">beyondouyuan@gmail.com</a></li>
+    </ul>
+    <p>We will respond to your request within a reasonable period (usually no more than 15 business days).</p>
+  </section>
+</main>
+
+<footer>
+  Thunder Alarm © 2026 beyondouyuan · Version 1.0 · Updated 2026-11-21
+</footer>
+
+</body>
+</html>

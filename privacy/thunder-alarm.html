@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>隐私政策 · 雷霆闹钟（Thunder Alarm）</title>
+<meta name="description" content="雷霆闹钟隐私政策：提醒、动作记录与偏好仅存本机；相机画面逐帧处理后即丢弃，不上传不落盘；动作识别全部在设备本地完成。">
+<style>
+  :root {
+    --brand: #1E63FF;
+    --brand-dark: #0D47C7;
+    --header-bg: #10141D;
+    --header-accent: #1E63FF;
+    --bg: #F3F5F9;
+    --card: #FFFFFF;
+    --text: #171A22;
+    --text-secondary: #5A6270;
+    --border: #E2E6EE;
+    --danger: #DC2626;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  header {
+    background: linear-gradient(135deg, var(--header-bg) 0%, #1A1F2C 100%);
+    color: #fff;
+    padding: 56px 24px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, var(--header-accent) 0%, transparent 70%);
+    opacity: 0.25;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: -40px;
+    width: 160px; height: 160px;
+    background: radial-gradient(circle, var(--danger) 0%, transparent 70%);
+    opacity: 0.15;
+  }
+  header .logo-mark {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 72px; height: 72px; border-radius: 18px;
+    background: var(--brand);
+    margin-bottom: 16px;
+    box-shadow: 0 8px 32px rgba(30, 99, 255, 0.5);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  }
+  header .logo-mark img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  header h1 { font-size: 24px; font-weight: 700; letter-spacing: 0.5px; position: relative; z-index: 1; }
+  header p { margin-top: 8px; font-size: 14px; opacity: 0.85; position: relative; z-index: 1; }
+  header .lang { position: relative; z-index: 1; }
+  main { max-width: 720px; margin: 0 auto; padding: 32px 20px 64px; }
+  .meta {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 28px;
+  }
+  section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 24px 8px;
+    margin-bottom: 16px;
+  }
+  h2 {
+    font-size: 17px; font-weight: 700;
+    color: var(--brand);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
+  h3 { font-size: 15px; font-weight: 600; margin: 16px 0 6px; }
+  p, li { font-size: 14px; margin-bottom: 10px; }
+  ul, ol { padding-left: 22px; margin-bottom: 10px; }
+  li { margin-bottom: 6px; }
+  .highlight {
+    background: #EAF0FB;
+    border-left: 4px solid var(--brand);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin: 12px 0;
+    font-size: 14px;
+  }
+  .highlight strong { color: var(--brand); }
+  .warn {
+    background: #FEF2F2;
+    border-left: 4px solid var(--danger);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin: 12px 0;
+    font-size: 14px;
+  }
+  .warn strong { color: var(--danger); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0 16px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { background: #F3F5F9; font-weight: 600; color: var(--text); }
+  footer {
+    text-align: center; color: var(--text-secondary);
+    font-size: 12px; padding: 24px 16px 48px;
+  }
+  footer a { color: var(--brand); text-decoration: none; }
+  a.lang-link {
+    display: inline-block;
+    margin-top: 16px;
+    color: #fff;
+    font-size: 13px;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 999px;
+    padding: 4px 14px;
+    position: relative;
+    z-index: 1;
+  }
+  a.lang-link:hover { background: rgba(255,255,255,0.1); }
+  code {
+    background: #F3F5F9;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+  @media (max-width: 480px) {
+    header { padding: 44px 16px 36px; }
+    header::before, header::after { display: none; }
+    section { padding: 20px 16px 4px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-mark">
+    <img src="./icon.png" alt="雷霆闹钟应用图标" width="72" height="72" onerror="this.style.display='none'">
+  </div>
+  <h1>隐私政策</h1>
+  <p>雷霆闹钟（Thunder Alarm）· 提醒 + 动作验证</p>
+  <a href="./privacy-policy-en.html" class="lang-link">English</a>
+</header>
+
+<main>
+  <div class="meta">
+    <strong>生效日期：</strong>2026 年 11 月 21 日 &nbsp;·&nbsp; <strong>更新日期：</strong>2026 年 11 月 21 日 &nbsp;·&nbsp; <strong>适用范围：</strong>雷霆闹钟（Thunder Alarm）<br>
+    我们深知你的时间与专注的价值。雷霆闹钟是一款「到点提醒 + 动作验证」的个人效率工具，核心设计原则是<strong>数据不出端</strong>——所有提醒、动作记录与偏好设置只保存在你的设备本地。
+  </div>
+
+  <section>
+    <h2>一、核心承诺</h2>
+    <div class="highlight">
+      <strong>数据不出端：</strong>你的提醒内容、动作完成记录与偏好设置<b>仅保存在你的设备本地</b>，不要求注册账号，不传输至任何服务器。
+    </div>
+    <p>雷霆闹钟以本地优先为产品设计原则。到点提醒触发的相机动作识别（摆头 / 点头 / 举手等）<b>逐帧在设备本地处理，识别结果确定后即丢弃原始画面</b>——我们不采集、不存储、不上传你的相机画面或姿态原始数据。</p>
+  </section>
+
+  <section>
+    <h2>二、我们收集哪些信息</h2>
+    <h3>2.1 由你主动创建的提醒数据（仅存本机）</h3>
+    <table>
+      <tr><th>数据类型</th><th>存储位置</th><th>用途</th></tr>
+      <tr><td>提醒设置（时间、重复规则、动作类型、目标次数）</td><td>本机 SQLite 数据库</td><td>到点触发系统闹钟</td></tr>
+      <tr><td>动作完成记录（达标时间、完成耗时、动作计数）</td><td>本机 SQLite 数据库</td><td>展示历史完成情况</td></tr>
+      <tr><td>偏好设置（通知开关、动作识别开关等）</td><td>本机键值存储</td><td>应用行为配置</td></tr>
+    </table>
+    <p>以上数据存储于你的设备本地（drift SQLite + shared_preferences），<b>不会</b>被上传到任何服务器，也不会写入 iCloud 或其他云备份（除非你使用系统级整机备份，此情形下备份由 Apple / Google 控制，雷霆闹钟无访问权限）。</p>
+
+    <h3>2.2 相机画面与姿态原始数据</h3>
+    <div class="highlight">
+      <strong>逐帧处理，识别后即丢弃：</strong>相机仅在你主动进入验证流程时打开，画面在设备本地由姿态识别 SDK 逐帧分析，确认你完成指定动作的目标次数后，<b>原始画面立即释放，不写入文件、不上传网络</b>。
+    </div>
+
+    <h3>2.3 本地聚合埋点（仅计数）</h3>
+    <p>雷霆闹钟会在本机数据库中记录<b>匿名的聚合计数事件</b>（如「App 启动」「提醒创建」「验证达标」的次数），用于理解产品功能使用情况。这些事件：</p>
+    <ul>
+      <li>仅保存在本机数据库，<b>不向任何服务器上报</b>；</li>
+      <li>不含相机画面、提醒正文或任何可识别个人身份的信息；</li>
+      <li>卸载 App 即随本地数据一同清除。</li>
+    </ul>
+
+    <h3>2.4 订阅、购买与账号信息</h3>
+    <p>当前版本全部功能免费，不含应用内购买，也不含账号系统——不收集任何支付信息、邮箱或手机号。</p>
+  </section>
+
+  <section>
+    <h2>三、权限的使用与你的掌控</h2>
+    <table>
+      <tr><th>权限</th><th>用途</th><th>何时申请</th></tr>
+      <tr><td><strong>相机</strong></td><td>动作识别验证（确认你已完成指定动作后才关闭提醒）</td><td>你首次进入验证流程时；拒绝后仍可手动退出验证页，但无法完成动作</td></tr>
+      <tr><td><strong>AlarmKit 闹钟（iOS 26+）</strong></td><td>按你设定的时间触发系统闹钟，锁屏或静音时也能响铃</td><td>你创建第一条提醒时由系统弹窗请求；拒绝后该提醒不再排闹钟</td></tr>
+      <tr><td><strong>精确闹钟（Android 12+）</strong></td><td>保证提醒到点准时触发</td><td>你创建提醒时按需请求</td></tr>
+      <tr><td><strong>悬浮窗（Android 10+）</strong></td><td>App 被杀/退后台时仍能拉起验证页</td><td>首次进入验证流程时按需请求</td></tr>
+      <tr><td><strong>前台服务（Android）</strong></td><td>存在待验证提醒时维持进程存活</td><td>有待验证提醒时自动启动</td></tr>
+    </table>
+    <p>所有权限遵循最小必要原则：<b>拒绝授权不影响其他功能使用，不会导致 App 崩溃</b>（仅相应能力降级，如无闹钟权限时提醒不会自动响铃）。你可随时在系统设置中撤销任何权限。</p>
+  </section>
+
+  <section>
+    <h2>四、第三方 SDK 与网络传输</h2>
+    <h3>4.1 动作识别 SDK</h3>
+    <ul>
+      <li><strong>Android</strong>：Google ML Kit Pose Detection（<code>google_mlkit_pose_detection</code>）</li>
+      <li><strong>iOS</strong>：Apple Vision 框架（由 Google ML Kit 包的 iOS 端桥接调用）</li>
+    </ul>
+    <p>姿态识别逻辑完全在设备本地执行，<b>不发起任何网络请求</b>。</p>
+
+    <h3>4.2 传递依赖的网络库</h3>
+    <div class="warn">
+      <strong>如实告知：</strong>Google ML Kit Pose Detection 的依赖树中包含 Google DataTransport、GTMSessionFetcher 与 nanopb 三个库。这些库是 Firebase / Google Analytics 生态的标准网络传输组件，理论上具备向 Google 服务器发起网络请求的能力。<br><br>
+      <b>雷霆闹钟没有初始化 Firebase，也没有调用任何上报 API。</b>在我们的代码路径中，这些库只被 ML Kit 包作为编译依赖引入，<b>默认不会发起网络请求</b>。如果 Google 在其 Pose Detection SDK 内部静默上报（非我们可控），请参考 <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google 隐私政策</a>。
+    </div>
+
+    <h3>4.3 其余依赖</h3>
+    <ul>
+      <li><strong>本地存储</strong>：drift SQLite（加密安全存储于 App 沙箱）、shared_preferences（键值存储）</li>
+      <li><strong>通知调度</strong>：flutter_alarmkit（iOS AlarmKit 原生通道）、flutter_local_notifications（本地通知，降级路径）</li>
+      <li><strong>权限查询</strong>：permission_handler（仅查询授权状态，不上报）</li>
+      <li><strong>时区</strong>：flutter_timezone（读取系统时区设置，不上报）</li>
+    </ul>
+    <p>以上依赖均不包含主动发起网络请求的代码。<b>雷霆闹钟本身不含任何 HTTP / HTTPS 请求逻辑</b>，除非系统层面或第三方 SDK 内部有非我们可控的隐式行为。</p>
+  </section>
+
+  <section>
+    <h2>五、信息的共享与披露</h2>
+    <p>我们<b>不会</b>向任何第三方出售、出租或共享你的数据。仅在以下情形可能披露：</p>
+    <ul>
+      <li>依据法律法规、司法或行政机关要求；</li>
+      <li>为保护我们的合法权益或公共安全所必需。</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>六、数据存储期限与删除</h2>
+    <ul>
+      <li><b>本地数据：</b>保存在你的设备上，直至你主动删除。删除方式包括：在应用内删除提醒、卸载应用（清除全部本地数据）。</li>
+      <li><b>相机原始画面：</b>逐帧处理后立即释放，<b>不持久化存储</b>。</li>
+      <li><b>本地聚合埋点：</b>与本地数据同生命周期，卸载 App 即清除。</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>七、儿童隐私</h2>
+    <p>雷霆闹钟面向一般成年用户。由于应用<b>不收集个人身份信息、不提供账号系统</b>，且全部数据仅存本机，我们不会有意收集儿童的个人信息。若你认为有任何数据被不当处理，请通过下文联系方式与我们联系。</p>
+  </section>
+
+  <section>
+    <h2>八、数据安全</h2>
+    <ul>
+      <li>本地数据库存储于 App 沙箱内，受设备系统安全机制保护；</li>
+      <li>相机画面逐帧处理后即丢弃，不写入磁盘；</li>
+      <li>权限由你在系统设置中自主授予或关闭；</li>
+      <li>我们遵循数据最小化收集原则：能留在本地的数据绝不上传。</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>九、费用与内购</h2>
+    <p>雷霆闹钟当前版本全部功能免费，不含应用内购买，也不含广告。</p>
+  </section>
+
+  <section>
+    <h2>十、本政策的更新</h2>
+    <p>我们可能适时更新本政策。重大变更将通过应用内的隐私政策页面发布通知。政策版本生效日期见页面顶部。</p>
+  </section>
+
+  <section>
+    <h2>十一、联系我们</h2>
+    <p>如对本政策或你的数据有任何疑问，请通过以下方式联系我们：</p>
+    <ul>
+      <li>电子邮件：<a href="mailto:beyondouyuan@gmail.com">beyondouyuan@gmail.com</a></li>
+    </ul>
+    <p>我们将在合理期限内（通常不超过 15 个工作日）回复你的请求。</p>
+  </section>
+</main>
+
+<footer>
+  雷霆闹钟（Thunder Alarm）© 2026 beyondouyuan · 版本 1.0 · 更新 2026-11-21
+</footer>
+
+</body>
+</html>
