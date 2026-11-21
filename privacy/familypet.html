@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow">
 <title>隐私政策 · 全家宠（FamilyPet Health）</title>
-<meta name="description" content="全家宠（FamilyPet Health）隐私政策：数据仅存本机，数据不出端，导出即掌控。">
+<meta name="description" content="全家宠（FamilyPet Health）隐私政策：数据默认仅存本机，可选 iCloud 备份写入您本人的私有库。">
 <style>
   :root {
     --brand: #2563EB;
@@ -106,8 +106,8 @@
 
 <main>
   <div class="meta">
-    <strong>生效日期：</strong>2026 年 10 月 24 日 &nbsp;·&nbsp; <strong>适用范围：</strong>全家宠（FamilyPet Health）<br>
-    我们深知您对家人与宠物健康数据的重视。本政策说明全家宠如何处理您的数据，全文以「数据仅存本机、数据不出端」为核心承诺。
+    <strong>生效日期：</strong>2026 年 10 月 24 日 &nbsp;·&nbsp; <strong>更新日期：</strong>2026 年 11 月 21 日 &nbsp;·&nbsp; <strong>适用范围：</strong>全家宠（FamilyPet Health）<br>
+    我们深知您对家人与宠物健康数据的重视。本政策说明全家宠如何处理您的数据，核心承诺是「数据默认仅存本机」；唯一例外是您主动开启的 iCloud 备份，备份写入您本人的 iCloud 私有库，我们无法读取。
   </div>
 
   <section>
@@ -116,6 +116,7 @@
       <strong>数据不出端：</strong>您的宠物健康数据（档案、排期、体重、病历、家庭成员）默认<b>仅保存在您设备本地</b>，不要求注册账号，不传输至任何服务器。
     </div>
     <p>全家宠以「本地优先」为产品设计原则。宠物健康记录是敏感的个人信息，我们将其留在您的设备上，由您完全掌控。</p>
+    <p><b>唯一例外：</b>当您点击「备份到 iCloud」时，一份数据快照会写入您本人的 iCloud 私有数据库，开发者无读取权限。</p>
   </section>
 
   <section>
@@ -129,7 +130,11 @@
       <tr><td>病历记录</td><td>本机数据库</td><td>就医历史沉淀</td></tr>
       <tr><td>家庭成员信息</td><td>本机数据库</td><td>同一台手机上的多角色协作</td></tr>
     </table>
-    <p>以上数据存储于您设备本地的数据库（drift SQLite），<b>不会</b>被上传到云端。</p>
+    <p>以上数据存储于您设备本地的数据库（drift SQLite），<b>不会</b>被上传到我们的服务器。</p>
+
+    <h3>2.2 iCloud 备份（可选）</h3>
+    <p>当您点击「备份到 iCloud」时，一份数据快照会写入您本人的 <b>iCloud 私有数据库</b>（CloudKit 容器 <code>iCloud.com.tidewell.familypetcore</code>），用于在重装应用或同一 Apple 账户的设备上恢复数据。全家宠没有可读取该数据的服务器，开发者也无法访问您的私有库。</p>
+    <p>备份默认关闭，只有您主动点击才会开始；换设备恢复需登录同一个 Apple ID，同一台手机上的其他家庭成员看不到这份备份；可随时在 iOS「设置 → Apple 账户 → iCloud → 管理账户储存空间」中删除。</p>
 
     <h3>2.2 使用统计与行为埋点</h3>
     <p>全家宠<b>不收集</b>使用统计、行为埋点、设备标识符或崩溃诊断数据。应用内不含任何统计 SDK，也不会向开发者自建服务器发送数据。</p>
@@ -167,6 +172,7 @@
     <h2>六、信息存储期限与删除</h2>
     <ul>
       <li><b>本地数据：</b>数据保存在您的设备上，直至您主动删除。删除方式包括：在应用内删除记录、卸载应用（清除全部本地数据）。</li>
+      <li><b>iCloud 备份（可选）：</b>保存在您本人的 iCloud 账户中，直至您在 iOS「设置 → Apple 账户 → iCloud → 管理账户储存空间」中删除该应用的数据。</li>
       <li><b>导出文件：</b>由您生成并留存于设备或您指定的位置，全家宠无法远程删除。</li>
     </ul>
   </section>
@@ -180,6 +186,7 @@
     <h2>八、数据安全</h2>
     <ul>
       <li>本地数据库存储于应用沙箱内，受设备系统安全机制保护；</li>
+      <li>iCloud 备份存放于您本人的私有库，受 Apple iCloud 安全机制保护，全家宠没有可读取该数据的服务器；</li>
       <li>提醒通知权限由您在系统设置中自主授予或关闭；</li>
       <li>我们采用最小化收集原则：能留在本地的数据绝不上传。</li>
     </ul>
@@ -206,7 +213,7 @@
 </main>
 
 <footer>
-  全家宠（FamilyPet Health）© 2026 beyondouyuan · 数据仅存本机，数据不出端
+  全家宠（FamilyPet Health）© 2026 beyondouyuan · 版本 1.1 · 更新 2026-11-21
 </footer>
 
 </body>
