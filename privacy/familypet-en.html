@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow">
 <title>Privacy Policy · FamilyPet Health</title>
-<meta name="description" content="FamilyPet Health privacy policy: your data stays on your device by default, with an optional iCloud backup in your own private database.">
+<meta name="description" content="FamilyPet Health privacy policy: your data stays on your device by default, with optional iCloud backup and family sharing kept in your own private database.">
 <style>
   :root {
     --brand: #2563EB;
@@ -106,8 +106,8 @@
 
 <main>
   <div class="meta">
-    <strong>Effective date:</strong> October 24, 2026 &nbsp;·&nbsp; <strong>Updated:</strong> November 22, 2026 &nbsp;·&nbsp; <strong>Applies to:</strong> FamilyPet Health<br>
-    We know how much your family's and your pets' health data matters to you. This policy explains how FamilyPet Health handles your data. Our core commitment is that your data stays on your device by default; the only exception is the optional iCloud backup you turn on yourself, which is written to your own private iCloud database and cannot be read by us.
+    <strong>Effective date:</strong> October 24, 2026 &nbsp;·&nbsp; <strong>Updated:</strong> November 24, 2026 &nbsp;·&nbsp; <strong>Applies to:</strong> FamilyPet Health<br>
+    We know how much your family's and your pets' health data matters to you. This policy explains how FamilyPet Health handles your data. Our core commitment is that your data stays on your device by default; the only exceptions are two optional iCloud features you turn on yourself — backup, and family sharing that you invite people to. Both are written to your own private iCloud database and cannot be read by us.
   </div>
 
   <section>
@@ -116,7 +116,7 @@
       <strong>Your data stays on your device:</strong> your pet health data — profiles, schedules, weight, medical records, and family members — is stored <b>only on your device</b> by default. No account is required, and nothing is sent to any server.
     </div>
     <p>FamilyPet Health is built around a local-first principle. Pet health records are sensitive personal information, so we keep them on your device, entirely under your control.</p>
-    <p><b>The only exception:</b> when you tap “Back Up to iCloud”, a snapshot of your data is written to your personal iCloud private database. Developers have no read access to that database.</p>
+    <p><b>The only exceptions</b> are two optional features you start yourself: “Back Up to iCloud” and “Family Sharing”. Both write a snapshot of your data to your personal iCloud private database. Developers have no read access to that database.</p>
   </section>
 
   <section>
@@ -136,10 +136,14 @@
     <p>If you tap “Back Up to iCloud”, a snapshot of your health data is written to your <b>personal iCloud private database</b> (CloudKit container <code>iCloud.com.tidewell.familypetcore</code>). This backup exists so you can restore your data after reinstalling the app or switching devices signed into the same Apple Account. We have no server that can read it, and the developer cannot access your private database.</p>
     <p>Backups are off unless you start them. Restoring on another device requires the same Apple ID, and other household members on the same phone cannot see the backup. You can remove it at any time in iOS Settings → Apple Account → iCloud → Manage Account Storage.</p>
 
-    <h3>2.3 Usage statistics and behavioral tracking</h3>
+    <h3>2.3 Family sharing (optional, iCloud)</h3>
+    <p>If you turn on Family Sharing, a snapshot of your data is stored in the same <b>personal iCloud private database</b> and then shared with the Apple Accounts you explicitly invite, using Apple's CloudKit sharing. Sharing is entirely between your iCloud account and your invitees' iCloud accounts. We do not host, relay, or receive the shared data, and we cannot see who joined or what was shared.</p>
+    <p>Invitees you add as editors can upload a new snapshot, which replaces the previous one; the app asks for confirmation before overwriting local data. You can stop sharing at any time in the app, which removes access for everyone you invited. Sharing is off unless you create it, and no sharing takes place with anyone you did not invite.</p>
+
+    <h3>2.4 Usage statistics and behavioral tracking</h3>
     <p>FamilyPet Health <b>does not collect</b> usage statistics, behavioral tracking, device identifiers, or crash diagnostics. The app contains no analytics SDK and does not send data to any server operated by the developer.</p>
 
-    <h3>2.4 Subscription and purchase information</h3>
+    <h3>2.5 Subscription and purchase information</h3>
     <p>Subscription status (active or not, product ID, expiration date) is provided by the App Store and verified on-device to unlock benefits; we never receive or store your payment card details.</p>
   </section>
 
@@ -172,7 +176,7 @@
     <h2>6. Retention and Deletion</h2>
     <ul>
       <li><b>Local data:</b> kept on your device until you delete it. You can delete records in the app or uninstall the app, which clears all local data.</li>
-      <li><b>iCloud backups (optional):</b> kept in your personal iCloud account until you delete this app's data in iOS Settings → Apple Account → iCloud → Manage Account Storage.</li>
+      <li><b>iCloud backups and shared snapshots (optional):</b> kept in your personal iCloud account until you delete this app's data in iOS Settings → Apple Account → iCloud → Manage Account Storage, or until the sharing owner stops sharing.</li>
       <li><b>Exported files:</b> created by you and kept on your device or in a location you choose. FamilyPet Health cannot delete them remotely.</li>
     </ul>
   </section>
@@ -186,7 +190,7 @@
     <h2>8. Data Security</h2>
     <ul>
       <li>The local database is stored inside the app sandbox and protected by the device's system security mechanisms;</li>
-      <li>iCloud backups live in your personal iCloud private database and are protected by Apple's iCloud security; FamilyPet Health has no server that can read them;</li>
+      <li>iCloud backups and shared snapshots live in your personal iCloud private database and are protected by Apple's iCloud security; FamilyPet Health has no server that can read them;</li>
       <li>You grant or revoke reminder notification permission yourself in system settings;</li>
       <li>We follow a data-minimization principle: any data that can stay on your device is never uploaded.</li>
     </ul>
