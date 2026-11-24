@@ -157,8 +157,8 @@
 
 <main>
   <div class="meta">
-    <strong>Effective date:</strong> November 21, 2026 &nbsp;·&nbsp; <strong>Updated:</strong> November 21, 2026 &nbsp;·&nbsp; <strong>Applies to:</strong> Thunder Alarm<br>
-    We know your time and focus matter. Thunder Alarm is a personal productivity tool that reminds you at the scheduled time and verifies the action through your camera. Our design principle is <strong>data never leaves your device</strong>: all reminders, action records, and preferences are stored locally only.
+    <strong>Effective date:</strong> November 24, 2026 &nbsp;·&nbsp; <strong>Updated:</strong> November 24, 2026 &nbsp;·&nbsp; <strong>Applies to:</strong> Thunder Alarm<br>
+    We know your time and focus matter. Thunder Alarm is a personal productivity tool that reminds you at the scheduled time and verifies the action through your camera, accelerometer, math puzzles, typing, or voice dictation. Our design principle is <strong>data never leaves your device</strong>: all reminders, action records, and preferences are stored locally only — iCloud backup (Pro) is entirely user-initiated and writes to your own private iCloud container.
   </div>
 
   <section>
@@ -166,19 +166,21 @@
     <div class="highlight">
       <strong>Data stays on your device:</strong> your reminder settings, action completion records, and preferences are stored <b>only on your device</b>. No account is required and nothing is sent to any server.
     </div>
-    <p>Thunder Alarm is built around a local-first principle. The camera-based action verification (head shake / nod / hand raise, etc.) that triggers at reminder time is processed <b>frame-by-frame on the device</b>. Once the recognition result confirms you have completed the target number of actions, the raw frames are released immediately — we do not capture, store, or upload your camera footage or pose data.</p>
+    <p>Thunder Alarm is built around a local-first principle. Verification supports five action types — camera-based pose recognition (head shake / nod / squat / jumping jack / hand raise), accelerometer-based shake, math puzzles, typing, and voice dictation — all processed <b>on the device</b>. Once the target action count is confirmed, raw camera frames are released immediately; the math problems, typing prompts, and voice dictation run entirely in memory and are discarded after verification.</p>
+    <p><strong>iCloud Backup (Pro-only):</strong> Pro users may opt in to iCloud backup. The backup writes your reminder settings and action records to your own private iCloud container (<code>iCloud.com.tidewell.alarm</code>) via Apple CloudKit. Thunder Alarm has no access to Apple account information; you control your own iCloud data. Local-first storage remains the default — iCloud backup is off until you explicitly enable it.</p>
   </section>
 
   <section>
     <h2>2. Information We Collect</h2>
-    <h3>2.1 Reminder data you create (stored only on this device)</h3>
+    <h3>2.1 Reminder data you create (stored only on this device; optional iCloud backup for Pro)</h3>
     <table>
       <tr><th>Data type</th><th>Storage</th><th>Purpose</th></tr>
       <tr><td>Reminder settings (time, repeat rule, action type, target count)</td><td>Local SQLite database</td><td>Trigger system alarms at the scheduled time</td></tr>
       <tr><td>Action completion records (validation time, duration, count)</td><td>Local SQLite database</td><td>Display completion history</td></tr>
-      <tr><td>Preferences (notification toggle, action recognition toggle, etc.)</td><td>Local key-value store</td><td>Application behavior configuration</td></tr>
+      <tr><td>Preferences (notification toggle, action recognition toggle, iCloud backup toggle)</td><td>Local key-value store</td><td>Application behavior configuration</td></tr>
+      <tr><td><strong>Optional iCloud backup (Pro-only, opt-in)</strong></td><td>Apple CloudKit private container <code>iCloud.com.tidewell.alarm</code></td><td>Cross-device restoration; off-by-default; user controls enablement</td></tr>
     </table>
-    <p>This data is stored locally on your device (drift SQLite + shared_preferences). It is <b>never</b> uploaded to any server and is not written to iCloud or other cloud backups. If you use a system-level device backup (iOS / Android), the backup is controlled by Apple or Google and Thunder Alarm has no access to it.</p>
+    <p>This data is stored locally on your device (drift SQLite + shared_preferences). <b>Local-first storage is the default — nothing is uploaded to any server unless you explicitly enable iCloud backup (Pro-only)</b>. If you use a system-level device backup (iOS / Android), the backup is controlled by Apple or Google and Thunder Alarm has no access to it.</p>
 
     <h3>2.2 Camera frames and raw pose data</h3>
     <div class="highlight">
@@ -194,7 +196,8 @@
     </ul>
 
     <h3>2.4 Subscriptions, purchases, and account information</h3>
-    <p>The current version is fully free: no in-app purchases and no account system. We do not collect any payment information, email address, or phone number.</p>
+    <p>Thunder Alarm offers an auto-renewing subscription ("Thunder Alarm Pro") to unlock iCloud backup/restore and future Pro-only features. Core functionality (reminder creation, action verification, check-in records, CSV export) is permanently free with no ads.</p>
+    <p>Purchases are processed by Apple; we do not collect or store any payment card information, email address, or phone number.</p>
   </section>
 
   <section>
@@ -270,7 +273,13 @@
 
   <section>
     <h2>9. Fees and In-App Purchases</h2>
-    <p>Thunder Alarm is fully free in the current version: no in-app purchases and no ads.</p>
+    <p>Thunder Alarm's core functionality is permanently free with no ads. The "Thunder Alarm Pro" auto-renewing subscription is an optional upgrade that unlocks iCloud backup/restore and future Pro-only features.</p>
+    <ul>
+      <li><b>Billing:</b> subscription fees are processed through Apple App Store. We do not collect or store any payment card information;</li>
+      <li><b>Auto-renewal:</b> subscriptions auto-renew within 24 hours before the end of each cycle;</li>
+      <li><b>Cancellation:</b> you can cancel at any time in App Store account subscriptions — benefits remain active until the end of the current period;</li>
+      <li><b>Refunds:</b> handled by Apple per its policies.</li>
+    </ul>
   </section>
 
   <section>
