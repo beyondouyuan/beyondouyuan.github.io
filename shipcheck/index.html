@@ -97,7 +97,8 @@
     h1{font-size:32px}
     .grid3{grid-template-columns:1fr}
     .fields{grid-template-columns:1fr}
-    .nav .links{display:none}
+    .nav .links{display:flex}
+    .nav .links a:not(.lang){display:none}
     section{padding:48px 0}
     .row{grid-template-columns:52px 1fr}
     .row .res{grid-column:2;text-align:left}
@@ -119,6 +120,7 @@
       <a href="#pains">常见卡点</a>
       <a href="#sample">报告样例</a>
       <a href="#check">免费自检</a>
+      <a class="lang" href="/shipcheck/en/" hreflang="en">EN</a>
     </nav>
   </div>
 </header>
