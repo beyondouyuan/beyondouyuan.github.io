@@ -267,6 +267,27 @@
 </footer>
 
 <script>
+  // Analytics: set the GoatCounter site code (e.g. "shipcheck"). Empty = no third-party script.
+  var ANALYTICS_CODE = "";
+  function track(name) {
+    if (window.goatcounter && window.goatcounter.count) {
+      window.goatcounter.count({ path: name, title: name, event: true });
+    }
+  }
+  if (ANALYTICS_CODE) {
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://gc.zgo.at/count.js";
+    s.setAttribute("data-goatcounter", "https://" + ANALYTICS_CODE + ".goatcounter.com/count");
+    document.head.appendChild(s);
+  }
+  var sample = document.querySelector("details");
+  if (sample) {
+    sample.addEventListener("toggle", function () {
+      if (sample.open) track("sample_open");
+    });
+  }
+
   // FormSubmit sends an activation email to this address on first use
   var CONTACT_EMAIL = "beyondouyuan@gmail.com";
   var ENDPOINT = "https://formsubmit.co/ajax/" + CONTACT_EMAIL;
@@ -312,6 +333,7 @@
       .then(function () {
         panel.textContent = "Received. You'll hear back within 24h at " + email + ".";
         panel.style.display = "block";
+        track("submit");
         form.reset();
       })
       .catch(function () {

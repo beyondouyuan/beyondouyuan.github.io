@@ -274,6 +274,27 @@
 </footer>
 
 <script>
+  // 统计：填入 GoatCounter 站点代码即启用（如 "shipcheck"），留空则不加载任何第三方脚本
+  var ANALYTICS_CODE = "";
+  function track(name) {
+    if (window.goatcounter && window.goatcounter.count) {
+      window.goatcounter.count({ path: name, title: name, event: true });
+    }
+  }
+  if (ANALYTICS_CODE) {
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://gc.zgo.at/count.js";
+    s.setAttribute("data-goatcounter", "https://" + ANALYTICS_CODE + ".goatcounter.com/count");
+    document.head.appendChild(s);
+  }
+  var sample = document.querySelector("details");
+  if (sample) {
+    sample.addEventListener("toggle", function () {
+      if (sample.open) track("sample_open");
+    });
+  }
+
   // 上线前可换成正式邮箱；FormSubmit 首次使用会发一封激活邮件到该地址
   var CONTACT_EMAIL = "beyondouyuan@gmail.com";
   var ENDPOINT = "https://formsubmit.co/ajax/" + CONTACT_EMAIL;
@@ -321,6 +342,7 @@
       .then(function () {
         panel.textContent = "已提交，24 小时内回复到 " + email + "。";
         panel.style.display = "block";
+        track("submit");
         form.reset();
       })
       .catch(function () {
