@@ -209,7 +209,7 @@
     <div class="wrap">
       <div class="sec-head">
         <h2>Request a free check</h2>
-        <p>Submitting opens your mail client. Nothing goes through a third-party server.</p>
+        <p>Submissions are forwarded straight to my inbox (via FormSubmit). No mail client needed.</p>
       </div>
       <form id="intake" novalidate>
         <div class="fields">
@@ -267,8 +267,9 @@
 </footer>
 
 <script>
-  // Replace before going fully public
+  // FormSubmit sends an activation email to this address on first use
   var CONTACT_EMAIL = "beyondouyuan@gmail.com";
+  var ENDPOINT = "https://formsubmit.co/ajax/" + CONTACT_EMAIL;
   document.getElementById("cMail").textContent = CONTACT_EMAIL;
 
   var form = document.getElementById("intake");
@@ -286,20 +287,43 @@
         function (x) { return x.value; }
       );
     };
-    var body =
-      "Bundle ID: " + bundle + "\n" +
-      "Blockers: " + (pick("blocker").join(", ") || "not specified") + "\n" +
-      "Territories: " + (pick("territory").join(", ") || "not specified") + "\n" +
-      "Willingness to pay: " + form.willing.value + "\n" +
-      "Contact email: " + email + "\n";
-    window.location.href =
-      "mailto:" + CONTACT_EMAIL +
-      "?subject=" + encodeURIComponent("ShipCheck check request · " + bundle) +
-      "&body=" + encodeURIComponent(body);
+    var payload = {
+      _subject: "ShipCheck check request · " + bundle,
+      _template: "table",
+      _captcha: "false",
+      bundle_id: bundle,
+      blockers: pick("blocker").join(", ") || "not specified",
+      territories: pick("territory").join(", ") || "not specified",
+      willingness: form.willing.value,
+      reply_to: email
+    };
 
+    var btn = form.querySelector('button[type="submit"]');
     var panel = document.getElementById("okPanel");
-    panel.textContent = "Your mail draft is ready. Send it from your mail client. If nothing opened, email " + CONTACT_EMAIL + " directly.";
-    panel.style.display = "block";
+    btn.disabled = true;
+    btn.textContent = "Sending…";
+
+    fetch(ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(payload)
+    })
+      .then(function (r) { return r.json(); })
+      .then(function () {
+        panel.textContent = "Received. You'll hear back within 24h at " + email + ".";
+        panel.style.display = "block";
+        form.reset();
+      })
+      .catch(function () {
+        panel.textContent = "Something failed. Email " + CONTACT_EMAIL + " directly with your bundle ID.";
+        panel.style.background = "rgba(248,113,113,.1)";
+        panel.style.borderColor = "rgba(248,113,113,.3)";
+        panel.style.display = "block";
+      })
+      .finally(function () {
+        btn.disabled = false;
+        btn.textContent = "Draft my request";
+      });
   });
 </script>
 </body>

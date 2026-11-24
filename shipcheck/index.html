@@ -216,7 +216,7 @@
     <div class="wrap">
       <div class="sec-head">
         <h2>提交一次免费自检</h2>
-        <p>填完会调用你的邮件客户端发送，不经过任何第三方服务器。</p>
+        <p>提交后直接转发到我的邮箱（经 FormSubmit），不需要你打开邮件客户端。</p>
       </div>
       <form id="intake" novalidate>
         <div class="fields">
@@ -274,8 +274,9 @@
 </footer>
 
 <script>
-  // 上线前把这里换成正式邮箱
+  // 上线前可换成正式邮箱；FormSubmit 首次使用会发一封激活邮件到该地址
   var CONTACT_EMAIL = "beyondouyuan@gmail.com";
+  var ENDPOINT = "https://formsubmit.co/ajax/" + CONTACT_EMAIL;
   document.getElementById("cMail").textContent = CONTACT_EMAIL;
 
   var form = document.getElementById("intake");
@@ -287,29 +288,51 @@
       alert("请填写 Bundle ID 和邮箱");
       return;
     }
-    var blockers = Array.prototype.map.call(
-      form.querySelectorAll('input[name="blocker"]:checked'),
-      function (x) { return x.value; }
-    );
-    var territories = Array.prototype.map.call(
-      form.querySelectorAll('input[name="territory"]:checked'),
-      function (x) { return x.value; }
-    );
-    var body =
-      "Bundle ID: " + bundle + "\n" +
-      "卡点: " + (blockers.join(" / ") || "未填") + "\n" +
-      "目标地区: " + (territories.join(" / ") || "未填") + "\n" +
-      "价格意愿: " + form.willing.value + "\n" +
-      "联系邮箱: " + email + "\n";
-    var subject = "ShipCheck 自检请求 · " + bundle;
-    window.location.href =
-      "mailto:" + CONTACT_EMAIL +
-      "?subject=" + encodeURIComponent(subject) +
-      "&body=" + encodeURIComponent(body);
+    var pick = function (name) {
+      return Array.prototype.map.call(
+        form.querySelectorAll('input[name="' + name + '"]:checked'),
+        function (x) { return x.value; }
+      );
+    };
+    var blockers = pick("blocker");
+    var territories = pick("territory");
+    var payload = {
+      _subject: "ShipCheck 自检请求 · " + bundle,
+      _template: "table",
+      _captcha: "false",
+      bundle_id: bundle,
+      blockers: blockers.join(" / ") || "未填",
+      territories: territories.join(" / ") || "未填",
+      willingness: form.willing.value,
+      reply_to: email
+    };
 
+    var btn = form.querySelector('button[type="submit"]');
     var panel = document.getElementById("okPanel");
-    panel.textContent = "已生成邮件草稿，请在邮件客户端确认发送。若没有弹出，请直接发到 " + CONTACT_EMAIL;
-    panel.style.display = "block";
+    btn.disabled = true;
+    btn.textContent = "发送中…";
+
+    fetch(ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(payload)
+    })
+      .then(function (r) { return r.json(); })
+      .then(function () {
+        panel.textContent = "已提交，24 小时内回复到 " + email + "。";
+        panel.style.display = "block";
+        form.reset();
+      })
+      .catch(function () {
+        panel.textContent = "提交失败，请直接发邮件到 " + CONTACT_EMAIL + "，附上 Bundle ID。";
+        panel.style.background = "rgba(248,113,113,.1)";
+        panel.style.borderColor = "rgba(248,113,113,.3)";
+        panel.style.display = "block";
+      })
+      .finally(function () {
+        btn.disabled = false;
+        btn.textContent = "生成并发送自检请求";
+      });
   });
 </script>
 </body>
